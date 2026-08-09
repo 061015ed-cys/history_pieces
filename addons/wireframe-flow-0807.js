@@ -1067,6 +1067,12 @@
       .sort();
     const answer = [...definition.answer].sort();
     const correct = selected.length === answer.length && selected.every((value, index) => value === answer[index]);
+    if (global.HistoryPiecesPdfUx?.showMissionResult) {
+      appState().challengeResults = appState().challengeResults || { 2: null, 3: null };
+      appState().challengeResults[pendingPiece] = { selected, correct };
+      global.HistoryPiecesPdfUx.showMissionResult(pendingPiece, selected, correct, definition);
+      return;
+    }
     const feedback = document.getElementById("wire-surprise-feedback");
     if (!correct) {
       if (feedback) {
@@ -1278,7 +1284,9 @@
     } else if (wireAction === "reflection-skip") {
       saveReflectionText(reflectionPiece, true);
     } else if (wireAction === "reflection-next") {
-      if (reflectionPiece < 3) showTransition(reflectionPiece);
+      if (global.HistoryPiecesPdfUx?.showPlaceComplete) {
+        global.HistoryPiecesPdfUx.showPlaceComplete(reflectionPiece);
+      } else if (reflectionPiece < 3) showTransition(reflectionPiece);
       else show("unlock-page");
     } else if (wireAction === "transition-next") {
       advanceTransition();

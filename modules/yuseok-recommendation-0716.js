@@ -74,6 +74,12 @@
     }
   });
 
+  const THEME_BY_ID = Object.freeze({
+    "mokpo-history-1": Object.freeze({ ko: "공간 변화", zh: "空间变化", signals: ["건축", "근대사", "과거-현재 변화", "근대문화"] }),
+    "mokpo-open-port-1897": Object.freeze({ ko: "도시 일상", zh: "城市日常", signals: ["사람과 생활", "교통", "거리", "사진"] }),
+    "mokpojin-history-park": Object.freeze({ ko: "항구 역사", zh: "港口历史", signals: ["역사", "항구", "근대사"] })
+  });
+
   let cachedFacts = null;
   let lastRecommendations = [];
   let selectedRecommendation = null;
@@ -119,6 +125,7 @@
       ? cnReason
       : (chinese?.reason || getLocalizedReason(item, language));
 
+    const themeDefinition = THEME_BY_ID[id] || { ko: "역사 공간", zh: "历史空间", signals: [] };
     return {
       id,
       name: chinese?.name || String(item.name),
@@ -134,7 +141,19 @@
       },
       verified: item.verified === true,
       source: item.verified === true ? "verified" : "preliminary"
+      ,theme: language === "zh-CN" ? themeDefinition.zh : themeDefinition.ko
+      ,themeSignals: themeDefinition.signals
     };
+  }
+
+  function preferenceScore(item, userState) {
+    const stateTags = [
+      ...(Array.isArray(userState.storyTags) ? userState.storyTags : []),
+      ...Object.values(userState.emotionResponses || {}).flatMap((response) => Array.isArray(response?.tags) ? response.tags : [])
+    ].map(String);
+    const signalScore = (item.themeSignals || []).reduce((score, signal) => score + (stateTags.some((tag) => tag.includes(signal) || signal.includes(tag)) ? 3 : 0), 0);
+    const verifiedScore = item.verified ? 1 : 0;
+    return signalScore + verifiedScore;
   }
 
   function isValidVerifiedRecommendation(item) {
@@ -170,7 +189,11 @@
       places.push(normalizeRecommendation(item, language));
     });
 
-    return places.slice(0, 3);
+    return places
+      .map((place, index) => ({ ...place, preferenceScore: preferenceScore(place, state), originalOrder: index }))
+      .sort((a, b) => b.preferenceScore - a.preferenceScore || a.originalOrder - b.originalOrder)
+      .slice(0, 3)
+      .map((place, index) => ({ ...place, rank: index + 1 }));
   }
 
   function setText(id, value) {
@@ -201,11 +224,14 @@
 
     const title = document.createElement("strong");
     title.textContent = data.name;
+    const theme = document.createElement("em");
+    theme.className = "recommendation-theme";
+    theme.textContent = `${data.rank || ""}${data.rank ? "순위 · " : ""}${data.theme || ""}`;
     const meta = document.createElement("span");
     meta.textContent = data.tags.join(" · ");
     const reason = document.createElement("small");
     reason.textContent = data.reason;
-    button.append(title, meta, reason);
+    button.append(theme, title, meta, reason);
     return button;
   }
 

@@ -109,6 +109,8 @@ function showPage(pageId) {
     return;
   }
 
+  const previousPageId = window.__historyPiecesActivePage || null;
+
   document.querySelectorAll("video").forEach((video) => {
     if (typeof video.pause === "function") video.pause();
   });
@@ -119,6 +121,11 @@ function showPage(pageId) {
   target.classList.add("active");
   target.scrollTop = 0;
   window.scrollTo(0, 0);
+  window.__historyPiecesActivePage = pageId;
+
+  window.dispatchEvent(new CustomEvent("historypieces:pagechange", {
+    detail: { pageId, previousPageId }
+  }));
 
   if (pageId === "journey-film-page") {
     journeyPrepareClips();

@@ -46,6 +46,11 @@ function currentPhotoUrl(pieceNumber) {
 }
 
 function continueAfterTimeTrace(pieceNumber) {
+  const pdfUx = window.HistoryPiecesPdfUx;
+  if (pdfUx?.showHistoryEvidence) {
+    pdfUx.showHistoryEvidence(pieceNumber);
+    return;
+  }
   const flow = window.HistoryPiecesWireframe;
   if (pieceNumber === 2 || pieceNumber === 3) {
     if (flow?.showSurpriseQuiz) flow.showSurpriseQuiz(pieceNumber);

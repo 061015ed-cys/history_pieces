@@ -1,0 +1,113 @@
+/* 장소별 촬영 직전에만 표시하는 구도 안내 화면 */
+.hp-photo-guide-page .hp-photo-guide-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 100%;
+  padding-bottom: 4px;
+}
+
+.hp-photo-guide-page .ornament-label,
+.hp-photo-guide-page .setup-title {
+  margin-bottom: 0;
+}
+
+.hp-photo-guide-page .setup-title {
+  font-size: clamp(25px, 7vw, 31px);
+  line-height: 1.18;
+}
+
+.hp-photo-guide-example {
+  position: relative;
+  width: 100%;
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid rgba(91, 62, 39, 0.2);
+  border-radius: 18px;
+  background: #e6d7c2;
+  box-shadow: 0 10px 24px rgba(67, 43, 27, 0.12);
+}
+
+.hp-photo-guide-example img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.hp-photo-guide-example figcaption {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  padding: 5px 9px;
+  border-radius: 999px;
+  background: rgba(43, 31, 23, 0.78);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.hp-photo-guide-criteria,
+.hp-photo-guide-reason {
+  padding: 13px 15px;
+  border: 1px solid rgba(112, 77, 46, 0.17);
+  border-radius: 15px;
+}
+
+.hp-photo-guide-criteria {
+  background: rgba(225, 236, 243, 0.9);
+}
+
+.hp-photo-guide-reason {
+  background: rgba(230, 239, 225, 0.9);
+}
+
+.hp-photo-guide-criteria > strong,
+.hp-photo-guide-reason > strong {
+  display: block;
+  margin-bottom: 7px;
+  color: #684123;
+  font-size: 12px;
+}
+
+.hp-photo-guide-criteria ul {
+  display: grid;
+  gap: 3px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.hp-photo-guide-criteria li,
+.hp-photo-guide-reason p {
+  margin: 0;
+  color: #3e342c;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.hp-photo-guide-criteria li::before {
+  content: "✓";
+  margin-right: 7px;
+  color: #2e6d78;
+  font-weight: 900;
+}
+
+.hp-photo-guide-page .big-button {
+  margin-top: auto;
+}
+
+@media (max-height: 720px) {
+  .hp-photo-guide-page .hp-photo-guide-layout {
+    gap: 9px;
+  }
+
+  .hp-photo-guide-example img {
+    max-height: 190px;
+  }
+
+  .hp-photo-guide-criteria,
+  .hp-photo-guide-reason {
+    padding: 10px 13px;
+  }
+}

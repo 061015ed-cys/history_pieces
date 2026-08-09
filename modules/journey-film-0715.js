@@ -72,6 +72,16 @@
     return clipObjectUrls.get(source);
   }
 
+  function getCaption(stageIndex) {
+    const commonState = getCommonState() || {};
+    const response = commonState.emotionResponses?.[stageIndex];
+    if (response?.value) return String(response.value);
+    const fallback = commonState.language === "zh-CN"
+      ? ["在木浦站开始的记录", "发现空间用途的变化", "记住留在建筑中的历史"]
+      : ["목포역에서 시작한 오늘의 기록", "공간의 쓰임이 바뀐 흔적", "건물에 남은 역사를 기억합니다"];
+    return fallback[stageIndex - 1];
+  }
+
   /**
    * 각 조각에서 촬영한 비디오를 여정필름 상태에 저장한다.
    * @param {1|2|3} stageIndex
@@ -114,6 +124,9 @@
     video.controls = true;
     video.setAttribute("aria-label", text("journeySequentialLabel"));
     container.appendChild(video);
+    const caption = document.createElement("p");
+    caption.className = "journey-live-caption";
+    container.appendChild(caption);
 
     state.currentPlayer = video;
     state.currentPlayingIndex = 1;
@@ -133,6 +146,7 @@
       const index = state.currentPlayingIndex;
       const source = state.clipVideos[index] || FALLBACK_CLIPS[index];
       const url = resolveClipUrl(source);
+      caption.textContent = getCaption(index);
 
       if (!url) {
         failedClipCount += 1;
@@ -202,6 +216,25 @@
       drawWidth,
       drawHeight
     );
+  }
+
+  function drawCaption(ctx, caption, stageIndex, width, height) {
+    const safeCaption = String(caption || "").slice(0, 42);
+    if (!safeCaption) return;
+    const boxX = 48;
+    const boxY = height - 190;
+    const boxWidth = width - 96;
+    const boxHeight = 112;
+    ctx.save();
+    ctx.fillStyle = "rgba(24, 19, 15, 0.78)";
+    ctx.fillRect(boxX, boxY, boxWidth, boxHeight);
+    ctx.fillStyle = "#f3d8a6";
+    ctx.font = "600 24px sans-serif";
+    ctx.fillText(`RECORD ${stageIndex}/3`, boxX + 24, boxY + 34);
+    ctx.fillStyle = "#ffffff";
+    ctx.font = "700 30px sans-serif";
+    ctx.fillText(safeCaption, boxX + 24, boxY + 78, boxWidth - 48);
+    ctx.restore();
   }
 
   function loadVideoSource(video, source) {
@@ -389,16 +422,21 @@
         recorderError = new Error(text("journeyEncodingFailed"));
       };
 
+      let currentStageIndex = 1;
       drawing = true;
       const drawFrame = () => {
         if (!drawing) return;
-        if (video.readyState >= 2) drawCover(ctx, video, canvas.width, canvas.height);
+        if (video.readyState >= 2) {
+          drawCover(ctx, video, canvas.width, canvas.height);
+          drawCaption(ctx, getCaption(currentStageIndex), currentStageIndex, canvas.width, canvas.height);
+        }
         animationFrameId = requestAnimationFrame(drawFrame);
       };
       drawFrame();
       recorder.start(1000);
 
-      for (const source of sources) {
+      for (const [sourceIndex, source] of sources.entries()) {
+        currentStageIndex = sourceIndex + 1;
         if (source instanceof File && !source.type.startsWith("video/")) {
           throw new Error(text("journeyVideoOnly"));
         }

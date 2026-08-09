@@ -33,7 +33,6 @@
   add('#language-page [data-language="zh-TW"] small', "繁体中文");
   add('#language-page [data-language="ja"] small', "日语");
   add('#language-page [data-language="vi"] small', "越南语");
-  add('#language-page [data-language="th"] small', "泰语");
   add('#language-page [data-language="id"] small', "印度尼西亚语");
   add("#language-page .guide-line", "✒ 语言以后随时可以更改。");
   add("#language-next-btn", "下一步 <span>→</span>", "html");
@@ -43,16 +42,13 @@
   add("#country-page .main-title", "请选择国家或地区");
   add("#country-page .sub-text", "请设置服务提供范围。");
   const countries = [
-    ["大韩民国（韩国）", "推荐"],
-    ["中国", ""],
-    ["日本", "目前暂不支持"],
-    ["美国", "将依次开放"],
-    ["中国台湾", "将依次开放"],
-    ["泰国", "将依次开放"],
-    ["越南", "将依次开放"],
-    ["新加坡", "将依次开放"],
-    ["法国", "将依次开放"],
-    ["德国", "将依次开放"]
+    ["大韩民国（韩国）", "基本讲解模式"],
+    ["中国", "面向中国游客的定制讲解"],
+    ["英语地区（English-speaking）", "英语 · 将于后续支持"],
+    ["中国台湾·香港（繁體中文）", "繁体中文 · 将于后续支持"],
+    ["日本（日本）", "日语 · 将于后续支持"],
+    ["越南（Việt Nam）", "越南语 · 将于后续支持"],
+    ["印度尼西亚（Indonesia）", "印度尼西亚语 · 将于后续支持"]
   ];
   countries.forEach(([name, status], index) => {
     add(`#country-page .select-row:nth-child(${index + 1}) strong`, name);
@@ -306,7 +302,7 @@
   add("#next-place-detail-page .mini-map", "从木浦站前往所选推荐地点的简略地图", "aria-label");
   add("#language-page .setup-title", "请选择<br>语言", "html");
   add("#language-page .setup-desc", "以后仍可在设置中更改。");
-  ["将于后续支持", "繁体中文 · 将于后续支持", "将于后续支持", "越南语 · 将于后续支持", "泰语 · 将于后续支持", "印度尼西亚语 · 将于后续支持"].forEach((copy, index) => {
+  ["英语 · 将于后续支持", "繁体中文 · 将于后续支持", "日语 · 将于后续支持", "越南语 · 将于后续支持", "印度尼西亚语 · 将于后续支持"].forEach((copy, index) => {
     add(`#language-page .select-row:nth-child(${index + 3}) small`, copy);
   });
   add('#language-page [data-next="country-page"]', "下一步 <span>→</span>", "html");
@@ -473,6 +469,7 @@
   add('#journey-film-page [data-action="synthesize-journey-film"]', "生成旅程短片文件");
   add('#journey-film-page [data-action="share-instagram"]', "下载后打开Instagram");
   add('#journey-film-page [data-next="next-place-page"]', "获取下一地点推荐 <span>→</span>", "html");
+  add('#journey-film-page [data-next="pdf-theme-select-page"]', "选择下一条记录 <span>→</span>", "html");
 
   add("#next-place-page .ornament-label", "推荐下一地点");
   add("#next-place-page .mini-title", "请选择木浦站故事之后<br>要继续探索的地点", "html");

@@ -1,0 +1,532 @@
+.pdf-ux-page .standard-layout {
+  gap: 16px;
+  padding-top: max(28px, env(safe-area-inset-top));
+}
+
+.pdf-time-compare,
+.pdf-reward-grid,
+.pdf-journey-pieces {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.pdf-time-compare figure,
+.pdf-reward-grid article,
+.pdf-story-panel,
+.pdf-journey-pieces figure {
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid rgba(91, 67, 45, .2);
+  border-radius: 16px;
+  background: rgba(255, 252, 245, .92);
+}
+
+.pdf-time-compare img,
+.pdf-reward-grid img,
+.pdf-reward-grid video,
+.pdf-story-panel img,
+.pdf-journey-pieces img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.pdf-time-compare figcaption,
+.pdf-reward-grid strong,
+.pdf-story-panel figcaption,
+.pdf-journey-pieces figcaption {
+  display: block;
+  padding: 9px 10px;
+  color: #463323;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.pdf-evidence-card a {
+  display: inline-block;
+  margin-top: 10px;
+  color: #805b37;
+  font-size: 12px;
+  text-decoration: underline;
+}
+
+.pdf-ai-card,
+.pdf-explanation,
+.pdf-final-rewards,
+.pdf-recommend-context {
+  padding: 14px 16px;
+  border: 1px solid rgba(136, 94, 51, .18);
+  border-radius: 16px;
+  background: rgba(246, 232, 205, .82);
+  color: #4b3827;
+}
+
+.pdf-ai-card strong,
+.pdf-explanation strong,
+.pdf-recommend-context > strong {
+  display: block;
+  margin-bottom: 7px;
+}
+
+.pdf-ai-card p,
+.pdf-explanation p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+.pdf-answer-list {
+  display: grid;
+  gap: 8px;
+}
+
+.pdf-answer-list p {
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  gap: 8px;
+  margin: 0;
+  padding: 9px;
+  border-radius: 10px;
+  background: #fffaf1;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+#pdf-mission-result-page[data-correct="false"] .pdf-result-card {
+  border-color: rgba(167, 67, 47, .42);
+}
+
+#pdf-mission-result-page[data-correct="true"] .pdf-result-card {
+  border-color: rgba(67, 126, 80, .42);
+}
+
+.pdf-progress {
+  height: 10px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(100, 77, 55, .16);
+}
+
+.pdf-progress span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #bd8650, #744725);
+  transition: width .25s ease;
+}
+
+.pdf-final-rewards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.pdf-final-rewards span {
+  padding: 10px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, .72);
+  text-align: center;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.place-comic-grid[data-pdf-rendered="true"] {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+.pdf-story-panel img {
+  aspect-ratio: auto;
+  max-height: none;
+  object-fit: contain;
+}
+
+.journey-player-host {
+  position: relative;
+}
+
+.journey-live-caption {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  left: 12px;
+  z-index: 2;
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: rgba(29, 21, 15, .78);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.pdf-official-photo-placeholder {
+  display: grid;
+  min-height: 128px;
+  margin-bottom: 14px;
+  place-content: center;
+  border: 1px dashed rgba(95, 68, 42, .38);
+  border-radius: 12px;
+  text-align: center;
+}
+
+.pdf-official-photo-placeholder span {
+  color: #916f4e;
+  font-weight: 800;
+  letter-spacing: .18em;
+}
+
+.pdf-official-photo-placeholder p {
+  margin: 6px 0 0;
+  font-size: 12px;
+}
+
+.pdf-journey-pieces {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.pdf-journey-pieces figcaption {
+  font-size: 10px;
+}
+
+.recommendation-theme {
+  display: inline-flex;
+  width: fit-content;
+  margin-bottom: 6px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: rgba(166, 115, 68, .13);
+  color: #80552e;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 800;
+}
+
+.pdf-theme-layout {
+  justify-content: flex-start;
+  gap: 14px;
+  padding-top: max(20px, env(safe-area-inset-top));
+  padding-bottom: max(22px, env(safe-area-inset-bottom));
+}
+
+.pdf-theme-layout .ornament-label,
+.pdf-theme-layout .mini-title {
+  margin-bottom: 2px;
+}
+
+.pdf-theme-list,
+.pdf-piece-preview-list,
+.pdf-preference-list {
+  display: grid;
+  gap: 10px;
+}
+
+.pdf-theme-list > button,
+.pdf-preference-list > button {
+  position: relative;
+  display: grid;
+  width: 100%;
+  min-height: 78px;
+  padding: 14px 46px 14px 16px;
+  border: 1px solid rgba(126, 91, 54, .22);
+  border-radius: 16px;
+  background: rgba(255, 252, 245, .94);
+  color: #3f2d21;
+  box-shadow: 0 8px 18px rgba(74, 43, 20, .07);
+  text-align: left;
+  cursor: pointer;
+}
+
+.pdf-theme-list strong,
+.pdf-theme-list small,
+.pdf-preference-list strong,
+.pdf-preference-list span,
+.pdf-preference-list small {
+  display: block;
+}
+
+.pdf-theme-list strong,
+.pdf-preference-list strong {
+  font-size: 15px;
+  line-height: 1.4;
+}
+
+.pdf-theme-list small,
+.pdf-preference-list small {
+  margin-top: 5px;
+  color: #796556;
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+.pdf-theme-list i {
+  position: absolute;
+  top: 50%;
+  right: 17px;
+  transform: translateY(-50%);
+  color: #8a5b34;
+  font-size: 18px;
+  font-style: normal;
+}
+
+.pdf-piece-preview-list article {
+  display: grid;
+  grid-template-columns: 58px minmax(0, 1fr);
+  gap: 8px;
+  padding: 12px 13px;
+  border: 1px solid rgba(126, 91, 54, .2);
+  border-radius: 13px;
+  background: rgba(255, 252, 245, .92);
+  color: #4a3525;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.pdf-piece-preview-list article:first-child {
+  border-color: rgba(94, 132, 142, .34);
+  background: rgba(222, 236, 239, .76);
+}
+
+.pdf-piece-preview-list b {
+  color: #7b4f2d;
+}
+
+.pdf-first-place-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, .85fr);
+  gap: 12px;
+  align-items: center;
+  padding: 12px;
+  border: 1px solid rgba(126, 91, 54, .22);
+  border-radius: 16px;
+  background: rgba(255, 252, 245, .94);
+}
+
+.pdf-first-place-photo {
+  display: grid;
+  min-height: 92px;
+  overflow: hidden;
+  place-content: center;
+  border-radius: 11px;
+  background: rgba(96, 78, 62, .1);
+  color: #957757;
+  text-align: center;
+}
+
+.pdf-first-place-photo img {
+  display: block;
+  width: 100%;
+  height: 92px;
+  object-fit: cover;
+}
+
+.pdf-first-place-photo span {
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: .14em;
+}
+
+.pdf-first-place-photo small {
+  margin-top: 5px;
+  font-size: 10px;
+  letter-spacing: 0;
+}
+
+.pdf-first-place-card > div:last-child strong,
+.pdf-first-place-card > div:last-child small {
+  display: block;
+}
+
+.pdf-first-place-card > div:last-child strong {
+  color: #4a3525;
+  font-size: 14px;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+
+.pdf-first-place-card > div:last-child small {
+  margin-top: 7px;
+  color: #806a58;
+  font-size: 11px;
+}
+
+.pdf-theme-layout > .big-button {
+  min-height: 58px;
+  margin-top: 2px;
+  font-size: 19px;
+}
+
+.pdf-theme-layout > .text-button {
+  margin-top: -4px;
+}
+
+.pdf-preference-list > button {
+  padding-right: 14px;
+}
+
+.pdf-preference-list > button[aria-pressed="true"] {
+  border-color: #8b5b32;
+  outline: 2px solid rgba(139, 91, 50, .32);
+  background: rgba(237, 226, 207, .94);
+}
+
+.pdf-preference-list span {
+  margin-top: 4px;
+  color: #77563d;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.pdf-preference-list span i {
+  color: #ad8954;
+  font-size: 8px;
+  font-style: normal;
+  letter-spacing: .12em;
+}
+
+.pdf-preference-reason {
+  margin: 0;
+  padding: 11px 13px;
+  border-left: 3px solid #ad8954;
+  background: rgba(244, 234, 215, .8);
+  color: #5e4736;
+  font-size: 11px;
+  line-height: 1.55;
+}
+
+.pdf-route-line {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 24px minmax(0, 1fr);
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  border-radius: 13px;
+  background: rgba(232, 207, 170, .72);
+  color: #4d3727;
+  font-size: 11px;
+  text-align: center;
+}
+
+.pdf-route-line i {
+  color: #986b3c;
+  font-size: 16px;
+  font-style: normal;
+}
+
+.pdf-route-line strong {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+
+@media (max-width: 390px) {
+  .pdf-time-compare,
+  .pdf-reward-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pdf-theme-layout {
+    gap: 11px;
+  }
+
+  .pdf-theme-layout .mini-title {
+    font-size: 23px;
+  }
+
+  .pdf-theme-list > button,
+  .pdf-preference-list > button {
+    min-height: 70px;
+    padding-top: 11px;
+    padding-bottom: 11px;
+  }
+}
+
+/* 2026-08-09 요청 화면 최종 모바일 보정 */
+#language-page .select-row.disabled,
+#country-page .select-row.disabled {
+  display: flex !important;
+}
+
+#language-page .setting-card.list-card,
+#country-page .setting-card.list-card {
+  height: clamp(280px, 44dvh, 360px) !important;
+  min-height: 280px !important;
+  max-height: 360px !important;
+}
+
+#language-page .setting-card.list-card .select-row,
+#country-page .setting-card.list-card .select-row {
+  min-height: 64px !important;
+  padding: 10px 18px !important;
+}
+
+#language-page .select-row strong,
+#country-page .select-row strong {
+  font-size: 17px;
+}
+
+#language-page .select-row small,
+#country-page .select-row small {
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.pdf-theme-layout,
+.pdf-theme-layout > *,
+.pdf-piece-preview-list article > *,
+.pdf-first-place-card > *,
+.pdf-route-line > * {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.pdf-piece-preview-list article span,
+.pdf-first-place-card strong,
+.pdf-first-place-card small,
+.pdf-route-line span,
+.pdf-route-line strong,
+.pdf-preference-list strong,
+.pdf-preference-list small {
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+
+.pdf-first-place-card {
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  overflow: hidden;
+}
+
+.pdf-route-line {
+  grid-template-columns: minmax(0, .9fr) 24px minmax(0, 1.1fr);
+  overflow: hidden;
+}
+
+@media (max-width: 390px) {
+  #language-page .setting-card.list-card,
+  #country-page .setting-card.list-card {
+    height: clamp(270px, 43dvh, 335px) !important;
+    min-height: 270px !important;
+  }
+
+  .pdf-first-place-card {
+    grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr);
+    gap: 9px;
+  }
+
+  .pdf-first-place-card > div:last-child strong {
+    font-size: 13px;
+  }
+}
+
+@media (max-height: 720px) {
+  #language-page .setting-card.list-card,
+  #country-page .setting-card.list-card {
+    height: 280px !important;
+    min-height: 280px !important;
+  }
+}
