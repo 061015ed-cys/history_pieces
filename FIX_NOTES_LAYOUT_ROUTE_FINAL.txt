@@ -1,0 +1,10 @@
+History Pieces layout/route final fix
+
+1. Fixed top-title clipping on piece webtoon, journey film, reservation, nickname, and first-record screens.
+2. Long screens begin at the top and scroll downward; short screens retain centered layout where possible.
+3. All recommendation detail routes render as: 목포역 → selected destination.
+4. The selected destination name updates automatically for all three candidates.
+5. Original common files remain unchanged; fixes are limited to addons/integrated-ui-0725.css and addons/integrated-ui-0725.js.
+6. Automated Chromium checks passed at 1280x900 and 390x844 with zero page errors and zero detected clipping.
+
+PTH model files are not included in this light package. Put the existing three files in addons/models before FIRST_RUN.bat.

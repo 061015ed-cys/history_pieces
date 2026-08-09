@@ -1,0 +1,24 @@
+{
+  "summary": [
+    {
+      "viewport": "400x800",
+      "buttonsChecked": 30,
+      "badCount": 0,
+      "bad": []
+    },
+    {
+      "viewport": "360x800",
+      "buttonsChecked": 30,
+      "badCount": 0,
+      "bad": []
+    },
+    {
+      "viewport": "320x800",
+      "buttonsChecked": 30,
+      "badCount": 0,
+      "bad": []
+    }
+  ],
+  "totalButtonsChecked": 90,
+  "totalBad": 0
+}

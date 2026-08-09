@@ -1,0 +1,73 @@
+{
+  "meta": {
+    "project": "History Pieces",
+    "owner": "최유석",
+    "date": "2026-07-16",
+    "version": "v4",
+    "status": "recommendation_verified_and_enabled",
+    "rule": "verified=true인 확정 추천만 화면에 반영합니다."
+  },
+  "place": {
+    "id": "mokpo_station",
+    "name": "목포역",
+    "verifiedNarrativeFacts": [
+      {
+        "id": "mokpo-station-opened-1913",
+        "claimKo": "목포역은 1913년 5월 15일 호남선 목포-학교 구간 개통과 함께 영업을 시작했다.",
+        "claimCn": "木浦站于1913年5月15日随湖南线木浦至学校区间开通而开始营业。",
+        "sourceName": "한국민족문화대백과사전 - 목포역",
+        "sourceUrl": "https://encykorea.aks.ac.kr/Article/E0068032",
+        "verified": true
+      },
+      {
+        "id": "honam-line-mokpo-transport",
+        "claimKo": "호남선은 대전과 목포를 연결하며, 개통 초기 호남 지역의 물자를 운송하는 경제적 역할을 했다.",
+        "claimCn": "湖南线连接大田与木浦，并在开通初期承担了运输湖南地区物资的经济功能。",
+        "sourceName": "한국민족문화대백과사전 - 호남선",
+        "sourceUrl": "https://encykorea.aks.ac.kr/Article/E0063695",
+        "verified": true
+      }
+    ]
+  },
+  "recommendations": [
+    {
+      "id": "mokpo-history-1",
+      "name": "목포근대역사관 1관",
+      "address": "전라남도 목포시 영산로29번길 6",
+      "contact": "061-242-0340",
+      "distance": "772m",
+      "walkingTime": "도보 12분",
+      "tags": [
+        "근대문화",
+        "원도심",
+        "개항"
+      ],
+      "reason": {
+        "ko": "목포역에서 원도심으로 이동하며 목포의 근대 도시 이야기를 이어서 살펴볼 수 있는 장소입니다.",
+        "cn": "从木浦站前往老城区，可以继续了解木浦近代城市形成与交流的历史。"
+      },
+      "urls": {
+        "detail": "https://biz.mokpo.go.kr/tour/attraction/cultural_assets/list?idx=7449&mode=view",
+        "map": "https://map.naver.com/p/directions/3ySQy2,2yTB3U,%EB%AA%A9%ED%8F%AC%EC%97%AD%20(%EA%B3%A0%EC%86%8D%EC%B2%A0%EB%8F%84),11630534,PLACE_POI/3ySESp,2yTrxo,%EB%AA%A9%ED%8F%AC%EA%B7%BC%EB%8C%80%EC%97%AD%EC%82%AC%EA%B4%80%201%EA%B4%80,1281942881,PLACE_POI/-/walk/0?c=15.00,0,0,0,dh",
+        "reservation": null
+      },
+      "reservationRequired": false,
+      "verified": true,
+      "fieldVerification": {
+        "name": true,
+        "address": true,
+        "contact": true,
+        "detailUrl": true,
+        "reservationRequired": true,
+        "reservationUrl": true,
+        "mapUrl": true,
+        "distance": true,
+        "walkingTime": true,
+        "reasonKo": true,
+        "reasonCn": true
+      },
+      "note": "장소명·주소·공식 상세 페이지·예약 여부·거리·도보 시간·네이버지도 길찾기 URL과 한국어·중국어 추천 이유를 확정했습니다."
+    }
+  ],
+  "unverifiedCandidatesFromCommonFrame": []
+}

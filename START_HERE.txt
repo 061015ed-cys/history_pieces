@@ -1,0 +1,6 @@
+1. Double-click RUN_ONE_CLICK.bat
+2. No separate Python or Node.js installation is required
+3. Keep the black server window open
+4. If needed, open http://127.0.0.1:5517
+
+Do not run index.html directly or with VS Code Live Server.

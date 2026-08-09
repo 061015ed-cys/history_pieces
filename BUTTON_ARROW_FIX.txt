@@ -1,0 +1,7 @@
+History Pieces 하단 버튼 화살표 겹침 수정
+
+- 원본 index.html, style.css, script.js와 기존 modules 파일은 수정하지 않았습니다.
+- addons/integrated-ui-0725.css 마지막에 버튼 화살표 교정 규칙만 추가했습니다.
+- 화살표의 absolute 위치를 해제하고 버튼 텍스트 옆의 독립 flex 요소로 배치했습니다.
+- 폭이 좁은 화면에서도 텍스트와 화살표가 겹치지 않도록 간격과 패딩을 조정했습니다.
+- first/second/third_piece_detection.pth 모델 세 개를 addons/models에 모두 포함했습니다.

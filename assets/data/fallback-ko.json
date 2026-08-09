@@ -1,0 +1,52 @@
+{
+  "meta": {
+    "project": "History Pieces",
+    "owner": "최유석",
+    "date": "2026-07-16",
+    "language": "ko",
+    "source": "사용자가 확정한 목포역 서사"
+  },
+  "pieceStories": {
+    "1": {
+      "title": "목포의 첫 관문",
+      "summary": "목포역 간판은 목포 여행의 시작을 알리는 첫 단서입니다.",
+      "panels": [
+        { "image": null, "speaker": "해설", "text": "목포역의 이름이 여행의 첫 장면을 엽니다." },
+        { "image": null, "speaker": "기록새", "text": "{nickname}님, 목포에 도착했다는 첫 번째 증표를 찾았어요." },
+        { "image": null, "speaker": "해설", "text": "오늘 바라본 역의 이름이 첫 번째 이야기 조각으로 남습니다." },
+        { "image": null, "speaker": "기록새", "text": "철길의 끝에서 {nickname}님의 목포 이야기가 시작돼요." }
+      ]
+    },
+    "2": {
+      "title": "원도심으로 향하는 길",
+      "summary": "역 앞의 길은 목포의 원도심과 근대문화공간으로 이어집니다.",
+      "panels": [
+        { "image": null, "speaker": "해설", "text": "역을 나온 발걸음은 광장과 거리로 이어집니다." },
+        { "image": null, "speaker": "기록새", "text": "{nickname}님, 역은 도착점이면서 도시로 향하는 출발점이기도 해요." },
+        { "image": null, "speaker": "해설", "text": "사용자가 바라본 길의 방향이 두 번째 이야기 조각으로 남습니다." },
+        { "image": null, "speaker": "기록새", "text": "이 길을 따라 목포의 다음 장면이 이어져요." }
+      ]
+    },
+    "3": {
+      "title": "사람들이 오가던 역전",
+      "summary": "목포역 앞에는 이동과 만남, 생활의 흔적이 쌓여 있습니다.",
+      "panels": [
+        { "image": null, "speaker": "해설", "text": "역 앞의 공간은 기다림과 만남, 출발의 움직임으로 채워집니다." },
+        { "image": null, "speaker": "기록새", "text": "{nickname}님, 장소를 채우는 것은 건물만이 아니라 오가는 사람들의 시간이기도 해요." },
+        { "image": null, "speaker": "해설", "text": "오늘의 움직임이 세 번째 이야기 조각으로 남습니다." },
+        { "image": null, "speaker": "기록새", "text": "지금 남긴 기록도 이 공간의 새로운 기억이 되었어요." }
+      ]
+    }
+  },
+  "placeStory": {
+    "title": "철길 끝에서 시작된 이야기",
+    "summary": "이름과 길, 사람의 움직임을 연결해 사용자의 오늘 기록을 완성합니다.",
+    "panels": [
+      { "image": null, "speaker": "해설", "text": "목포의 첫 관문" },
+      { "image": null, "speaker": "해설", "text": "원도심으로 향하는 길" },
+      { "image": null, "speaker": "해설", "text": "사람들이 오가던 역전" },
+      { "image": null, "speaker": "기록새", "text": "그리고 오늘, {nickname}님도 이곳에 새로운 기록 하나를 남겼어요." }
+    ],
+    "finalMessage": "목포역은 철길의 끝이지만, 목포 여행과 도시의 이야기가 시작되는 첫 장면입니다."
+  }
+}

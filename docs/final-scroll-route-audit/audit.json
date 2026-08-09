@@ -1,0 +1,183 @@
+{
+  "language": {
+    "pageId": "language-page",
+    "pageOverflow": "hidden",
+    "layoutOverflow": "hidden",
+    "cardOverflow": "scroll",
+    "cardClientHeight": 486,
+    "cardScrollHeight": 598,
+    "scrollBefore": 0,
+    "scrollAfter": 80,
+    "cardWithinPage": true,
+    "layoutWithinPage": true,
+    "appShell": {
+      "h": 844,
+      "w": 390
+    }
+  },
+  "country": {
+    "pageId": "country-page",
+    "pageOverflow": "hidden",
+    "layoutOverflow": "hidden",
+    "cardOverflow": "scroll",
+    "cardClientHeight": 441,
+    "cardScrollHeight": 747,
+    "scrollBefore": 0,
+    "scrollAfter": 80,
+    "cardWithinPage": true,
+    "layoutWithinPage": true,
+    "appShell": {
+      "h": 844,
+      "w": 390
+    }
+  },
+  "routes": [
+    {
+      "destination": "목포근대역사관 1관",
+      "map": {
+        "left": 40.828125,
+        "right": 349.171875,
+        "top": 263.796875,
+        "bottom": 375.796875,
+        "width": 308.34375,
+        "height": 112
+      },
+      "start": {
+        "left": 51.828125,
+        "right": 145.671875,
+        "top": 300.9375,
+        "bottom": 338.65625,
+        "width": 93.84375,
+        "height": 37.71875
+      },
+      "arrow": {
+        "left": 151.671875,
+        "right": 185.671875,
+        "top": 302.796875,
+        "bottom": 336.796875,
+        "width": 34,
+        "height": 34
+      },
+      "end": {
+        "left": 191.671875,
+        "right": 338.171875,
+        "top": 300.9375,
+        "bottom": 338.65625,
+        "width": 146.5,
+        "height": 37.71875
+      },
+      "card": {
+        "left": 21.828125,
+        "right": 368.171875,
+        "top": 134.796875,
+        "bottom": 475.796875,
+        "width": 346.34375,
+        "height": 341
+      },
+      "withinMap": true,
+      "withinCard": true,
+      "mapScrollWidth": 306,
+      "mapClientWidth": 306,
+      "bodyScrollWidth": 390,
+      "viewportWidth": 390
+    },
+    {
+      "destination": "1897 개항문화거리",
+      "map": {
+        "left": 40.828125,
+        "right": 349.171875,
+        "top": 263.796875,
+        "bottom": 375.796875,
+        "width": 308.34375,
+        "height": 112
+      },
+      "start": {
+        "left": 51.828125,
+        "right": 145.671875,
+        "top": 300.9375,
+        "bottom": 338.65625,
+        "width": 93.84375,
+        "height": 37.71875
+      },
+      "arrow": {
+        "left": 151.671875,
+        "right": 185.671875,
+        "top": 302.796875,
+        "bottom": 336.796875,
+        "width": 34,
+        "height": 34
+      },
+      "end": {
+        "left": 191.671875,
+        "right": 338.171875,
+        "top": 300.9375,
+        "bottom": 338.65625,
+        "width": 146.5,
+        "height": 37.71875
+      },
+      "card": {
+        "left": 21.828125,
+        "right": 368.171875,
+        "top": 134.796875,
+        "bottom": 475.796875,
+        "width": 346.34375,
+        "height": 341
+      },
+      "withinMap": true,
+      "withinCard": true,
+      "mapScrollWidth": 306,
+      "mapClientWidth": 306,
+      "bodyScrollWidth": 390,
+      "viewportWidth": 390
+    },
+    {
+      "destination": "목포진 역사공원",
+      "map": {
+        "left": 40.828125,
+        "right": 349.171875,
+        "top": 263.796875,
+        "bottom": 375.796875,
+        "width": 308.34375,
+        "height": 112
+      },
+      "start": {
+        "left": 51.828125,
+        "right": 145.671875,
+        "top": 300.9375,
+        "bottom": 338.65625,
+        "width": 93.84375,
+        "height": 37.71875
+      },
+      "arrow": {
+        "left": 151.671875,
+        "right": 185.671875,
+        "top": 302.796875,
+        "bottom": 336.796875,
+        "width": 34,
+        "height": 34
+      },
+      "end": {
+        "left": 191.671875,
+        "right": 338.171875,
+        "top": 300.9375,
+        "bottom": 338.65625,
+        "width": 146.5,
+        "height": 37.71875
+      },
+      "card": {
+        "left": 21.828125,
+        "right": 368.171875,
+        "top": 134.796875,
+        "bottom": 475.796875,
+        "width": 346.34375,
+        "height": 341
+      },
+      "withinMap": true,
+      "withinCard": true,
+      "mapScrollWidth": 306,
+      "mapClientWidth": 306,
+      "bodyScrollWidth": 390,
+      "viewportWidth": 390
+    }
+  ]
+}

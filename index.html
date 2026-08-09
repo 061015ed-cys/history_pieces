@@ -1,0 +1,1284 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#f7ead6">
+  <title>History Pieces | 3장소 최종 흐름</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="addons/integrated-ui-0725.css?v=20260807-piece1-four-panel-v2">
+  <link rel="stylesheet" href="addons/timetrace/dist/timetrace.css?v=20260807-three-piece-integration">
+  <link rel="stylesheet" href="addons/timetrace-host-0807.css?v=20260807-three-piece-integration">
+</head>
+
+<body data-culture="korea">
+  <main class="app-shell">
+
+    <section id="start-page" class="page" data-owner="이경민" aria-hidden="true">
+      <div class="page-bg bg-start"></div>
+
+      <div class="screen-layout center-layout">
+        <p class="ornament-label">AI 스토리 관광 서비스</p>
+        <h1 class="brand-title">History Pieces</h1>
+        <h2 class="main-title">기록으로 오래된 이야기를 다시 깨우다</h2>
+        <p class="sub-text">
+          당신의 지금이 지나간 시간과 만나,<br>
+          광주·전남 곳곳의 이야기를 새롭게 이어갑니다.
+        </p>
+
+        <button type="button" class="big-button" data-next="language-page">
+          시작하기 <span>→</span>
+        </button>
+
+        <p class="bottom-note">당신의 기록이 다음 이야기를 만듭니다</p>
+      </div>
+    </section>
+
+
+    <section id="language-page" class="page active settings-list-page" data-owner="최유석">
+      <div class="page-bg bg-language"></div>
+
+      <div class="screen-layout setup-layout">
+        <p class="ornament-label">여행자 설정</p>
+        <h1 class="setup-title">언어를<br>선택해주세요</h1>
+        <p class="setup-desc">이후에도 설정에서 변경할 수 있어요.</p>
+
+        <div class="setting-card list-card" role="group" aria-label="서비스 언어 선택">
+          <button type="button" class="select-row selected" data-language="ko" aria-pressed="true">
+            <span lang="ko">
+              <strong>한국어</strong>
+              <small>Korean</small>
+            </span>
+            <i>✓</i>
+          </button>
+
+          <button type="button" class="select-row" data-language="zh-CN" aria-pressed="false">
+            <span lang="zh-CN">
+              <strong>中文（简体）</strong>
+              <small>중국어 간체</small>
+            </span>
+            <i></i>
+          </button>
+
+          <button type="button" class="select-row disabled" aria-pressed="false" aria-disabled="true" tabindex="-1">
+            <span>
+              <strong>English</strong>
+              <small>추후 지원 예정</small>
+            </span>
+            <i></i>
+          </button>
+
+          <button type="button" class="select-row disabled" aria-pressed="false" aria-disabled="true" tabindex="-1">
+            <span>
+              <strong>中文（繁體）</strong>
+              <small>중국어 번체 · 추후 지원 예정</small>
+            </span>
+            <i></i>
+          </button>
+
+          <button type="button" class="select-row disabled" aria-pressed="false" aria-disabled="true" tabindex="-1">
+            <span>
+              <strong>日本語</strong>
+              <small>추후 지원 예정</small>
+            </span>
+            <i></i>
+          </button>
+
+          <button type="button" class="select-row disabled" aria-pressed="false" aria-disabled="true" tabindex="-1">
+            <span>
+              <strong>Tiếng Việt</strong>
+              <small>베트남어 · 추후 지원 예정</small>
+            </span>
+            <i></i>
+          </button>
+
+          <button type="button" class="select-row disabled" aria-pressed="false" aria-disabled="true" tabindex="-1">
+            <span>
+              <strong>ภาษาไทย</strong>
+              <small>태국어 · 추후 지원 예정</small>
+            </span>
+            <i></i>
+          </button>
+
+          <button type="button" class="select-row disabled" aria-pressed="false" aria-disabled="true" tabindex="-1">
+            <span>
+              <strong>Bahasa Indonesia</strong>
+              <small>인도네시아어 · 추후 지원 예정</small>
+            </span>
+            <i></i>
+          </button>
+        </div>
+
+        <button type="button" class="big-button" data-next="country-page">
+          다음 <span>→</span>
+        </button>
+      </div>
+    </section>
+
+
+    <section id="country-page" class="page settings-list-page" data-owner="최유석/이지영">
+      <div class="page-bg bg-country"></div>
+
+      <div class="screen-layout setup-layout">
+        <p class="ornament-label">여행자 설정</p>
+        <h1 class="setup-title">국가 또는 지역을<br>선택해주세요</h1>
+        <p class="setup-desc">서비스 제공 범위를 설정해 주세요.</p>
+
+        <div class="setting-card list-card" role="group" aria-label="국가 또는 문화권 선택">
+          <button type="button" class="select-row selected" data-country="korea" aria-pressed="true">
+            <span>
+              <strong>대한민국 (한국)</strong>
+              <small>기본 해설 모드</small>
+            </span>
+            <i>✓</i>
+          </button>
+
+          <button type="button" class="select-row" data-country="china" aria-pressed="false">
+            <span>
+              <strong>중국 (中国)</strong>
+              <small>중국인 관광객 맞춤 해설</small>
+            </span>
+            <i>›</i>
+          </button>
+
+          <button type="button" class="select-row disabled" aria-pressed="false" aria-disabled="true" tabindex="-1">
+            <span>
+              <strong>일본 (日本)</strong>
+              <small>현재는 지원하지 않아요</small>
+            </span>
+            <i>›</i>
+          </button>
+
+          <button type="button" class="select-row disabled" aria-pressed="false" aria-disabled="true" tabindex="-1">
+            <span>
+              <strong>미국 (United States)</strong>
+              <small>순차 지원 예정</small>
+            </span>
+            <i>›</i>
+          </button>
+
+          <button type="button" class="select-row disabled" aria-pressed="false" aria-disabled="true" tabindex="-1">
+            <span>
+              <strong>대만 (Taiwan)</strong>
+              <small>순차 지원 예정</small>
+            </span>
+            <i>›</i>
+          </button>
+
+          <button type="button" class="select-row disabled" aria-pressed="false" aria-disabled="true" tabindex="-1">
+            <span>
+              <strong>태국 (Thailand)</strong>
+              <small>순차 지원 예정</small>
+            </span>
+            <i>›</i>
+          </button>
+
+          <button type="button" class="select-row disabled" aria-pressed="false" aria-disabled="true" tabindex="-1">
+            <span>
+              <strong>베트남 (Vietnam)</strong>
+              <small>순차 지원 예정</small>
+            </span>
+            <i>›</i>
+          </button>
+
+          <button type="button" class="select-row disabled" aria-pressed="false" aria-disabled="true" tabindex="-1">
+            <span>
+              <strong>싱가포르 (Singapore)</strong>
+              <small>순차 지원 예정</small>
+            </span>
+            <i>›</i>
+          </button>
+
+          <button type="button" class="select-row disabled" aria-pressed="false" aria-disabled="true" tabindex="-1">
+            <span>
+              <strong>프랑스 (France)</strong>
+              <small>순차 지원 예정</small>
+            </span>
+            <i>›</i>
+          </button>
+
+          <button type="button" class="select-row disabled" aria-pressed="false" aria-disabled="true" tabindex="-1">
+            <span>
+              <strong>독일 (Germany)</strong>
+              <small>순차 지원 예정</small>
+            </span>
+            <i>›</i>
+          </button>
+        </div>
+
+        <p class="small-guide">지원 국가 및 서비스는 순차적으로 확대될 예정입니다.</p>
+
+        <button type="button" class="big-button" data-action="confirm-country">
+          다음 <span>→</span>
+        </button>
+      </div>
+    </section>
+
+
+    <section id="china-mode-intro-page" class="page" data-owner="이지영">
+      <div class="page-bg bg-china"></div>
+
+      <div class="screen-layout setup-layout">
+        <p class="ornament-label">중국인 관광객 모드</p>
+        <h1 class="setup-title">중국 여행자의 시선으로<br>장소를 해석합니다</h1>
+
+        <div class="setting-card mode-card">
+          <span class="culture-badge">🇨🇳 중국인 관광객 맞춤 해설</span>
+          <p>
+            기록새가 철도역, 항구도시, 개항거리의 맥락을 바탕으로
+            목포역의 이야기를 중국 여행자에게 익숙한 관점으로 풀어줍니다.
+          </p>
+
+          <div class="china-summary">
+            中文摘要：将以中国游客熟悉的铁路、港口和城市记忆为线索解释木浦站。
+          </div>
+        </div>
+
+        <button type="button" class="big-button" data-next="nickname-page">
+          계속하기 <span>→</span>
+        </button>
+      </div>
+    </section>
+
+
+    <section id="nickname-page" class="page" data-owner="최유석/이지영">
+      <div class="page-bg bg-nickname"></div>
+
+      <div class="screen-layout setup-layout">
+        <p class="ornament-label">여행자 설정</p>
+        <h1 class="setup-title">어떻게<br>불러드릴까요?</h1>
+        <p class="setup-desc">여정 속 기록에 남길 이름을 정해주세요.</p>
+
+        <div class="setting-card nickname-card">
+          <label for="nickname-input">닉네임</label>
+          <input id="nickname-input" type="text" maxlength="20" autocomplete="nickname" placeholder="닉네임을 입력하세요">
+
+          <div class="nickname-chip-row">
+            <button type="button" data-nickname-chip="여행자">여행자 ✦</button>
+            <button type="button" data-nickname-chip="Guest">Guest ✦</button>
+            <button type="button" data-nickname-chip="오늘의 기록자">오늘의 기록자 ✦</button>
+          </div>
+        </div>
+
+        <p class="small-guide">닉네임은 나중에 언제든 바꿀 수 있어요.</p>
+
+        <button type="button" class="big-button" data-action="save-nickname">
+          다음 <span>→</span>
+        </button>
+      </div>
+    </section>
+
+
+    <section id="first-record-page" class="page first-record-intro-page" data-owner="이경민/구도훈">
+      <div class="page-bg bg-record"></div>
+
+      <div class="screen-layout record-layout">
+        <p class="ornament-label">첫 기록 준비</p>
+        <h1 class="setup-title">당신의 첫 기록으로<br>여정을 시작하세요</h1>
+        <p class="setup-desc">
+          지금 보고 있는 장면을 남겨보세요.<br>
+          장소를 알아볼 수 있는 단서가 함께 보이면 좋아요.
+        </p>
+
+        <div class="record-intro-visual" aria-hidden="true">
+          <span class="corner lt"></span>
+          <span class="corner rt"></span>
+          <span class="corner lb"></span>
+          <span class="corner rb"></span>
+        </div>
+
+        <div class="guide-note">
+          <span>🪶</span>
+          <p>첫 기록을 남기면, 이 여정은 조금 다른 방향으로 흘러갈지도 모릅니다.</p>
+        </div>
+
+        <button type="button" class="big-button" data-next="first-record-camera-page">
+          첫 기록 남기기 <span>→</span>
+        </button>
+      </div>
+    </section>
+
+
+    <section id="first-record-camera-page" class="page capture-page" data-owner="구도훈">
+      <div class="page-bg bg-record"></div>
+
+      <div class="screen-layout record-layout">
+        <p class="ornament-label">첫 기록 입력</p>
+        <h1 class="setup-title">장면 기록하기</h1>
+        <p class="setup-desc">
+          지금 보이는 장면을 기록해주세요.<br>
+          간판, 건물, 거리 풍경이 함께 보이면 좋아요.
+        </p>
+
+        <div class="camera-frame">
+          <img id="first-photo-preview" class="camera-preview hidden" alt="첫 기록 미리보기">
+          <label id="first-photo-empty" for="first-photo-input" class="camera-empty">
+            <span class="corner lt"></span>
+            <span class="corner rt"></span>
+            <span class="corner lb"></span>
+            <span class="corner rb"></span>
+            <strong>사진을 선택하거나 촬영하세요</strong>
+            <small>간판, 건물, 거리 구조가 보이면 좋아요.</small>
+          </label>
+          <input id="first-photo-input" class="hidden-input" type="file" accept="image/*" capture="environment">
+        </div>
+
+        <div class="guide-note">
+          <span>🪶</span>
+          <p>사진 속에 남아 있는 장소의 단서를 살펴볼게요.</p>
+        </div>
+
+        <button type="button" class="big-button" data-action="analyze-first-photo" disabled>
+          분석하기 <span>→</span>
+        </button>
+
+        <button type="button" class="text-button" data-action="load-sample-first-photo">
+          샘플 사진으로 진행하기
+        </button>
+      </div>
+    </section>
+
+
+    <section id="place-loading-page" class="page" data-owner="최유석">
+      <div class="page-bg bg-record"></div>
+
+      <div class="screen-layout center-layout" role="status" aria-live="polite" aria-busy="true">
+        <p class="ornament-label">장소 후보 탐색</p>
+        <div class="loader-lens">⌕</div>
+        <h1 class="mini-title">사진 속 장소 단서를<br>해석하고 있어요</h1>
+        <p class="setup-desc">
+          간판, 건물 윤곽, 거리 구조를 바탕으로<br>
+          현재 장면과 가까운 장소를 찾고 있습니다.
+        </p>
+      </div>
+    </section>
+
+
+    <section id="place-confirm-page" class="page" data-owner="최유석/이지영">
+      <div class="page-bg bg-record"></div>
+
+      <div class="screen-layout standard-layout">
+        <p class="ornament-label">장소 후보 확인</p>
+        <h1 class="mini-title">목포역 일대로<br>추정됩니다</h1>
+
+        <div class="content-card">
+          <p class="tag">분석 단서</p>
+          <h2>목포역 간판 · 역 앞 광장 · 원도심 진입로</h2>
+          <p class="description">
+            업로드한 장면에서 목포역과 가까운 시각 단서가 확인되었습니다.
+            이곳에서 목포역의 이야기 조각을 찾아볼 수 있습니다.
+          </p>
+        </div>
+
+        <div class="giroksae-note before-appear">
+          <span>?</span>
+          <p>현재 장면과 가장 가까운 장소 후보를 찾았습니다. 이곳이 목포역 일대가 맞나요?</p>
+        </div>
+
+        <button type="button" class="big-button" data-next="giroksae-intro-page">
+          맞아요 <span>→</span>
+        </button>
+        <button type="button" class="sub-button" data-next="first-record-camera-page" data-reset-first-photo="true">
+          다시 사진 올리기
+        </button>
+      </div>
+    </section>
+
+
+    <section id="giroksae-intro-page" class="page dark-page character-page" data-owner="이지영" role="button" tabindex="0"
+      aria-describedby="giroksae-intro-text">
+      <div class="character-layout">
+        <img class="giroksae-large" src="assets/images/giroksae-mission.png" alt="미션을 안내하는 기록새">
+        <p class="character-label">기록새가 첫 기록에 반응했습니다</p>
+
+        <div class="character-dialogue">
+          <p id="giroksae-intro-text">
+            목포역이라… 목포의 이야기가 시작되기 좋은 곳에 기록을 남겼네?
+          </p>
+          <small>화면을 터치해 계속하기</small>
+        </div>
+      </div>
+    </section>
+
+
+    <section id="mokpo-guide-page" class="page" data-owner="최유석/이지영">
+      <div class="page-bg bg-record"></div>
+
+      <div class="screen-layout standard-layout">
+        <p class="ornament-label">목포역 이야기 탐색</p>
+        <h1 class="mini-title">세 개의 이야기 조각을<br>찾아볼까요?</h1>
+
+        <div class="piece-map-card">
+          <article>
+            <span>01</span>
+            <strong>목포의 첫 관문</strong>
+            <small>목포역 간판</small>
+          </article>
+          <article>
+            <span>02</span>
+            <strong>원도심으로 향하는 길</strong>
+            <small>역 앞 광장과 방향</small>
+          </article>
+          <article>
+            <span>03</span>
+            <strong>사람들이 오가던 역전</strong>
+            <small>이동과 생활의 흔적</small>
+          </article>
+        </div>
+
+        <div class="giroksae-note">
+          <!-- 깨진 이미지를 정상화하고 글자도 한국어로 명시 -->
+          <img src="assets/images/giroksae-mission.png" alt="미션을 안내하는 기록새"
+            style="display: block !important; visibility: visible !important;">
+          <p>좋아. 목포역에 숨은 세 조각을 차례로 찾아보자.</p>
+        </div>
+        <button type="button" class="big-button" data-next="piece-1-mission-page">
+          첫 번째 조각 찾기 <span>→</span>
+        </button>
+      </div>
+    </section>
+
+
+    <section id="piece-1-mission-page" class="page" data-owner="구도훈/이지영">
+      <div class="page-bg bg-record"></div>
+
+      <div class="screen-layout standard-layout">
+        <p class="ornament-label">이야기 조각 1</p>
+        <h1 class="mini-title">목포역 간판을<br>찾아보세요</h1>
+
+        <div class="content-card">
+          <p class="tag">미션</p>
+          <h2>목포의 첫 관문</h2>
+          <p class="description">
+            역 이름이 적힌 간판은 목포로 들어오는 첫 관문을 알려주는 단서입니다.
+            간판이 잘 보이도록 촬영해주세요.
+          </p>
+        </div>
+
+        <button type="button" class="big-button" data-next="piece-1-upload-page">
+          미션 사진 찍기 <span>→</span>
+        </button>
+      </div>
+    </section>
+
+
+    <section id="piece-1-upload-page" class="page" data-owner="구도훈">
+      <div class="page-bg bg-record"></div>
+
+      <div class="screen-layout record-layout">
+        <p class="ornament-label">조각 1 기록</p>
+        <h1 class="setup-title">목포역 간판이<br>보이게 기록해주세요</h1>
+
+        <div class="camera-frame">
+          <img id="piece-1-photo-preview" class="camera-preview hidden" alt="조각 1 사진 미리보기">
+          <label id="piece-1-photo-empty" for="piece-1-photo-input" class="camera-empty">
+            <span class="corner lt"></span>
+            <span class="corner rt"></span>
+            <span class="corner lb"></span>
+            <span class="corner rb"></span>
+            <strong>간판 단서 사진 업로드</strong>
+            <small>직접 학습 AI가 단서 여부를 판별합니다.</small>
+          </label>
+          <input id="piece-1-photo-input" class="hidden-input piece-photo-input" data-piece="1" type="file"
+            accept="image/*" capture="environment">
+        </div>
+
+        <button type="button" class="big-button" data-action="run-piece-ai" data-piece="1" disabled>
+          AI 단서 판별하기 <span>→</span>
+        </button>
+        <button type="button" class="text-button" data-action="load-sample-piece-photo" data-piece="1">
+          샘플 단서 사진 사용
+        </button>
+      </div>
+    </section>
+
+
+    <section id="piece-1-ai-result-page" class="page" data-owner="구도훈">
+      <div class="page-bg bg-record"></div>
+
+      <div class="screen-layout standard-layout">
+        <p class="ornament-label">AI 단서 판별</p>
+        <h1 id="piece-1-ai-title" class="mini-title">첫 번째 조각이<br>확인되었습니다</h1>
+
+        <div class="content-card ai-result-card">
+          <div class="result-row">
+            <span>감지 클래스</span>
+            <strong id="piece-1-ai-label">mokpo_station</strong>
+          </div>
+          <div class="result-row">
+            <span>신뢰도</span>
+            <strong id="piece-1-ai-confidence" class="result-emphasis">87%</strong>
+          </div>
+          <div class="result-row">
+            <span>판정</span>
+            <strong id="piece-1-ai-success" class="result-emphasis">이야기 조각 1 획득</strong>
+          </div>
+          <p id="piece-1-ai-reason" class="result-reason" aria-live="polite"></p>
+        </div>
+
+        <button type="button" id="piece-1-next-btn" class="big-button" data-action="unlock-piece-comic" data-piece="1">
+          조각 이야기 보기 <span>→</span>
+        </button>
+        <button type="button" id="piece-1-retry-btn" class="sub-button hidden" data-action="retry-piece-photo"
+          data-piece="1">
+          다시 촬영하기
+        </button>
+        <button type="button" id="piece-1-fallback-btn" class="text-button hidden" data-action="force-piece-success"
+          data-piece="1">
+          발표용 샘플 결과로 계속하기
+        </button>
+      </div>
+    </section>
+
+
+    <!-- 장소 확인 뒤 조각 1/2/3에 공통으로 사용하는 실제 TimeTrace 화면 -->
+    <section id="timetrace-page" class="page timetrace-host-page" data-owner="TimeTrace/최유석" aria-label="과거와 현재 비교">
+      <div id="timetrace-root" aria-live="polite"></div>
+    </section>
+
+
+    <!-- TimeTrace 로드 실패 시에만 사용하는 안전 진행 화면 -->
+    <section id="piece-overlay-page" class="page" data-owner="이경민/최유석/이지영">
+      <div class="page-bg bg-record"></div>
+
+      <div class="screen-layout standard-layout">
+        <p class="ornament-label">과거와 현재 비교</p>
+        <h1 id="piece-overlay-title" class="mini-title">이야기 조각의<br>시간을 겹쳐봅니다</h1>
+
+        <div class="content-card overlay-card">
+          <p class="tag">옛 기록 오버레이</p>
+          <h2 id="piece-overlay-subtitle">현재 기록과 옛 기록 비교</h2>
+
+          <div id="piece-overlay-frame" class="overlay-frame" data-mode="blend" data-archive-available="false">
+            <img id="piece-overlay-current" class="current-image" alt="사용자가 촬영한 현재 기록">
+            <div id="piece-overlay-current-sample" class="sample-photo-placeholder overlay-sample-placeholder hidden" role="img" aria-label="샘플 사진">
+              <span aria-hidden="true">🖼️</span>
+              <strong>샘플 사진</strong>
+            </div>
+            <img id="piece-overlay-archive" class="archive-image hidden" alt="같은 장소의 옛 기록">
+            <span class="overlay-caption current-caption">현재 기록</span>
+            <span class="overlay-caption archive-caption">옛 기록</span>
+            <div id="piece-overlay-fallback" class="overlay-fallback hidden" role="status">
+              이 조각의 옛 기록 자료는 아직 연결되지 않았습니다.<br>현재 기록을 확인한 뒤 웹툰으로 계속할 수 있습니다.
+            </div>
+          </div>
+
+          <div class="overlay-mode-row" role="group" aria-label="오버레이 표시 방식">
+            <button type="button" class="sub-button" data-action="overlay-mode" data-overlay-mode="current">현재</button>
+            <button type="button" class="sub-button" data-action="overlay-mode" data-overlay-mode="archive">과거</button>
+            <button type="button" class="sub-button selected" data-action="overlay-mode" data-overlay-mode="blend">겹쳐
+              보기</button>
+          </div>
+
+          <button type="button" class="text-button overlay-play-button" data-action="play-overlay">
+            현재에서 과거로 재생
+          </button>
+
+          <label class="overlay-opacity-control">
+            <span>옛 기록 겹침 정도 <strong id="piece-overlay-value">58%</strong></span>
+            <input id="piece-overlay-slider" type="range" min="0" max="100" step="1" value="58">
+          </label>
+        </div>
+
+        <div id="piece-overlay-giroksae-note" class="giroksae-note hidden">
+          <img src="assets/images/giroksae-mission.png" alt="미션을 안내하는 기록새">
+          <p id="piece-overlay-giroksae-line"></p>
+        </div>
+
+        <button type="button" class="big-button" data-action="continue-piece-comic">
+          조각 웹툰 보기 <span>→</span>
+        </button>
+      </div>
+    </section>
+
+
+    <section id="piece-1-comic-page" class="page comic-page" data-owner="최유석/이지영">
+      <div class="page-bg bg-record"></div>
+
+      <div class="screen-layout standard-layout">
+        <p class="ornament-label">조각 이야기 1</p>
+        <h1 id="piece-1-title" class="mini-title">목포의 첫 관문</h1>
+
+        <div class="comic-template">
+          <div id="piece-1-panel-grid" class="webtoon-panel-grid">
+            <article class="webtoon-panel" data-webtoon-panel="1">
+              <img id="piece-1-comic-photo" data-panel-image alt="조각 1 웹툰 1패널">
+              <div class="panel-copy"><strong data-panel-speaker>해설</strong>
+                <p id="piece-1-caption" data-panel-text>목포역 간판은 목포 여행의 시작을 알리는 첫 단서입니다.</p>
+              </div>
+            </article>
+            <article class="webtoon-panel" data-webtoon-panel="2">
+              <div class="panel-placeholder" aria-hidden="true">02</div>
+              <div class="panel-copy"><strong data-panel-speaker>해설</strong>
+                <p data-panel-text>이야기를 구성하고 있습니다.</p>
+              </div>
+            </article>
+            <article class="webtoon-panel" data-webtoon-panel="3">
+              <div class="panel-placeholder" aria-hidden="true">03</div>
+              <div class="panel-copy"><strong data-panel-speaker>해설</strong>
+                <p data-panel-text>오늘의 기록을 이야기와 연결합니다.</p>
+              </div>
+            </article>
+            <article class="webtoon-panel" data-webtoon-panel="4">
+              <img data-panel-image src="assets/images/giroksae-record.png" alt="기록을 살펴보는 기록새">
+              <div class="panel-copy"><strong data-panel-speaker>기록새</strong>
+                <p id="piece-1-giroksae-line" data-panel-text>이 간판이 목포로 들어오는 첫 관문을 알려주는 조각이야.</p>
+              </div>
+            </article>
+          </div>
+          <div id="piece-1-zh-summary" class="china-summary hidden"></div>
+        </div>
+
+        <button type="button" class="big-button" data-next="record-1-page">
+          5초 기록 남기기 <span>→</span>
+        </button>
+      </div>
+    </section>
+
+
+    <section id="record-1-page" class="page" data-owner="최유석/구도훈">
+      <div class="page-bg bg-record"></div>
+
+      <div class="screen-layout record-layout">
+        <p class="ornament-label">현재 기록 1</p>
+        <h1 class="setup-title">첫 조각의 장소를<br>5초로 남겨주세요</h1>
+
+        <div class="camera-frame video-frame">
+          <video id="record-1-preview" class="camera-preview hidden" muted loop playsinline></video>
+          <label id="record-1-empty" for="record-1-input" class="camera-empty">
+            <strong>5초 기록 업로드</strong>
+            <small>현재 풍경을 영상으로 남깁니다.<br>(5초 이내 촬영 권장)</small>
+          </label>
+          <input id="record-1-input" class="hidden-input record-input" data-record="1" type="file" accept="video/*"
+            capture="environment">
+        </div>
+
+        <button type="button" class="big-button" data-action="save-record" data-record="1">
+          다음 조각 찾기 <span>→</span>
+        </button>
+        <button type="button" class="text-button" data-action="load-sample-record" data-record="1">
+          샘플 기록 사용
+        </button>
+      </div>
+    </section>
+
+
+    <section id="piece-2-mission-page" class="page" data-owner="구도훈/이지영">
+      <div class="page-bg bg-record"></div>
+
+      <div class="screen-layout standard-layout">
+        <p class="ornament-label">이야기 조각 2</p>
+        <h1 class="mini-title">원도심으로 향하는<br>길을 찾아보세요</h1>
+
+        <div class="content-card">
+          <p class="tag">미션</p>
+          <h2>역 앞 광장과 길의 방향</h2>
+          <p class="description">
+            목포역은 역 안에서 끝나는 장소가 아니라,
+            원도심과 근대문화공간으로 이어지는 출발점입니다.
+          </p>
+        </div>
+
+        <button type="button" class="big-button" data-next="piece-2-upload-page">
+          미션 사진 찍기 <span>→</span>
+        </button>
+      </div>
+    </section>
+
+
+    <section id="piece-2-upload-page" class="page" data-owner="구도훈">
+      <div class="page-bg bg-record"></div>
+
+      <div class="screen-layout record-layout">
+        <p class="ornament-label">조각 2 기록</p>
+        <h1 class="setup-title">역 앞 길의 방향이<br>보이게 기록해주세요</h1>
+
+        <div class="camera-frame">
+          <img id="piece-2-photo-preview" class="camera-preview hidden" alt="조각 2 사진 미리보기">
+          <label id="piece-2-photo-empty" for="piece-2-photo-input" class="camera-empty">
+            <span class="corner lt"></span>
+            <span class="corner rt"></span>
+            <span class="corner lb"></span>
+            <span class="corner rb"></span>
+            <strong>원도심 방향 단서 사진 업로드</strong>
+            <small>목포역과 원도심의 연결성을 확인합니다.</small>
+          </label>
+          <input id="piece-2-photo-input" class="hidden-input piece-photo-input" data-piece="2" type="file"
+            accept="image/*" capture="environment">
+        </div>
+
+        <button type="button" class="big-button" data-action="run-piece-ai" data-piece="2" disabled>
+          AI 단서 판별하기 <span>→</span>
+        </button>
+        <button type="button" class="text-button" data-action="load-sample-piece-photo" data-piece="2">
+          샘플 단서 사진 사용
+        </button>
+      </div>
+    </section>
+
+
+    <section id="piece-2-ai-result-page" class="page" data-owner="구도훈">
+      <div class="page-bg bg-record"></div>
+
+      <div class="screen-layout standard-layout">
+        <p class="ornament-label">AI 단서 판별</p>
+        <h1 id="piece-2-ai-title" class="mini-title">두 번째 조각이<br>확인되었습니다</h1>
+
+        <div class="content-card ai-result-card">
+          <div class="result-row">
+            <span>감지 클래스</span>
+            <strong id="piece-2-ai-label">mokpo_music_hall</strong>
+          </div>
+          <div class="result-row">
+            <span>신뢰도</span>
+            <strong id="piece-2-ai-confidence" class="result-emphasis">84%</strong>
+          </div>
+          <div class="result-row">
+            <span>판정</span>
+            <strong id="piece-2-ai-success" class="result-emphasis">이야기 조각 2 획득</strong>
+          </div>
+          <p id="piece-2-ai-reason" class="result-reason" aria-live="polite"></p>
+        </div>
+
+        <button type="button" id="piece-2-next-btn" class="big-button" data-action="unlock-piece-comic" data-piece="2">
+          조각 이야기 보기 <span>→</span>
+        </button>
+        <button type="button" id="piece-2-retry-btn" class="sub-button hidden" data-action="retry-piece-photo"
+          data-piece="2">
+          다시 촬영하기
+        </button>
+        <button type="button" id="piece-2-fallback-btn" class="text-button hidden" data-action="force-piece-success"
+          data-piece="2">
+          발표용 샘플 결과로 계속하기
+        </button>
+      </div>
+    </section>
+
+
+    <section id="piece-2-comic-page" class="page comic-page" data-owner="최유석/이지영">
+      <div class="page-bg bg-record"></div>
+
+      <div class="screen-layout standard-layout">
+        <p class="ornament-label">조각 이야기 2</p>
+        <h1 id="piece-2-title" class="mini-title">원도심으로 향하는 길</h1>
+
+        <div class="comic-template">
+          <div id="piece-2-panel-grid" class="webtoon-panel-grid">
+            <article class="webtoon-panel" data-webtoon-panel="1">
+              <img id="piece-2-comic-photo" data-panel-image alt="조각 2 웹툰 1패널">
+              <div class="panel-copy"><strong data-panel-speaker>해설</strong>
+                <p id="piece-2-caption" data-panel-text>역 앞의 길은 목포의 원도심과 근대문화공간으로 이어집니다.</p>
+              </div>
+            </article>
+            <article class="webtoon-panel" data-webtoon-panel="2">
+              <div class="panel-placeholder" aria-hidden="true">02</div>
+              <div class="panel-copy"><strong data-panel-speaker>해설</strong>
+                <p data-panel-text>이야기를 구성하고 있습니다.</p>
+              </div>
+            </article>
+            <article class="webtoon-panel" data-webtoon-panel="3">
+              <div class="panel-placeholder" aria-hidden="true">03</div>
+              <div class="panel-copy"><strong data-panel-speaker>해설</strong>
+                <p data-panel-text>오늘의 기록을 이야기와 연결합니다.</p>
+              </div>
+            </article>
+            <article class="webtoon-panel" data-webtoon-panel="4">
+              <img data-panel-image src="assets/images/giroksae-record.png" alt="기록을 살펴보는 기록새">
+              <div class="panel-copy"><strong data-panel-speaker>기록새</strong>
+                <p id="piece-2-giroksae-line" data-panel-text>길은 그냥 이동하는 곳이 아니야. 도시의 이야기가 이어지는 선이지.</p>
+              </div>
+            </article>
+          </div>
+          <div id="piece-2-zh-summary" class="china-summary hidden"></div>
+        </div>
+
+        <button type="button" class="big-button" data-next="record-2-page">
+          5초 기록 남기기 <span>→</span>
+        </button>
+      </div>
+    </section>
+
+
+    <section id="record-2-page" class="page" data-owner="최유석/구도훈">
+      <div class="page-bg bg-record"></div>
+
+      <div class="screen-layout record-layout">
+        <p class="ornament-label">현재 기록 2</p>
+        <h1 class="setup-title">두 번째 조각의 장소를<br>5초로 남겨주세요</h1>
+
+        <div class="camera-frame video-frame">
+          <video id="record-2-preview" class="camera-preview hidden" muted loop playsinline></video>
+          <label id="record-2-empty" for="record-2-input" class="camera-empty">
+            <strong>5초 기록 업로드</strong>
+            <small>역 앞 길의 현재 풍경을 남깁니다.<br>(5초 이내 촬영 권장)</small>
+          </label>
+          <input id="record-2-input" class="hidden-input record-input" data-record="2" type="file" accept="video/*"
+            capture="environment">
+        </div>
+
+        <button type="button" class="big-button" data-action="save-record" data-record="2">
+          마지막 조각 찾기 <span>→</span>
+        </button>
+        <button type="button" class="text-button" data-action="load-sample-record" data-record="2">
+          샘플 기록 사용
+        </button>
+      </div>
+    </section>
+
+
+    <section id="piece-3-mission-page" class="page" data-owner="구도훈/이지영">
+      <div class="page-bg bg-record"></div>
+
+      <div class="screen-layout standard-layout">
+        <p class="ornament-label">이야기 조각 3</p>
+        <h1 class="mini-title">사람들이 오가던<br>역전의 풍경을 찾아보세요</h1>
+
+        <div class="content-card">
+          <p class="tag">미션</p>
+          <h2>이동과 만남의 흔적</h2>
+          <p class="description">
+            목포역은 교통시설이면서 동시에 사람들의 만남과 생활이 교차하던 장소입니다.
+          </p>
+        </div>
+
+        <button type="button" class="big-button" data-next="piece-3-upload-page">
+          미션 사진 찍기 <span>→</span>
+        </button>
+      </div>
+    </section>
+
+
+    <section id="piece-3-upload-page" class="page" data-owner="구도훈">
+      <div class="page-bg bg-record"></div>
+
+      <div class="screen-layout record-layout">
+        <p class="ornament-label">조각 3 기록</p>
+        <h1 class="setup-title">역전의 풍경을<br>기록해주세요</h1>
+
+        <div class="camera-frame">
+          <img id="piece-3-photo-preview" class="camera-preview hidden" alt="조각 3 사진 미리보기">
+          <label id="piece-3-photo-empty" for="piece-3-photo-input" class="camera-empty">
+            <span class="corner lt"></span>
+            <span class="corner rt"></span>
+            <span class="corner lb"></span>
+            <span class="corner rb"></span>
+            <strong>역전 풍경 단서 사진 업로드</strong>
+            <small>사람들의 이동과 생활 흔적을 확인합니다.</small>
+          </label>
+          <input id="piece-3-photo-input" class="hidden-input piece-photo-input" data-piece="3" type="file"
+            accept="image/*" capture="environment">
+        </div>
+
+        <button type="button" class="big-button" data-action="run-piece-ai" data-piece="3" disabled>
+          AI 단서 판별하기 <span>→</span>
+        </button>
+        <button type="button" class="text-button" data-action="load-sample-piece-photo" data-piece="3">
+          샘플 단서 사진 사용
+        </button>
+      </div>
+    </section>
+
+
+    <section id="piece-3-ai-result-page" class="page" data-owner="구도훈">
+      <div class="page-bg bg-record"></div>
+
+      <div class="screen-layout standard-layout">
+        <p class="ornament-label">AI 단서 판별</p>
+        <h1 id="piece-3-ai-title" class="mini-title">세 번째 조각이<br>확인되었습니다</h1>
+
+        <div class="content-card ai-result-card">
+          <div class="result-row">
+            <span>감지 클래스</span>
+            <strong id="piece-3-ai-label">mokpo_modern_history_2</strong>
+          </div>
+          <div class="result-row">
+            <span>신뢰도</span>
+            <strong id="piece-3-ai-confidence" class="result-emphasis">82%</strong>
+          </div>
+          <div class="result-row">
+            <span>판정</span>
+            <strong id="piece-3-ai-success" class="result-emphasis">이야기 조각 3 획득</strong>
+          </div>
+          <p id="piece-3-ai-reason" class="result-reason" aria-live="polite"></p>
+        </div>
+
+        <button type="button" id="piece-3-next-btn" class="big-button" data-action="unlock-piece-comic" data-piece="3">
+          조각 이야기 보기 <span>→</span>
+        </button>
+        <button type="button" id="piece-3-retry-btn" class="sub-button hidden" data-action="retry-piece-photo"
+          data-piece="3">
+          다시 촬영하기
+        </button>
+        <button type="button" id="piece-3-fallback-btn" class="text-button hidden" data-action="force-piece-success"
+          data-piece="3">
+          발표용 샘플 결과로 계속하기
+        </button>
+      </div>
+    </section>
+
+
+    <section id="piece-3-comic-page" class="page comic-page" data-owner="최유석/이지영">
+      <div class="page-bg bg-record"></div>
+
+      <div class="screen-layout standard-layout">
+        <p class="ornament-label">조각 이야기 3</p>
+        <h1 id="piece-3-title" class="mini-title">사람들이 오가던 역전</h1>
+
+        <div class="comic-template">
+          <div id="piece-3-panel-grid" class="webtoon-panel-grid">
+            <article class="webtoon-panel" data-webtoon-panel="1">
+              <img id="piece-3-comic-photo" data-panel-image alt="조각 3 웹툰 1패널">
+              <div class="panel-copy"><strong data-panel-speaker>해설</strong>
+                <p id="piece-3-caption" data-panel-text>목포역 앞에는 이동과 만남, 생활의 흔적이 쌓여 있습니다.</p>
+              </div>
+            </article>
+            <article class="webtoon-panel" data-webtoon-panel="2">
+              <div class="panel-placeholder" aria-hidden="true">02</div>
+              <div class="panel-copy"><strong data-panel-speaker>해설</strong>
+                <p data-panel-text>이야기를 구성하고 있습니다.</p>
+              </div>
+            </article>
+            <article class="webtoon-panel" data-webtoon-panel="3">
+              <div class="panel-placeholder" aria-hidden="true">03</div>
+              <div class="panel-copy"><strong data-panel-speaker>해설</strong>
+                <p data-panel-text>오늘의 기록을 이야기와 연결합니다.</p>
+              </div>
+            </article>
+            <article class="webtoon-panel" data-webtoon-panel="4">
+              <img data-panel-image src="assets/images/giroksae-record.png" alt="기록을 살펴보는 기록새">
+              <div class="panel-copy"><strong data-panel-speaker>기록새</strong>
+                <p id="piece-3-giroksae-line" data-panel-text>역은 기차만 지나가는 곳이 아니야. 사람들의 시간이 쌓이는 곳이지.</p>
+              </div>
+            </article>
+          </div>
+          <div id="piece-3-zh-summary" class="china-summary hidden"></div>
+        </div>
+
+        <button type="button" class="big-button" data-next="record-3-page">
+          5초 기록 남기기 <span>→</span>
+        </button>
+      </div>
+    </section>
+
+
+    <section id="record-3-page" class="page" data-owner="최유석/구도훈">
+      <div class="page-bg bg-record"></div>
+
+      <div class="screen-layout record-layout">
+        <p class="ornament-label">현재 기록 3</p>
+        <h1 class="setup-title">마지막 조각의 장소를<br>5초로 남겨주세요</h1>
+
+        <div class="camera-frame video-frame">
+          <video id="record-3-preview" class="camera-preview hidden" muted loop playsinline></video>
+          <label id="record-3-empty" for="record-3-input" class="camera-empty">
+            <strong>5초 기록 업로드</strong>
+            <small>역전 풍경의 현재 장면을 남깁니다.<br>(5초 이내 촬영 권장)</small>
+          </label>
+          <input id="record-3-input" class="hidden-input record-input" data-record="3" type="file" accept="video/*"
+            capture="environment">
+        </div>
+
+        <button type="button" class="big-button" data-action="save-record" data-record="3">
+          장소 이야기 해금하기 <span>→</span>
+        </button>
+        <button type="button" class="text-button" data-action="load-sample-record" data-record="3">
+          샘플 기록 사용
+        </button>
+      </div>
+    </section>
+
+
+    <section id="unlock-page" class="page" data-owner="이지영">
+      <div class="page-bg bg-unlock"></div>
+
+      <div class="screen-layout standard-layout">
+        <p class="ornament-label">장소 이야기 해금</p>
+        <h1 class="mini-title">세 개의 조각이 모여<br>목포역 이야기가 열렸습니다</h1>
+
+        <div class="unlock-card">
+          <span>✨</span>
+          <h2>목포역 장소 이야기 해금</h2>
+          <p>
+            목포의 첫 관문, 원도심으로 향하는 길,
+            사람들이 오가던 역전의 기억이 하나로 연결되었습니다.
+          </p>
+        </div>
+
+        <div class="giroksae-note">
+          <img src="assets/images/giroksae-reward.png" alt="조각 획득을 축하하는 기록새">
+          <p id="unlock-giroksae-line">좋아. 이제 조각들이 이어진 목포역의 전체 이야기를 볼 차례야.</p>
+        </div>
+
+        <button type="button" class="big-button" data-action="unlock-place-story">
+          장소 이야기 웹툰 보기 <span>→</span>
+        </button>
+      </div>
+    </section>
+
+
+    <section id="place-story-comic-page" class="page comic-page" data-owner="최유석/이지영">
+      <div class="page-bg bg-record"></div>
+
+      <div class="screen-layout standard-layout">
+        <p class="ornament-label">장소 이야기 웹툰</p>
+        <h1 id="place-story-title" class="mini-title">목포역의 세 조각이<br>하나의 이야기로 이어졌습니다</h1>
+
+        <div class="place-comic-grid">
+          <article id="place-panel-1">목포의 첫 관문</article>
+          <article id="place-panel-2">원도심으로 향하는 길</article>
+          <article id="place-panel-3">사람들이 오가던 역전</article>
+          <article id="place-panel-4">목포역 이야기 완성</article>
+        </div>
+
+        <div class="giroksae-note">
+          <img src="assets/images/giroksae-reward.png" alt="완성된 이야기를 보여주는 기록새">
+          <p id="place-story-line">세 조각을 모두 모았네. 이제 목포역이 단순한 역이 아니라 도시의 기억으로 보일 거야.</p>
+        </div>
+
+        <div id="place-story-zh-summary" class="china-summary hidden"></div>
+
+        <button type="button" class="big-button" data-next="quiz-page">
+          장소 퀴즈 풀기 <span>→</span>
+        </button>
+      </div>
+    </section>
+
+
+    <section id="quiz-page" class="page" data-owner="이지영/최유석">
+      <div class="page-bg bg-record"></div>
+
+      <div class="screen-layout standard-layout">
+        <p class="ornament-label">장소 이해 퀴즈</p>
+        <h1 class="mini-title">목포역의 세 조각은<br>무엇을 보여줬을까요?</h1>
+
+        <div class="content-card">
+          <p class="tag">Question</p>
+          <h2>목포역 이야기가 완성된 이유는?</h2>
+          <p class="description">
+            조각 3개가 연결되며 목포역은 어떤 장소로 해석되었을까요?
+          </p>
+
+          <div class="quiz-list">
+            <button type="button" data-quiz-option="correct">
+              과거와 현재, 이동과 생활이 이어지는 목포의 첫 관문
+            </button>
+            <button type="button" data-quiz-option="wrong">
+              단순히 기차를 타고 내리는 교통시설
+            </button>
+            <button type="button" data-quiz-option="wrong">
+              주변 장소와 연결되지 않는 독립된 건물
+            </button>
+            <button type="button" data-quiz-option="wrong">
+              사진 기록만 남기면 되는 관광 인증 지점
+            </button>
+          </div>
+
+          <!-- [위치 교정] 스크립트가 텍스트를 주입하고 hidden을 해제할 때 정상 노출되도록 핏을 맞춤 -->
+          <p id="quiz-feedback" class="quiz-feedback hidden" aria-live="polite"></p>
+        </div>
+      </div>
+    </section>
+
+
+    <section id="quiz-result-page" class="page" data-owner="이지영">
+      <div class="page-bg bg-unlock"></div>
+
+      <div class="screen-layout standard-layout">
+        <p class="ornament-label">퀴즈 결과</p>
+        <h1 class="mini-title">정답입니다</h1>
+
+        <div class="unlock-card">
+          <span>📜</span>
+          <h2>목포역 장소 이해 완료</h2>
+          <p>
+            목포역이 목포의 첫 관문이자,
+            원도심과 생활의 기억으로 이어지는 장소임을 이해했습니다.
+          </p>
+        </div>
+
+        <div class="giroksae-note">
+          <img src="assets/images/giroksae-record.png" alt="여정 기록을 정리하는 기록새">
+          <p>이제 네가 남긴 현재 기록들을 하나의 여정필름으로 엮어볼게.</p>
+        </div>
+
+        <button type="button" class="big-button" data-next="journey-film-page">
+          여정필름 보기 <span>→</span>
+        </button>
+      </div>
+    </section>
+
+
+    <section id="journey-film-page" class="page" data-owner="이지영/최유석">
+      <div class="page-bg bg-record"></div>
+
+      <div class="screen-layout standard-layout">
+        <p class="ornament-label">여정필름</p>
+        <h1 id="journey-film-title" class="mini-title">당신의 목포역 기록이<br>하나로 이어졌습니다</h1>
+
+        <div id="journey-film-container" class="film-strip journey-player-host" aria-live="polite">
+          <article id="film-clip-1">기록 1</article>
+          <article id="film-clip-2">기록 2</article>
+          <article id="film-clip-3">기록 3</article>
+        </div>
+        <div id="journey-film-result" class="journey-film-result hidden" aria-live="polite"></div>
+
+        <p id="journey-film-description" class="description">
+          사용자가 각 조각 지점에서 남긴 현재 기록이 하나의 여정필름으로 엮였습니다.
+        </p>
+
+        <div id="journey-progress" class="journey-progress hidden" role="status">
+          <span class="progress-spinner"></span>
+          <p>세 개의 기록을 여정필름으로 합성하고 있습니다.</p>
+        </div>
+
+        <button type="button" class="sub-button" data-action="synthesize-journey-film">
+          여정필름 파일 만들기
+        </button>
+        <button type="button" id="journey-download-btn" class="sub-button" data-action="download-journey-film" disabled>
+          여정필름 다운로드
+        </button>
+        <button type="button" class="text-button" data-action="share-instagram">
+          다운로드 후 인스타그램 열기
+        </button>
+
+        <button type="button" class="big-button" data-next="next-place-page">
+          다음 장소 추천 받기 <span>→</span>
+        </button>
+      </div>
+    </section>
+
+
+    <section id="next-place-page" class="page" data-owner="최유석/이지영">
+      <div class="page-bg bg-record"></div>
+
+      <div class="screen-layout standard-layout">
+        <p class="ornament-label">다음 장소 추천</p>
+        <h1 class="mini-title">목포역 이야기 다음에<br>이어볼 장소를 선택해주세요</h1>
+        <p class="setup-desc recommendation-intro">
+          후보를 누르면 추천 근거와 간략 약도를 확인할 수 있습니다.
+        </p>
+
+        <div id="next-place-candidate-list" class="recommendation-list" aria-label="다음 기록 장소 후보">
+          <button type="button" class="recommendation-option" data-action="open-recommendation-detail"
+            data-recommendation-id="mokpo-history-1">
+            <strong>목포근대역사관 1관</strong>
+            <span>근대건축 · 원도심 역사 · 도보 이동</span>
+            <small>목포역에서 시작한 여정을 근대도시 목포의 역사 공간으로 이어갈 수 있습니다.</small>
+          </button>
+          <button type="button" class="recommendation-option" data-action="open-recommendation-detail"
+            data-recommendation-id="mokpo-open-port-1897">
+            <strong>1897 개항문화거리</strong>
+            <span>개항 흔적 · 거리 탐색 · 사진 기록</span>
+            <small>목포역에서 원도심으로 이동하며 개항 이후 형성된 거리의 분위기를 체험할 수 있습니다.</small>
+          </button>
+          <button type="button" class="recommendation-option" data-action="open-recommendation-detail"
+            data-recommendation-id="mokpojin-history-park">
+            <strong>목포진 역사공원</strong>
+            <span>항구 방어 · 역사 흔적 · 다음 서사</span>
+            <small>목포가 항구 도시로 기능해온 더 오래된 시간의 흔적을 이어서 확인할 수 있습니다.</small>
+          </button>
+        </div>
+
+        <p id="next-place-list-status" class="small-guide" aria-live="polite">
+          세 후보 중 한 곳을 눌러 자세히 확인해주세요.
+        </p>
+      </div>
+    </section>
+
+
+    <section id="next-place-detail-page" class="page" data-owner="최유석/이지영">
+      <div class="page-bg bg-record"></div>
+
+      <div class="screen-layout standard-layout">
+        <p class="ornament-label">추천 장소 확인</p>
+        <h1 id="next-place-name" class="mini-title">목포근대역사관 1관</h1>
+
+        <div class="recommend-card recommendation-detail-card">
+          <div id="next-place-route-info" class="route-info">
+            <span id="next-place-distance">772m</span>
+            <span id="next-place-time">도보 12분</span>
+          </div>
+
+          <div id="next-place-tags" class="tag-chip-row">
+            <span>근대문화</span>
+            <span>원도심</span>
+            <span>개항</span>
+          </div>
+
+          <div class="mini-map" role="img" aria-label="목포역에서 선택한 추천 장소로 이어지는 간략 약도">
+            <div class="map-node start">목포역</div>
+            <div class="map-path"></div>
+            <div id="next-place-map-destination" class="map-node end">근대역사관 1관</div>
+          </div>
+
+          <p id="next-place-reason" class="description">
+            목포역에서 원도심으로 이동하며 목포의 근대 도시 이야기를 이어서 살펴볼 수 있는 장소입니다.
+          </p>
+
+          <div id="next-place-zh-summary" class="china-summary hidden"></div>
+        </div>
+
+        <div class="detail-link-row">
+          <button type="button" id="next-place-map-btn" class="sub-button" data-action="open-next-place-map">
+            지도 길찾기
+          </button>
+          <button type="button" id="next-place-detail-btn" class="sub-button" data-action="open-next-place-detail">
+            공식 정보
+          </button>
+        </div>
+
+        <button type="button" class="big-button" data-action="reserve-next-place">
+          이 장소로 확정하기 <span>→</span>
+        </button>
+        <button type="button" class="text-button" data-next="next-place-page">
+          다른 후보 다시 보기
+        </button>
+      </div>
+    </section>
+
+
+    <section id="reservation-page" class="page" data-owner="최유석/이지영">
+      <div class="page-bg bg-unlock"></div>
+
+      <div class="screen-layout standard-layout">
+        <p class="ornament-label">다음 기록 예약</p>
+        <h1 class="mini-title">다음 장소가<br>예약되었습니다</h1>
+
+        <div class="unlock-card">
+          <span>🧭</span>
+          <h2 id="reserved-place-title">목포근대역사관 1관 기록 예약</h2>
+          <p>
+            예약한 장소로 이동한 뒤 다시 첫 기록을 남기면,
+            목포역에서 시작한 여정이 다음 장소의 이야기로 이어집니다.
+          </p>
+        </div>
+
+        <div class="giroksae-note">
+          <img src="assets/images/giroksae-mission.png" alt="다음 장소를 안내하는 기록새">
+          <p>좋아. 다음 기록은 그곳에서 이어가자.</p>
+        </div>
+
+        <button type="button" class="sub-button" data-action="reset-demo">
+          처음으로 돌아가기
+        </button>
+      </div>
+    </section>
+
+  </main>
+
+  <div id="toast" class="toast hidden"></div>
+
+  <script src="modules/i18n.js"></script>
+  <script src="modules/dohun-ai.js"></script>
+  <script src="script.js"></script>
+  <script src="modules/journey-film-0715.js"></script>
+  <script src="modules/yuseok-recommendation-0716.js"></script>
+  <script src="addons/dohun-model-bridge-0725.js"></script>
+  <script src="addons/integrated-ui-0725.js?v=20260808-giroksae-timetrace-final-v1"></script>
+  <script src="addons/fixed-webtoon-runtime-0807.js?v=20260808-giroksae-timetrace-final-v1"></script>
+  <script src="addons/wireframe-flow-0807.js?v=20260808-giroksae-timetrace-final-v1"></script>
+  <script type="module" src="addons/timetrace-host-0807.js?v=20260808-giroksae-timetrace-final-v1"></script>
+</body>
+
+</html>

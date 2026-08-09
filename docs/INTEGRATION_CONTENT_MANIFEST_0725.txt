@@ -1,0 +1,34 @@
+History Pieces 통합 내용 포함 목록
+
+[생성형 웹툰]
+addons/webtoon-runtime-0725.js
+addons/data/approved-webtoon-script.json
+addons/data/source-facts-user-approved.json
+addons/data/fallback-ko-user-approved.json
+addons/webtoon-reference/*
+
+[UI 통합]
+addons/integrated-ui-0725.css
+addons/integrated-ui-0725.js
+
+[PTH 모델 연결]
+addons/dohun-model-bridge-0725.js
+addons/model-contract.json
+model_runtime.py
+run_integrated.py
+addons/models/first_piece_detection.pth
+addons/models/second_piece_detection.pth
+addons/models/third_piece_detection.pth
+
+[실행]
+install_integrated.bat
+start_integrated.bat
+FIRST_RUN.bat
+COPY_MODELS_HERE.bat
+requirements_integrated.txt
+
+[검수]
+verify_integrated.py
+docs/UI_FULL_AUDIT_0725.md
+docs/ui-audit/*
+docs/final-health-recheck-0725.json

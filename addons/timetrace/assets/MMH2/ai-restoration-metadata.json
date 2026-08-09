@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "placeId": "MMH2",
+  "historicalYear": 1932,
+  "displayLabel": "AI 복원 장면",
+  "classification": "역사 기록을 조건으로 생성한 시연용 복원 장면이며 사실이 완전히 확인된 역사 원본 사진이 아님",
+  "runtimeGeneration": false,
+  "approval": {
+    "status": "approved_for_demo",
+    "scope": "TimeTrace 독립 시연",
+    "humanReviewer": "not_recorded",
+    "historicalFactStatus": "illustrative"
+  },
+  "inputs": {
+    "currentImage": { "path": "data/processed/v2/extracted/2026-07-31/MMH2/MHH2_2/MHH2_2/20260731_121430.jpg", "sha256": "90625c695f9a39c1560109d39f97fbb0e9600a5a8eb7a37e5bb9b4e14fdb8339" },
+    "historicalSourceImage": { "path": "data/historical_progressed/MMH2_1932_p041_no078_original.jpg", "sha256": "94444fa4b9450c33435f7ace6144351be6f703478456401e1ef47ca02e39a01e" },
+    "alignedHistoricalRgba": { "path": "evaluation/mmh2_historical_overlay_activation_2026-08-02/aligned_historical_rgba.png", "sha256": "c9932a69b84a50af1c1ba8d6936fef33e0742d95ac2b3d95f7f0b759c5f90b4b" },
+    "historicalAlphaMask": { "path": "evaluation/mmh2_historical_overlay_activation_2026-08-02/historical_alpha_mask.png", "sha256": "fc5feff0b43cf7865409c396011346fea352d001918ebb7140739a00c75bd40c" }
+  },
+  "generation": {
+    "tool": "OpenAI built-in image generation",
+    "prompt": "Preserve the approved aligned historical building exactly; replace modern cars, signs, wires, sky and road with a plausible 1932 Mokpo streetscape conditioned on the historical source, then harmonize seams, tone, grain and contrast without text or invented building redesign.",
+    "buildingLock": "approved aligned historical RGBA composited as the final geometry-preserving foreground",
+    "registration": { "method": "SIFT feature match and RANSAC homography", "goodMatches": 1106, "inliers": 948, "canvasCoveragePercent": 99.2908 }
+  },
+  "output": {
+    "path": "evaluation/mmh2_ai_restoration_review_2026-08-02/ai_restored_scene_v1.jpg",
+    "sha256": "050ad961fc59bb1bee5518f3c0e8f3d5389bc1e1d03b75e1fa65bec9b0746a1f",
+    "width": 4128,
+    "height": 3096
+  }
+}

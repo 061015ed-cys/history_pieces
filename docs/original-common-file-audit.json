@@ -1,0 +1,74 @@
+[
+  {
+    "file": "index.html",
+    "expectedSha256": "d4669492cfd396a0865f2f089c3758b24d22a51fd086c6ce57ef4eb7ae90d76a",
+    "integratedSha256": "d4669492cfd396a0865f2f089c3758b24d22a51fd086c6ce57ef4eb7ae90d76a",
+    "unchanged": true
+  },
+  {
+    "file": "style.css",
+    "expectedSha256": "be12e6b5e27e4a1e3a680fc5712171758c87150a6686f84c81a4e3b365ed65fe",
+    "integratedSha256": "be12e6b5e27e4a1e3a680fc5712171758c87150a6686f84c81a4e3b365ed65fe",
+    "unchanged": true
+  },
+  {
+    "file": "script.js",
+    "expectedSha256": "d5ae3eea01f2f528fcfd7b7441191bb11f215dc1d4a98db0071fc452c03d015f",
+    "integratedSha256": "d5ae3eea01f2f528fcfd7b7441191bb11f215dc1d4a98db0071fc452c03d015f",
+    "unchanged": true
+  },
+  {
+    "file": "modules/dohun-ai.js",
+    "expectedSha256": "a318e5c0a89c4539b7687aa4d2b9d95e39fb64a11d1713a4b7e514383f579d00",
+    "integratedSha256": "a318e5c0a89c4539b7687aa4d2b9d95e39fb64a11d1713a4b7e514383f579d00",
+    "unchanged": true
+  },
+  {
+    "file": "modules/i18n.js",
+    "expectedSha256": "64454803b015a350a1a86c51927602d01e5ddbf3de7d868929d25c47dc2eace6",
+    "integratedSha256": "64454803b015a350a1a86c51927602d01e5ddbf3de7d868929d25c47dc2eace6",
+    "unchanged": true
+  },
+  {
+    "file": "modules/journey-film-0715.js",
+    "expectedSha256": "6b9089d846071abb5830fcd3dd8740ebf1e2ca9f451662c227892373fba1ed87",
+    "integratedSha256": "6b9089d846071abb5830fcd3dd8740ebf1e2ca9f451662c227892373fba1ed87",
+    "unchanged": true
+  },
+  {
+    "file": "modules/yuseok-ai-0716.js",
+    "expectedSha256": "b531376328f23961cfc6a0e073f1af31b2b7e6d33ffc44de50fe0dd963ef4fca",
+    "integratedSha256": "b531376328f23961cfc6a0e073f1af31b2b7e6d33ffc44de50fe0dd963ef4fca",
+    "unchanged": true
+  },
+  {
+    "file": "modules/yuseok-recommendation-0716.js",
+    "expectedSha256": "45dcf1a64ff2eb64ccd6e8379b23f60bbf29584b65e284cd343bed3bb0a51620",
+    "integratedSha256": "45dcf1a64ff2eb64ccd6e8379b23f60bbf29584b65e284cd343bed3bb0a51620",
+    "unchanged": true
+  },
+  {
+    "file": "modules/yuseok-story-renderer-0716.js",
+    "expectedSha256": "8bf8d666fe519cb615a82e2c2ee0a92421d374b89f53afdbbe058fa9aa8ffde6",
+    "integratedSha256": "8bf8d666fe519cb615a82e2c2ee0a92421d374b89f53afdbbe058fa9aa8ffde6",
+    "unchanged": true
+  },
+  {
+    "file": "assets/data/fallback-cn.json",
+    "expectedSha256": "c10c18c3196d98956bbdfa75fc7d4f2fad1b3f3518edc91becc091e1cc31b548",
+    "integratedSha256": "c10c18c3196d98956bbdfa75fc7d4f2fad1b3f3518edc91becc091e1cc31b548",
+    "unchanged": true
+  },
+  {
+    "file": "assets/data/fallback-ko.json",
+    "expectedSha256": "7fa49ced71707dcffa815833cc570bf7f58fbb1a6ffb2dc7e44d58bdda164932",
+    "integratedSha256": "7fa49ced71707dcffa815833cc570bf7f58fbb1a6ffb2dc7e44d58bdda164932",
+    "unchanged": true
+  },
+  {
+    "file": "assets/data/source-facts.json",
+    "expectedSha256": "6a94ae17788a5b68e9ad81b1180a5d825b55f045be5da7eab55f7b51687faef7",
+    "integratedSha256": "6a94ae17788a5b68e9ad81b1180a5d825b55f045be5da7eab55f7b51687faef7",
+    "unchanged": true
+  }
+]

@@ -1,0 +1,41 @@
+{
+  "architecture": "torchvision.models.resnet50",
+  "classifier": "Sequential(Dropout(0.5), Linear(2048, 2))",
+  "input": {
+    "resize": 256,
+    "centerCrop": 224,
+    "normalizeMean": [
+      0.485,
+      0.456,
+      0.406
+    ],
+    "normalizeStd": [
+      0.229,
+      0.224,
+      0.225
+    ]
+  },
+  "positiveClassIndex": 1,
+  "pieces": {
+    "1": {
+      "model": "addons/models/first_piece_detection.pth",
+      "targetLabel": "mokpo_station",
+      "failLabel": "not_mokpo_station",
+      "threshold": 0.75
+    },
+    "2": {
+      "model": "addons/models/second_piece_detection.pth",
+      "targetLabel": "mokpo_music_hall",
+      "failLabel": "not_mokpo_music_hall",
+      "threshold": 0.7
+    },
+    "3": {
+      "model": "addons/models/third_piece_detection.pth",
+      "targetLabel": "mokpo_modern_history_2",
+      "failLabel": "not_mokpo_modern_history_2",
+      "threshold": 0.7
+    }
+  },
+  "classOrderStatus": "PTH state_dict does not contain class names. positiveClassIndex must be confirmed with the training class order or real validation images.",
+  "positiveClassIndexConfiguredForIntegration": 1
+}

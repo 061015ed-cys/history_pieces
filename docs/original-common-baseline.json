@@ -1,0 +1,50 @@
+[
+  {
+    "file": "index.html",
+    "sha256": "d4669492cfd396a0865f2f089c3758b24d22a51fd086c6ce57ef4eb7ae90d76a"
+  },
+  {
+    "file": "style.css",
+    "sha256": "be12e6b5e27e4a1e3a680fc5712171758c87150a6686f84c81a4e3b365ed65fe"
+  },
+  {
+    "file": "script.js",
+    "sha256": "d5ae3eea01f2f528fcfd7b7441191bb11f215dc1d4a98db0071fc452c03d015f"
+  },
+  {
+    "file": "modules/dohun-ai.js",
+    "sha256": "a318e5c0a89c4539b7687aa4d2b9d95e39fb64a11d1713a4b7e514383f579d00"
+  },
+  {
+    "file": "modules/i18n.js",
+    "sha256": "64454803b015a350a1a86c51927602d01e5ddbf3de7d868929d25c47dc2eace6"
+  },
+  {
+    "file": "modules/journey-film-0715.js",
+    "sha256": "6b9089d846071abb5830fcd3dd8740ebf1e2ca9f451662c227892373fba1ed87"
+  },
+  {
+    "file": "modules/yuseok-ai-0716.js",
+    "sha256": "b531376328f23961cfc6a0e073f1af31b2b7e6d33ffc44de50fe0dd963ef4fca"
+  },
+  {
+    "file": "modules/yuseok-recommendation-0716.js",
+    "sha256": "45dcf1a64ff2eb64ccd6e8379b23f60bbf29584b65e284cd343bed3bb0a51620"
+  },
+  {
+    "file": "modules/yuseok-story-renderer-0716.js",
+    "sha256": "8bf8d666fe519cb615a82e2c2ee0a92421d374b89f53afdbbe058fa9aa8ffde6"
+  },
+  {
+    "file": "assets/data/fallback-cn.json",
+    "sha256": "c10c18c3196d98956bbdfa75fc7d4f2fad1b3f3518edc91becc091e1cc31b548"
+  },
+  {
+    "file": "assets/data/fallback-ko.json",
+    "sha256": "7fa49ced71707dcffa815833cc570bf7f58fbb1a6ffb2dc7e44d58bdda164932"
+  },
+  {
+    "file": "assets/data/source-facts.json",
+    "sha256": "6a94ae17788a5b68e9ad81b1180a5d825b55f045be5da7eab55f7b51687faef7"
+  }
+]

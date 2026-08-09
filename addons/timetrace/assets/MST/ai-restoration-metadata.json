@@ -1,0 +1,92 @@
+{
+  "schemaVersion": 1,
+  "status": "approved_for_demo_composition",
+  "placeId": "MST",
+  "alignmentMode": "composition",
+  "comparisonMode": "full-frame-crossfade",
+  "precisionClaim": "not a homography success",
+  "displayLabel": "AI 복원 장면",
+  "historicalFactStatus": "illustrative",
+  "generatedAt": "2026-08-04T23:43:27+09:00",
+  "sourceSelection": {
+    "historicalPage": {
+      "path": "data/historical/MST/MST_1930s_mokpo_station_historical_original.jpg.jpg",
+      "sha256": "217e5f676c3bdfe1ff75a9eb542971c9d9a288e202f47cf93bdc363cac591e40",
+      "role": "traceable source page containing two photographs"
+    },
+    "historicalCrop": {
+      "path": "data/historical_progressed/MST_1930s_mokpo_station_historical_original.jpg",
+      "sha256": "ab607025b57f206635cf6a509bfbad727733e5473f9697ae57d0fc4a7a74549d",
+      "role": "user-progressed source used to derive the station-only runtime crop"
+    },
+    "historicalRuntimeCrop": {
+      "path": "evaluation/mst_composition_final_2026-08-04/mst_1932_station_historical_crop_v2.jpg",
+      "sha256": "77935a1702707ecfc46fde0f82f8a4f4ba32d2728c6491f2f5b2dfabd6496a7e",
+      "cropFromProgressedPixels": [
+        0,
+        430,
+        1195,
+        941
+      ],
+      "role": "station-only crop used by every runtime historical-original view"
+    },
+    "excludedUpperPhotograph": "목포신보사/상가 사진은 목포역 복원 근거에서 제외"
+  },
+  "inputs": {
+    "current": {
+      "path": "data/processed/v2/extracted/first_capture/MST/목포역/목포역/20260730_173849.jpg",
+      "sha256": "61bdfb248411866573dfaba961e30f44b48991c0c48a046159beb2eb3a5eb05e"
+    },
+    "historicalCrop": {
+      "path": "data/historical_progressed/MST_1930s_mokpo_station_historical_original.jpg",
+      "sha256": "ab607025b57f206635cf6a509bfbad727733e5473f9697ae57d0fc4a7a74549d"
+    },
+    "generatedCandidate": {
+      "path": "evaluation/mst_composition_final_2026-08-04/imagegen_candidate_station_v5.png",
+      "sha256": "1b0771ffe4edd1cd39c1de4e63ca5032eff10129d215cab05f32cde2166d7e05"
+    }
+  },
+  "generation": {
+    "tool": "OpenAI built-in image generation",
+    "runtimeGeneration": false,
+    "prompt": "Use Image 1 as the immutable 4:3 current-camera composition and use only the lower Mokpo Station photograph in Image 2 as historical architecture evidence. Reconstruct a plausible 1932 Mokpo Station scene while locking the current horizon, station center, viewing distance, forecourt axis and left/right margins. Remove modern vehicles, signs, high-rises, road markings, bollards and modern station structures. Do not use the unrelated upper shop/news-office photograph, invent readable text, or create collage seams. Render one coherent archival black-and-white full-frame scene.",
+    "constraints": [
+      "현재 사진의 4:3 카메라 축·지평선·역 중심·역전광장 접근축 유지",
+      "아래쪽 역사 목포역 사진만 건축 근거로 사용",
+      "현대 차량·고층 건물·표지·도로 시설 제거",
+      "사용자 화면에서 AI 복원 장면으로 명시"
+    ]
+  },
+  "output": {
+    "path": "evaluation/mst_composition_final_2026-08-04/ai_restored_scene_mst_station_v5.jpg",
+    "sha256": "dd53272d27c9b9995342641ecbde2468eb3edaac78be14b5b7e0520f9a870987",
+    "width": 4128,
+    "height": 3096
+  },
+  "outputs": {
+    "historicalRuntimeCrop": {
+      "path": "evaluation/mst_composition_final_2026-08-04/mst_1932_station_historical_crop_v2.jpg",
+      "sha256": "77935a1702707ecfc46fde0f82f8a4f4ba32d2728c6491f2f5b2dfabd6496a7e"
+    },
+    "alignedRgba": {
+      "path": "evaluation/mst_composition_final_2026-08-04/composition_restored_rgba_mst_station_v5.png",
+      "sha256": "a010d489803a5f3c487f192434776993b8bf7cc0e93288cb9103d2e45c8cf7cd"
+    },
+    "fullFrameMask": {
+      "path": "evaluation/mst_composition_final_2026-08-04/composition_full_frame_mask_mst_station_v5.png",
+      "sha256": "a9ddb3673e0e25c39a5c28ca28dacbc90c96408b21b588bb439d1e013b8fe170"
+    },
+    "preview": {
+      "path": "evaluation/mst_composition_final_2026-08-04/composition_preview_mst_station_v5.jpg",
+      "sha256": "0bf1582aa2b97172fe0145ce392ac0d3d7a21fd526012c1eb3c95fd6cc5240a7"
+    },
+    "reviewContactSheet": {
+      "path": "evaluation/mst_composition_final_2026-08-04/mst_station_v5_review_contact_sheet.jpg",
+      "sha256": "1cc10d4aac3652b3e3ce05c5bcb5c9b03f003619b5330da83d2044c7c7a99774"
+    }
+  },
+  "visualReview": {
+    "status": "approved_for_demo_composition",
+    "notes": "아래쪽 목포역 형상과 접근축을 사용하며, 현재 사진의 역사 위치와 넓은 전경 비율에 맞춘 full-frame 복원 후보를 선택함."
+  }
+}

@@ -1,0 +1,508 @@
+{
+  "schemaVersion": 1,
+  "generatedFrom": "repository video metadata inspection on 2026-08-02",
+  "browserCompatibilityRule": "MP4 container with H.264 video is supported by current Chrome, Edge, Safari, and Firefox builds",
+  "places": {
+    "MST": {
+      "label": "목포역",
+      "approval": {
+        "status": "approved_for_demo_composition",
+        "available": true,
+        "overlayReady": true,
+        "reason": "COMPOSITION_MODE_EXISTING_MEDIA"
+      },
+      "guidanceProfile": {
+        "code": "MOVE_BACK",
+        "direction": "back",
+        "directionIcon": "back",
+        "primaryInstruction": "역전 광장이 넓게 보이도록 조금 뒤로 이동해 주세요",
+        "secondaryInstruction": "조금만 더 멀어지면 과거 기록과 비교할 수 있어요",
+        "shortLabel": "한 걸음 뒤로",
+        "successInstruction": "구도 고정 완료",
+        "playbackRate": 1.0,
+        "segmentStartSeconds": 0.0,
+        "segmentEndSeconds": 6.6,
+        "holdBeforeReadyMs": 700,
+        "demoAssetStatus": "reviewed_success",
+        "assetReason": "173849 승인 사진에서 만든 6.7초 사전 녹화 composition 안내; 5.8초 zoom-out 후 0.9초 정지",
+        "directionLabel": "한 걸음 뒤로",
+        "directionGlyph": "↓",
+        "stageCopy": [
+          [
+            "역전과 광장의 전체 구도를 분석하고 있어요",
+            "지평선과 좌우 여백을 함께 확인하고 있습니다",
+            28
+          ],
+          [
+            "역전광장이 넓게 보이도록 조금 뒤로 이동해주세요",
+            "조금만 더 멀어지면 과거 기록과 비교할 수 있어요",
+            56
+          ],
+          [
+            "좋아요. 역과 광장의 전체 형태가 보이기 시작했어요",
+            "이 구도를 잠시 유지해 주세요",
+            82
+          ]
+        ],
+        "arOverlay": {
+          "viewBox": [
+            0,
+            0,
+            1080,
+            1920
+          ],
+          "targetPath": "M70 780 L330 675 L860 690 L1030 820 L1010 1370 L75 1370 Z",
+          "detectedPaths": [
+            "M25 730 L285 625 L900 640 L1080 785 L1060 1430 L25 1430 Z",
+            "M50 760 L310 650 L880 665 L1050 805 L1035 1400 L50 1400 Z",
+            "M70 780 L330 675 L860 690 L1030 820 L1010 1370 L75 1370 Z"
+          ],
+          "trackingPoints": [
+            [
+              70,
+              780
+            ],
+            [
+              330,
+              675
+            ],
+            [
+              860,
+              690
+            ],
+            [
+              1030,
+              820
+            ],
+            [
+              75,
+              1370
+            ],
+            [
+              1010,
+              1370
+            ]
+          ]
+        },
+        "objectFit": "contain",
+        "objectPosition": "50% 0%",
+        "freezeFrameSeconds": 6.6,
+        "loop": false,
+        "successFrameDescription": "173849 승인 현재 장면과 동일한 구도로 끝나는 사전 녹화 composition 안내 프레임"
+      },
+      "contract": {
+        "placeId": "MST",
+        "currentPlaceName": "목포역",
+        "currentDisplayName": "목포역",
+        "historicalPlaceName": "목포역",
+        "historicalDisplayName": "목포역",
+        "historicalYear": 1932,
+        "pieceNumber": 1,
+        "totalPieces": 3,
+        "sequenceIndex": 1,
+        "sequenceTotal": 3,
+        "completionSequenceLabel": "첫 번째 기록 열쇠 획득",
+        "currentImage": "./addons/timetrace/assets/MST/current.jpg",
+        "historicalSourceImage": "./addons/timetrace/assets/MST/historical-source.jpg",
+        "alignedHistoricalRgba": "./addons/timetrace/assets/MST/aligned-historical-rgba.png",
+        "aiRestoredScene": "./addons/timetrace/assets/MST/ai-restored-scene.jpg",
+        "aiRestorationMetadata": "./addons/timetrace/assets/MST/ai-restoration-metadata.json",
+        "historicalAlphaMask": "./addons/timetrace/assets/MST/historical-alpha-mask.png",
+        "staticOverlayPreview": "./addons/timetrace/assets/MST/overlay-preview.jpg",
+        "overlayMetadata": "./addons/timetrace/assets/MST/overlay-metadata.json",
+        "alignmentMode": "composition",
+        "comparisonMode": "full-frame-crossfade",
+        "displayCoordinates": {
+          "width": 4128,
+          "height": 3096,
+          "crop": null,
+          "objectFit": "contain",
+          "objectPosition": "50% 50%"
+        },
+        "captureDatePolicy": "host_captureDate_or_Asia_Seoul_now",
+        "historicalSourceStatus": "verified_station_only_crop",
+        "aiRestorationStatus": "approved_for_demo_composition"
+      }
+    },
+    "HNB": {
+      "label": "구 호남은행 목포지점",
+      "approval": {
+        "status": "approved_for_demo_composition",
+        "available": true,
+        "overlayReady": true,
+        "reason": "COMPOSITION_FALLBACK_AFTER_PRECISION_REVIEW"
+      },
+      "guidanceProfile": {
+        "code": "MOVE_BACK",
+        "direction": "back",
+        "directionIcon": "back",
+        "primaryInstruction": "건물 전체가 안내선 안에 들어오도록 조금 뒤로 이동해 주세요",
+        "secondaryInstruction": "건물 모서리가 중앙 기준선에 가까워지고 있어요",
+        "shortLabel": "한 걸음 뒤로",
+        "successInstruction": "구도 고정 완료",
+        "playbackRate": 1.3,
+        "segmentStartSeconds": 0.38,
+        "segmentEndSeconds": 7.62,
+        "holdBeforeReadyMs": 700,
+        "demoAssetStatus": "reviewed_success",
+        "directionLabel": "한 걸음 뒤로",
+        "stageCopy": [
+          [
+            "건물 전체의 구도를 분석하고 있어요",
+            "지붕과 양쪽 외곽을 확인하고 있습니다",
+            28
+          ],
+          [
+            "건물 전체가 안내선 안에 들어오도록 조금 뒤로 이동해주세요.",
+            "건물 모서리가 중앙 기준선에 가까워지고 있어요",
+            54
+          ],
+          [
+            "좋아요. 지붕과 양쪽 외곽이 모두 들어왔어요.",
+            "이 구도를 잠시 유지해 주세요",
+            82
+          ]
+        ],
+        "arOverlay": {
+          "viewBox": [
+            0,
+            0,
+            1080,
+            1920
+          ],
+          "targetPath": "M35 510 L520 300 L1045 535 L1055 1510 L35 1510 Z",
+          "detectedPaths": [
+            "M0 410 L500 230 L1080 480 L1080 1580 L0 1580 Z",
+            "M15 465 L510 270 L1065 515 L1070 1545 L15 1545 Z",
+            "M35 510 L520 300 L1045 535 L1055 1510 L35 1510 Z"
+          ],
+          "trackingPoints": [
+            [
+              35,
+              510
+            ],
+            [
+              520,
+              300
+            ],
+            [
+              1045,
+              535
+            ],
+            [
+              35,
+              1510
+            ],
+            [
+              1055,
+              1510
+            ]
+          ]
+        },
+        "assetReason": "174915의 0.38~7.62초 구간은 건물 크기가 줄고 종료 프레임이 174906 구도와 연결됨",
+        "directionGlyph": "↓",
+        "objectFit": "contain",
+        "objectPosition": "50% 0%",
+        "freezeFrameSeconds": 7.62,
+        "loop": false,
+        "successFrameDescription": "지붕과 중앙 모서리, 양쪽 파사드가 보이며 174906 현재 장면으로 이어지는 7.62초 프레임"
+      },
+      "contract": {
+        "placeId": "HNB",
+        "currentPlaceName": "목포 대중음악의 전당",
+        "currentDisplayName": "목포 대중음악의 전당",
+        "historicalPlaceName": "호남은행 목포지점",
+        "historicalDisplayName": "호남은행 목포지점",
+        "historicalYear": 1932,
+        "pieceNumber": 2,
+        "totalPieces": 3,
+        "sequenceIndex": 2,
+        "sequenceTotal": 3,
+        "completionSequenceLabel": "두 번째 기록 열쇠 획득",
+        "currentImage": "./addons/timetrace/assets/HNB/current.jpg",
+        "historicalSourceImage": "./addons/timetrace/assets/HNB/historical-source.jpg",
+        "alignedHistoricalRgba": "./addons/timetrace/assets/HNB/aligned-historical-rgba.png",
+        "aiRestoredScene": "./addons/timetrace/assets/HNB/ai-restored-scene.jpg",
+        "aiRestorationMetadata": "./addons/timetrace/assets/HNB/ai-restoration-metadata.json",
+        "aiRestorationStatus": "approved_for_demo_composition",
+        "historicalAlphaMask": "./addons/timetrace/assets/HNB/historical-alpha-mask.png",
+        "aiBackgroundGenerationMask": "./addons/timetrace/assets/HNB/ai-background-generation-mask.png",
+        "staticOverlayPreview": "./addons/timetrace/assets/HNB/overlay-preview.jpg",
+        "overlayMetadata": "./addons/timetrace/assets/HNB/overlay-metadata.json",
+        "alignmentAssetStatus": "precise_failed_composition_approved",
+        "displayCoordinates": {
+          "width": 3096,
+          "height": 4128,
+          "crop": null,
+          "objectFit": "contain",
+          "objectPosition": "50% 50%"
+        },
+        "historicalBuildingLockMask": "./addons/timetrace/assets/HNB/historical-building-lock-mask.png",
+        "preciseAlignmentMetadata": "evaluation/hnb_alignment_strategy_review_2026-08-04/alignment_strategy_review_v4.json",
+        "alignmentMode": "composition",
+        "comparisonMode": "full-frame-crossfade",
+        "captureDatePolicy": "host_captureDate_or_Asia_Seoul_now"
+      }
+    },
+    "MMH2": {
+      "label": "목포근대역사관 2관",
+      "approval": {
+        "status": "approved",
+        "available": true,
+        "overlayReady": true,
+        "reason": "OK"
+      },
+      "guidanceProfile": {
+        "code": "MOVE_RIGHT",
+        "direction": "right",
+        "directionIcon": "right",
+        "primaryInstruction": "건물 전체가 보이도록 오른쪽으로 이동해 주세요",
+        "secondaryInstruction": "조금만 더 이동하면 과거 사진과 비교할 수 있어요",
+        "shortLabel": "오른쪽으로 이동",
+        "successInstruction": "구도 고정 완료",
+        "playbackRate": 1.6,
+        "segmentStartSeconds": 4.2,
+        "segmentEndSeconds": 16.82,
+        "holdBeforeReadyMs": 700,
+        "demoAssetStatus": "reviewed_success",
+        "assetReason": "123421의 4.20–16.82초 구간은 오른쪽 이동 후 건물 전체가 확보되며 1.6배속 기준 7.89초",
+        "directionLabel": "오른쪽으로 이동",
+        "stageCopy": [
+          [
+            "과거 기록과 겹칠 수 있는 구도를 찾고 있어요",
+            "건물의 지붕과 외곽선을 확인하고 있습니다",
+            28
+          ],
+          [
+            "건물 전체가 보이도록 오른쪽으로 이동해 주세요",
+            "조금만 더 이동하면 과거 사진과 비교할 수 있어요",
+            56
+          ],
+          [
+            "좋아요. 건물의 전체 형태가 보이기 시작했어요",
+            "이 구도를 잠시 유지해 주세요",
+            82
+          ]
+        ],
+        "arOverlay": {
+          "viewBox": [
+            0,
+            0,
+            1080,
+            1920
+          ],
+          "targetPath": "M80 500 L520 330 L1010 570 L1035 1510 L90 1510 Z",
+          "detectedPaths": [
+            "M30 430 L490 275 L1060 520 L1070 1580 L35 1580 Z",
+            "M55 470 L505 305 L1030 550 L1050 1540 L65 1540 Z",
+            "M80 500 L520 330 L1010 570 L1035 1510 L90 1510 Z"
+          ],
+          "trackingPoints": [
+            [
+              80,
+              500
+            ],
+            [
+              520,
+              330
+            ],
+            [
+              1010,
+              570
+            ],
+            [
+              90,
+              1510
+            ],
+            [
+              1035,
+              1510
+            ]
+          ]
+        },
+        "directionGlyph": "→",
+        "objectFit": "contain",
+        "objectPosition": "50% 0%",
+        "freezeFrameSeconds": 16.82,
+        "loop": false,
+        "successFrameDescription": "목포근대역사관 2관이 중앙에 있고 낙지 상가가 프레임 밖으로 빠진 16.82초 프레임"
+      },
+      "contract": {
+        "placeId": "MMH2",
+        "currentPlaceName": "목포근대역사관 2관",
+        "currentDisplayName": "목포근대역사관 2관",
+        "historicalPlaceName": "동양척식주식회사 목포지점",
+        "historicalDisplayName": "동양척식주식회사 목포지점",
+        "historicalYear": 1932,
+        "pieceNumber": 3,
+        "totalPieces": 3,
+        "sequenceIndex": 3,
+        "sequenceTotal": 3,
+        "completionSequenceLabel": "세 번째 기록 열쇠 획득",
+        "currentImage": "./addons/timetrace/assets/MMH2/current.jpg",
+        "historicalSourceImage": "./addons/timetrace/assets/MMH2/historical-source.jpg",
+        "alignedHistoricalRgba": "./addons/timetrace/assets/MMH2/aligned-historical-rgba.png",
+        "aiRestoredScene": "./addons/timetrace/assets/MMH2/ai-restored-scene.jpg",
+        "aiRestorationMetadata": "./addons/timetrace/assets/MMH2/ai-restoration-metadata.json",
+        "historicalAlphaMask": "./addons/timetrace/assets/MMH2/historical-alpha-mask.png",
+        "staticOverlayPreview": "./addons/timetrace/assets/MMH2/overlay-preview.png",
+        "overlayMetadata": "./addons/timetrace/assets/MMH2/overlay-metadata.json",
+        "captureDatePolicy": "host_captureDate_or_Asia_Seoul_now"
+      }
+    }
+  },
+  "scenarios": {
+    "instant": {
+      "label": "정상 즉시 정합",
+      "contract": {
+        "missionStatus": "passed",
+        "overlayStatus": "ready",
+        "guidance": [],
+        "initialCapture": "available",
+        "retakeCapture": null,
+        "selectedCapture": "initial"
+      },
+      "videoId": null
+    },
+    "retake-back": {
+      "label": "촬영 구도 안내",
+      "contract": {
+        "missionStatus": "passed",
+        "overlayStatus": "retake_required",
+        "guidance": [
+          "MOVE_BACK"
+        ],
+        "initialCapture": "available",
+        "retakeCapture": "demo_frame",
+        "selectedCapture": "retake"
+      },
+      "videoId": null,
+      "videoByPlace": {
+        "MST": "MST-GUIDED-173849",
+        "HNB": "HNB-174915",
+        "MMH2": "MMH2-123421"
+      },
+      "guidance": {
+        "code": "MOVE_BACK",
+        "label": "장소 전체 구도를 확인해 주세요.",
+        "detail": "영상 움직임과 안내 방향을 함께 확인합니다.",
+        "icon": "back",
+        "readyAtMs": null,
+        "playbackRate": 1.6,
+        "segmentStartSeconds": 0.5,
+        "segmentEndSeconds": 14.9,
+        "demoAssetStatus": "replacement_required",
+        "assetReason": "후반부에서 구도 변화는 보이지만 승인된 MMH2 정합 기준을 통과하는 종료 프레임이 없어 성공 판정에 사용하지 않음"
+      }
+    },
+    "retake-occlusion": {
+      "label": "미션 성공 후 가림 보정",
+      "contract": {
+        "missionStatus": "passed",
+        "overlayStatus": "retake_required",
+        "guidance": [
+          "OCCLUSION"
+        ],
+        "initialCapture": "available",
+        "retakeCapture": "demo_frame",
+        "selectedCapture": "retake"
+      },
+      "videoId": "MMH2-123421",
+      "guidance": {
+        "code": "OCCLUSION",
+        "label": "건물 앞 가림이 사라지길 기다려 주세요",
+        "detail": "화면을 유지하면 자동으로 다시 확인합니다",
+        "icon": "eye",
+        "readyAtMs": 4200,
+        "playbackRate": 1.5,
+        "segmentStartSeconds": 0,
+        "segmentEndSeconds": 6.3
+      }
+    },
+    "mission-fail": {
+      "label": "미션 실패",
+      "contract": {
+        "missionStatus": "failed",
+        "overlayStatus": "not_evaluated",
+        "guidance": [],
+        "initialCapture": "available",
+        "retakeCapture": null,
+        "selectedCapture": null
+      },
+      "videoId": null
+    },
+    "compare": {
+      "label": "정합 결과 비교 화면",
+      "contract": {
+        "missionStatus": "passed",
+        "overlayStatus": "ready",
+        "guidance": [],
+        "initialCapture": "available",
+        "retakeCapture": null,
+        "selectedCapture": "initial"
+      },
+      "videoId": null
+    },
+    "complete": {
+      "label": "기록 열쇠 획득 화면",
+      "contract": {
+        "missionStatus": "passed",
+        "overlayStatus": "ready",
+        "guidance": [],
+        "initialCapture": "available",
+        "retakeCapture": null,
+        "selectedCapture": "initial"
+      },
+      "videoId": null
+    }
+  },
+  "videos": [
+    {
+      "id": "MMH2-123421",
+      "path": "./addons/timetrace/assets/MMH2/guidance.mp4",
+      "format": "mp4",
+      "codec": "h264",
+      "browserPlayable": true,
+      "width": 1080,
+      "height": 1920,
+      "orientation": "portrait",
+      "durationSeconds": 21.024,
+      "demoScenarios": [
+        "가림 보정",
+        "적합 구도 도달"
+      ]
+    },
+    {
+      "id": "HNB-174915",
+      "path": "./addons/timetrace/assets/HNB/guidance.mp4",
+      "format": "mp4",
+      "codec": "h264",
+      "browserPlayable": true,
+      "width": 1080,
+      "height": 1920,
+      "orientation": "portrait",
+      "durationSeconds": 19.057,
+      "demoScenarios": [
+        "뒤로 이동 보정",
+        "적합 구도 도달"
+      ]
+    },
+    {
+      "id": "MST-GUIDED-173849",
+      "path": "./addons/timetrace/assets/MST/guidance.mp4",
+      "format": "mp4",
+      "codec": "h264",
+      "browserPlayable": true,
+      "width": 1080,
+      "height": 1920,
+      "orientation": "portrait",
+      "durationSeconds": 6.7,
+      "demoScenarios": [
+        "뒤로 이동 보정",
+        "적합 구도 도달"
+      ],
+      "derivedAsset": true,
+      "demoClassification": "prerecorded composition guidance demo"
+    }
+  ]
+}

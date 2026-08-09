@@ -1,0 +1,9 @@
+History Pieces corrected integration verification
+PASSED
+- Original common files unchanged: 12
+- HTML IDs: 147, duplicates: 0
+- Approved piece scene counts: 7 / 8 / 8
+- Approved place-story scene count: 21
+- Webtoon references isolated from sample-photo path
+- Python / JSON checks passed
+- PTH check runs after FIRST_RUN copies the three user-provided models

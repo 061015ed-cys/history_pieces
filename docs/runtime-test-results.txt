@@ -1,0 +1,13 @@
+History Pieces original-UI correction test
+
+Original common files unchanged: True (12 files)
+Original sample buttons in HTML: 3
+Sample buttons hidden by add-on CSS: False
+Sample buttons hidden by add-on JS: False
+Original sample classifier preserved for sample/string input: True
+Guide-only progress renderer: True
+Progress references to piece upload/AI pages: False
+Original three-card guide hidden only at guide page: True
+Standalone mascot intro bypassed: True
+Global mascot removal absent: True
+Webtoon references isolated from sample directory: True

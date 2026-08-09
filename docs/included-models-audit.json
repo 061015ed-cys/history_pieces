@@ -1,0 +1,17 @@
+[
+  {
+    "file": "addons/models/first_piece_detection.pth",
+    "sizeBytes": 94371155,
+    "sha256": "7feaf03940cb957e9cb4ce517d7c6c99cf1e2b960f463349fe94b7fce649bd95"
+  },
+  {
+    "file": "addons/models/second_piece_detection.pth",
+    "sizeBytes": 94371545,
+    "sha256": "cb428c8e1759cb842a47d785437c0e93013378f560b0748c35a55669c39e2bdc"
+  },
+  {
+    "file": "addons/models/third_piece_detection.pth",
+    "sizeBytes": 94371155,
+    "sha256": "08df293d09b6cd6e5c43492cdf3017c43566993884222a4ecf5d12247d3c66f8"
+  }
+]

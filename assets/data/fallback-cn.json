@@ -1,0 +1,52 @@
+{
+  "meta": {
+    "project": "History Pieces",
+    "owner": "최유석",
+    "date": "2026-07-16",
+    "language": "zh-CN",
+    "source": "사용자가 확정한 목포역 서사의 중국어권 Fallback"
+  },
+  "pieceStories": {
+    "1": {
+      "title": "木浦的第一道门户",
+      "summary": "木浦站的站名标识，是宣告木浦旅程开始的第一条线索。作为湖南线的终点站，木浦站也连接着湖南内陆、港口与旧城区。",
+      "panels": [
+        { "image": null, "speaker": "旁白", "text": "木浦站的名字开启了旅程的第一幕。" },
+        { "image": null, "speaker": "记录鸟", "text": "{nickname}，你找到了抵达木浦的第一个标志。" },
+        { "image": null, "speaker": "旁白", "text": "今天看到的站名被保存为第一块故事碎片。" },
+        { "image": null, "speaker": "记录鸟", "text": "在铁路的终点，{nickname}的木浦故事开始了。" }
+      ]
+    },
+    "2": {
+      "title": "通往旧城区的路",
+      "summary": "从车站前延伸的道路通往木浦旧城区与开港街区。铁路带来的人流和物资，也由此进入城市。",
+      "panels": [
+        { "image": null, "speaker": "旁白", "text": "走出车站的脚步延伸到广场与街道。" },
+        { "image": null, "speaker": "记录鸟", "text": "{nickname}，车站既是到达点，也是走向城市的出发点。" },
+        { "image": null, "speaker": "旁白", "text": "你观察到的道路方向被保存为第二块故事碎片。" },
+        { "image": null, "speaker": "记录鸟", "text": "沿着这条路，木浦的下一幕继续展开。" }
+      ]
+    },
+    "3": {
+      "title": "人来人往的站前",
+      "summary": "车站前汇聚着旅客、商人和市民的脚步，留下了城市交通、相遇与日常生活的记忆。",
+      "panels": [
+        { "image": null, "speaker": "旁白", "text": "车站前的空间由等待、相遇与出发的流动组成。" },
+        { "image": null, "speaker": "记录鸟", "text": "{nickname}，构成一个地方的不只是建筑，还有来往的人们与时间。" },
+        { "image": null, "speaker": "旁白", "text": "今天的移动场景被保存为第三块故事碎片。" },
+        { "image": null, "speaker": "记录鸟", "text": "你刚刚留下的记录，也成为这里新的记忆。" }
+      ]
+    }
+  },
+  "placeStory": {
+    "title": "铁路尽头开始的故事",
+    "summary": "把站名、道路与人们的移动连接起来，完成旅行者今天的记录。",
+    "panels": [
+      { "image": null, "speaker": "旁白", "text": "木浦的第一道门户" },
+      { "image": null, "speaker": "旁白", "text": "通往旧城区的路" },
+      { "image": null, "speaker": "旁白", "text": "人来人往的站前" },
+      { "image": null, "speaker": "记录鸟", "text": "今天，{nickname}也在这里留下了一段新的记录。" }
+    ],
+    "finalMessage": "木浦站是铁路的终点，也是木浦旅行与城市故事开始的第一幕。"
+  }
+}

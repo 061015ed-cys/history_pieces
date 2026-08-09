@@ -1,0 +1,107 @@
+{
+  "pages": [
+    {
+      "id": "piece-3-comic-page",
+      "scrollTop": 0,
+      "pageTop": 0,
+      "pageBottom": 844,
+      "firstTop": 56,
+      "titleTop": 91,
+      "titleBottom": 124.796875,
+      "titleText": "사람들이 오가던 역전",
+      "scrollHeight": 1683,
+      "clientHeight": 844,
+      "justify": "flex-start",
+      "clipped": false
+    },
+    {
+      "id": "journey-film-page",
+      "scrollTop": 0,
+      "pageTop": 0,
+      "pageBottom": 844,
+      "firstTop": 50,
+      "titleTop": 85,
+      "titleBottom": 118.796875,
+      "titleText": "당신만의 여정필름 완성",
+      "scrollHeight": 902,
+      "clientHeight": 844,
+      "justify": "flex-start",
+      "clipped": false
+    },
+    {
+      "id": "reservation-page",
+      "scrollTop": 0,
+      "pageTop": 0,
+      "pageBottom": 844,
+      "firstTop": 56,
+      "titleTop": 91,
+      "titleBottom": 158.59375,
+      "titleText": "다음 장소가\n예약되었습니다",
+      "scrollHeight": 844,
+      "clientHeight": 844,
+      "justify": "flex-start",
+      "clipped": false
+    },
+    {
+      "id": "nickname-page",
+      "scrollTop": 0,
+      "pageTop": 0,
+      "pageBottom": 844,
+      "firstTop": 50,
+      "titleTop": 85,
+      "titleBottom": 170,
+      "titleText": "어떻게\n불러드릴까요?",
+      "scrollHeight": 844,
+      "clientHeight": 844,
+      "justify": "flex-start",
+      "clipped": false
+    },
+    {
+      "id": "first-record-page",
+      "scrollTop": 0,
+      "pageTop": 0,
+      "pageBottom": 844,
+      "firstTop": 50,
+      "titleTop": 85,
+      "titleBottom": 170,
+      "titleText": "당신의 첫 기록으로\n여정을 시작하세요",
+      "scrollHeight": 844,
+      "clientHeight": 844,
+      "justify": "flex-start",
+      "clipped": false
+    }
+  ],
+  "routes": [
+    {
+      "name": "목포근대역사관 1관",
+      "start": "목포역",
+      "dest": "목포근대역사관 1관",
+      "startRight": 137.0625,
+      "arrowLeft": 145.0625,
+      "arrowRight": 189.0625,
+      "destLeft": 197.0625,
+      "order": true
+    },
+    {
+      "name": "1897 개항문화거리",
+      "start": "목포역",
+      "dest": "1897 개항문화거리",
+      "startRight": 137.0625,
+      "arrowLeft": 145.0625,
+      "arrowRight": 189.0625,
+      "destLeft": 197.0625,
+      "order": true
+    },
+    {
+      "name": "목포진 역사공원",
+      "start": "목포역",
+      "dest": "목포진 역사공원",
+      "startRight": 137.0625,
+      "arrowLeft": 145.0625,
+      "arrowRight": 189.0625,
+      "destLeft": 197.0625,
+      "order": true
+    }
+  ],
+  "errors": []
+}

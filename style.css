@@ -1,0 +1,1699 @@
+/* =========================================================
+  History Pieces 본선 1차 통합본 CSS
+  목적:
+  - 초반 시안 같은 종이/기록/지도/깃털 분위기 씌우기 쉬운 구조
+  - 실제 이미지 배경은 나중에 bg-start, bg-language 등에 추가
+========================================================= */
+
+/* =========================================================
+  [이경민] 공통 디자인 토큰
+========================================================= */
+:root {
+  --paper: #f7ead6;
+  --paper-light: #fff7e9;
+  --paper-card: rgba(255, 247, 232, 0.88);
+
+  --brown: #6f3f1f;
+  --brown-dark: #3d2414;
+  --brown-soft: #a46b37;
+
+  --gold: #c9983c;
+  --gold-light: #f4d99b;
+
+  --line: rgba(101, 67, 34, 0.24);
+  --muted: #7c6a58;
+
+  --china-red: #9f2f2f;
+  --china-gold: #d2a84b;
+
+  --accent: var(--brown);
+  --accent-2: var(--gold);
+
+  --radius-lg: 34px;
+  --radius-md: 22px;
+  --shadow-card: 0 20px 48px rgba(74, 43, 20, 0.16);
+
+  --page-pad-inline: clamp(18px, 5.6vw, 24px);
+  --page-pad-block: clamp(24px, 4.2vh, 34px);
+  --section-gap: clamp(12px, 2.2vh, 20px);
+}
+
+body[data-culture="china"] {
+  --accent: var(--china-red);
+  --accent-2: var(--china-gold);
+}
+
+/* =========================================================
+  [이경민] 공통 구조
+========================================================= */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: #e8d3b3;
+  color: var(--brown-dark);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  /* [수정] !important를 제거하여 내부 스크롤 구조가 자연스럽게 작동하도록 합니다 */
+  overflow: hidden; 
+}
+button,
+input {
+  font: inherit;
+}
+
+button,
+[role="button"] {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.app-shell {
+  width: 100%;
+  position: relative;
+  overflow-x: hidden;
+  background: var(--paper);
+  aspect-ratio: 9 / 19.5; 
+  height: 92vh; 
+  max-height: 850px; 
+  width: auto;       
+  
+  /* [복구 완료] 검정 스마트폰 베젤 틀 완벽 고정 */
+  overflow-y: hidden; 
+  border: 4px solid #1c1c1e;   
+  border-radius: 40px;         
+  box-shadow: 
+    0 0 0 1px #2c2c2e,         
+    0 20px 50px rgba(44, 25, 12, 0.25); 
+
+  /* [핵심 추가] 자식 요소들의 fixed 좌표가 브라우저 창이 아니라 이 검정 틀 안에서만 놀도록 가둡니다 */
+  transform: translate(0, 0); 
+}
+
+.page {
+  display: none;
+  position: relative;
+  width: 100%;
+  height: 100%; 
+  min-height: 100%; 
+  
+  /* [수정] 상단 여백 최소 수치에 12px를 더 더해주어 천장 잘림을 방지합니다 */
+  padding: calc(max(var(--page-pad-block), env(safe-area-inset-top)) + 12px)
+           var(--page-pad-inline)
+           max(var(--page-pad-block), env(safe-area-inset-bottom));
+           
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
+.page.active {
+  display: flex;
+  flex-direction: column;
+  /* 상단 정렬 고정으로 위쪽 타이틀 글씨 절대 안 잘림 */
+  justify-content: flex-start; 
+  /* 검정 틀 안에서 내용이 많을 때만 부드러운 순정 모바일 스크롤 발생 */
+  overflow-y: auto; 
+  animation: pageFade 0.25s ease;
+}
+
+/* 기본 공통 속성 유지 (기존 코드) */
+.page.active .page-bg {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none; 
+}
+
+/* [추가] 오직 첫 화면(start-page)의 배경판만 fixed 마법을 풀고 휴대폰 틀 내부에 absolute로 귀속시킵니다 */
+#start-page .page-bg {
+  position: absolute !important;
+}
+
+@keyframes pageFade {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.page-bg {
+  /* position을 fixed로 바꾸거나 최소 높이를 지정해 스크롤 시 찢어짐을 원천 차단합니다 */
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  min-height: 100%; /* 콘텐츠가 늘어난 만큼 배경도 늘어나도록 고정 */
+  background:
+    radial-gradient(circle at top, rgba(255, 255, 255, 0.42), transparent 38%),
+    linear-gradient(180deg, #fbedd6 0%, #ead0aa 100%);
+}
+
+.page-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(105, 67, 30, 0.08) 1px, transparent 1px);
+  background-size: 14px 14px;
+  opacity: 0.55;
+}
+
+.page-bg::after {
+  content: "";
+  position: absolute;
+  inset: auto -40px -80px -40px;
+  height: 280px;
+  background:
+    linear-gradient(180deg, transparent, rgba(91, 58, 28, 0.12)),
+    radial-gradient(circle at 20% 60%, rgba(35, 70, 95, 0.12), transparent 30%),
+    radial-gradient(circle at 75% 50%, rgba(154, 98, 46, 0.16), transparent 34%);
+}
+
+/* =========================================================
+  [디자인 시안] 아이폰 15 비율 맞춤 폰트 레이어 & 배경 100% 밀착
+========================================================= */
+.page-bg.bg-start {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+
+  /* [_2 제거] 요청하신 원래 원본 파일명으로 완벽하게 매칭합니다 */
+  background: 
+    url('assets/images/bg-main-start-pont.png') no-repeat center center,
+    url('assets/images/bg-main-start.png') no-repeat center center;
+  
+  background-size: 100% 100%, 100% 100%;
+}
+
+/* 기존 통합본의 순정 격자/그라데이션 레이어 완전 차단 */
+.page-bg.bg-start::before,
+.page-bg.bg-start::after {
+  display: none !important;
+}
+
+.screen-layout {
+  position: relative;
+  z-index: 1;
+  flex: 1 1 auto;
+  min-height: 0;
+  width: 100%;
+}
+
+
+.center-layout,
+.setup-layout,
+.record-layout,
+.standard-layout {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1; 
+}
+
+.settings-list-page {
+  overflow-y: hidden;
+}
+
+.settings-list-page .setup-layout {
+  flex: 1 1 auto;
+  min-height: 0;
+  justify-content: flex-start;
+}
+
+.settings-list-page .list-card {
+  flex: 1 1 auto;
+  min-height: 0;
+  max-height: none;
+}
+
+.center-layout {
+  text-align: center;
+}
+
+/* =========================================================
+  [이경민] 제목 / 문구 - 글씨 크기 밸런스 조정 완료
+========================================================= */
+.ornament-label {
+  margin: 0 0 16px; 
+  text-align: center;
+  color: var(--brown);
+  font-weight: 800;
+  font-size: 14px; /* 시안 레이블에 맞춘 크기 */
+}
+
+/* 첫 페이지 전용 영어 대형 로고 타이틀 (시안 100% 반영 유지) */
+.brand-title {
+  margin: 0 0 28px;
+  text-align: center;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 54px; 
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  color: var(--brown-dark);
+}
+
+/* "기록으로 오래된 이야기를 다시 깨우다" */
+.main-title {
+  margin: 0 0 20px;
+  text-align: center;
+  color: var(--brown);
+  font-size: 24px; /* 본문과의 대비를 위해 살짝 키움 */
+  line-height: 1.35;
+  font-weight: 900;
+}
+
+/* "언어를 선택해주세요", "여정을 시작하세요" 등 대형 타이틀 (시안 PDF 2, 3 반영) */
+.setup-title {
+  margin: 0 0 16px;
+  text-align: center;
+  font-size: 34px; /* 32px -> 34px로 변경하여 시안 특유의 시원시원한 맛을 살림 */
+  line-height: 1.25;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  color: var(--brown-dark);
+}
+
+/* "장소 후보 탐색" 등 중간 크기 타이틀 (시안 PDF 5 반영) */
+.mini-title {
+  margin: 0 0 16px;
+  text-align: center;
+  font-size: 26px; /* 24px -> 26px로 변경하여 헤드라인 가독성 강화 */
+  line-height: 1.3;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  color: var(--brown-dark);
+}
+
+/* 시안의 정갈한 서브 본문 핏에 맞춘 세부 조정 */
+.sub-text,
+.setup-desc,
+.description {
+  color: var(--brown-dark);
+  line-height: 1.6;
+  font-size: 15px; /* 16px -> 15px로 미세 축소하여 제목이 더 강조되도록 대비감 부여 */
+}
+
+.sub-text,
+.setup-desc {
+  text-align: center;
+}
+
+.small-guide,
+.bottom-note {
+  text-align: center;
+  color: var(--brown-soft); /* 가독성을 위해 soft 브라운 톤으로 매칭 */
+  font-size: 13px; /* 14px -> 13px */
+  line-height: 1.5;
+}
+
+.tag {
+  margin: 0 0 8px;
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 900;
+}
+
+/* =========================================================
+  [이경민] 버튼
+========================================================= */
+.big-button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 72px;
+  margin-top: 28px;
+  border: 1px solid rgba(255, 221, 143, 0.45);
+  border-radius: 999px;
+  background:
+    linear-gradient(180deg, rgba(140, 77, 28, 0.98), rgba(92, 45, 15, 1));
+  color: #fff8e9;
+  font-size: 26px;
+  font-weight: 800;
+  box-shadow:
+    0 14px 30px rgba(76, 42, 16, 0.32),
+    inset 0 1px 1px rgba(255, 237, 190, 0.4);
+  cursor: pointer;
+  transition: transform 0.1s ease, opacity 0.2s ease;
+}
+
+.big-button:active {
+  transform: scale(0.98);
+}
+
+.big-button span {
+  position: absolute;
+  right: 28px;
+  color: var(--gold-light);
+}
+
+.big-button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.sub-button {
+  width: 100%;
+  min-height: 52px;
+  margin-top: 12px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: rgba(255, 250, 240, 0.75);
+  color: var(--brown);
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.text-button {
+  margin-top: 12px;
+  border: 0;
+  background: transparent;
+  color: var(--brown);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+button:focus-visible,
+input:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 3px;
+}
+
+/* =========================================================
+  [최유석 + 이지영] 설정 카드
+========================================================= */
+.setting-card,
+.content-card,
+.recommend-card,
+.unlock-card {
+  background: var(--paper-card);
+  border: 1px solid rgba(126, 91, 54, 0.22);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  backdrop-filter: blur(6px);
+}
+
+.list-card {
+  max-height: 380px; 
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.select-row {
+  width: 100%;
+  min-height: 72px;
+  padding: 14px 22px;
+  border: 0;
+  border-bottom: 1px solid rgba(126, 91, 54, 0.16);
+  background: transparent;
+  color: var(--brown-dark);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-align: left;
+  cursor: pointer;
+}
+
+.select-row:last-child {
+  border-bottom: 0;
+}
+
+.select-row strong {
+  display: block;
+  font-size: 19px;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+/*
+  언어 선택 전후에 문서 lang 값이 바뀌더라도 각 언어명은 같은 글꼴과
+  굵기를 유지합니다. 특히 简体의 일부 글자만 합성 굵기로 바뀌는 현상을 막습니다.
+*/
+.select-row [lang="zh-CN"] {
+  font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", system-ui, sans-serif;
+  font-synthesis: none;
+}
+
+.select-row [lang="zh-CN"] strong {
+  font-weight: 700;
+}
+
+.select-row small {
+  display: block;
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.select-row i {
+  width: 28px;
+  height: 28px;
+  border: 2px solid rgba(120, 84, 45, 0.32);
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  font-style: normal;
+}
+
+.select-row.selected {
+  background: rgba(255, 244, 221, 0.5);
+}
+
+.select-row.selected i {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.select-row em {
+  padding: 6px 10px;
+  border-radius: 10px;
+  background: var(--accent);
+  color: white;
+  font-style: normal;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.select-row.disabled {
+  opacity: 0.42;
+  cursor: not-allowed;
+}
+
+.mode-card {
+  padding: 24px;
+  line-height: 1.6;
+}
+
+.culture-badge {
+  display: inline-block;
+  margin-bottom: 12px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(159, 47, 47, 0.1);
+  color: var(--china-red);
+  font-weight: 900;
+  font-size: 13px;
+}
+
+/* =========================================================
+  [최유석 + 이지영] 닉네임
+========================================================= */
+.nickname-card {
+  padding: 28px 24px;
+}
+
+.nickname-card label {
+  display: block;
+  margin-bottom: 14px;
+  color: var(--brown-dark);
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.nickname-card input {
+  width: 100%;
+  height: 76px;
+  border-radius: 18px;
+  border: 1px solid rgba(103, 65, 31, 0.42);
+  background: rgba(255, 249, 238, 0.82);
+  padding: 0 22px;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--brown-dark);
+}
+
+.nickname-chip-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 26px;
+  padding-top: 22px;
+  border-top: 1px dashed rgba(103, 65, 31, 0.26);
+}
+
+.nickname-chip-row button {
+  border: 1px dashed rgba(103, 65, 31, 0.36);
+  border-radius: 999px;
+  background: rgba(255, 248, 235, 0.7);
+  padding: 10px 18px;
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--brown-dark);
+  cursor: pointer;
+}
+
+/* =========================================================
+  [구도훈] 사진/영상 입력 (1차 구현 스타일 유지 및 보강)
+========================================================= */
+.camera-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: 28px;
+  overflow: hidden;
+  border: 1px solid rgba(126, 91, 54, 0.28);
+  background: rgba(245, 225, 195, 0.58);
+  box-shadow: var(--shadow-card);
+}
+
+.video-frame {
+  width: 100%;
+  aspect-ratio: 4 / 3; /* 고정 비율 유지 */
+  min-height: 280px;
+}
+
+.record-intro-visual {
+  position: relative;
+  width: 100%;
+  height: min(34dvh, 290px);
+  min-height: 190px;
+  overflow: hidden;
+  border: 1px solid rgba(126, 91, 54, 0.22);
+  border-radius: 28px;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.42), transparent 55%),
+    rgba(232, 207, 170, 0.72);
+  box-shadow: var(--shadow-card);
+}
+
+.record-intro-visual::before {
+  content: "";
+  position: absolute;
+  inset: 18%;
+  border: 1px dashed rgba(111, 63, 31, 0.28);
+  border-radius: 22px;
+}
+
+.camera-preview {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.camera-empty {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 10px;
+  text-align: center;
+  padding: 28px;
+  cursor: pointer;
+}
+
+.camera-empty strong {
+  font-size: 18px;
+  color: var(--brown-dark);
+}
+
+.camera-empty small {
+  color: var(--muted);
+  line-height: 1.45;
+}
+
+.hidden-input,
+.hidden {
+  display: none !important;
+}
+
+.corner {
+  position: absolute;
+  width: 36px;
+  height: 36px;
+  border-color: rgba(255, 255, 255, 0.9);
+}
+
+.lt {
+  left: 22px;
+  top: 22px;
+  border-left: 5px solid;
+  border-top: 5px solid;
+}
+
+.rt {
+  right: 22px;
+  top: 22px;
+  border-right: 5px solid;
+  border-top: 5px solid;
+}
+
+.lb {
+  left: 22px;
+  bottom: 22px;
+  border-left: 5px solid;
+  border-bottom: 5px solid;
+}
+
+.rb {
+  right: 22px;
+  bottom: 22px;
+  border-right: 5px solid;
+  border-bottom: 5px solid;
+}
+
+/* =========================================================
+  [이지영] 기록새 / 안내 박스
+========================================================= */
+.guide-note,
+.giroksae-note {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 20px;
+  padding: 14px 18px;
+  border-radius: 18px;
+  background: rgba(255, 247, 232, 0.74);
+  border: 1px solid rgba(126, 91, 54, 0.18);
+  color: var(--brown-dark);
+}
+
+.guide-note p,
+.giroksae-note p {
+  margin: 0;
+  line-height: 1.5;
+}
+
+.giroksae-note img {
+  width: 58px;
+  height: 58px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.before-appear span {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  font-weight: 900;
+}
+
+.dark-page {
+  background: #17100c;
+  color: white;
+  cursor: pointer;
+}
+
+.dark-page::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(255, 225, 150, 0.18), transparent 48%);
+}
+
+.character-layout {
+  position: relative;
+  z-index: 1;
+  flex: 1 1 auto;
+  min-height: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  text-align: center;
+}
+
+.giroksae-large {
+  width: 170px;
+  height: 170px;
+  object-fit: contain;
+  border-radius: 34px;
+  background: rgba(255, 248, 235, 0.92);
+  padding: 10px;
+  box-shadow: 0 22px 60px rgba(0, 0, 0, 0.42);
+}
+
+/* [수정] 대사창 대신 기록새 이미지가 둥둥 뜨도록 애니메이션 위치 변경 */
+.character-page.active .giroksae-large {
+  /* 뿅 튀어나오는 효과(giroksaePop)와 둥둥 흔들리는 효과(dialogueSway)를 동시에 부여합니다 */
+  animation: 
+    giroksaePop 0.48s cubic-bezier(0.2, 0.85, 0.28, 1.25) both,
+    dialogueSway 3.2s ease-in-out 0.48s infinite; 
+  transform-origin: 50% 100%;
+}
+
+.character-page.active .character-dialogue {
+  /* 대사창은 흔들리지 않고 얌전히 고정되도록 애니메이션 제거 */
+  box-shadow: var(--shadow-card);
+  cursor: pointer;
+}
+
+@keyframes giroksaePop {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.76);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes dialogueSway {
+  0%, 100% { transform: translateY(0) rotate(-0.35deg); }
+  50% { transform: translateY(-5px) rotate(0.35deg); }
+}
+
+.character-label {
+  color: rgba(255, 255, 255, 0.75);
+  font-weight: 800;
+}
+
+.character-dialogue {
+  width: 100%;
+  padding: 22px;
+  border-radius: 26px;
+  background: rgba(255, 248, 235, 0.96);
+  color: var(--brown-dark);
+  box-shadow: var(--shadow-card);
+  cursor: pointer;
+}
+
+.character-dialogue p {
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.6;
+  font-weight: 800;
+}
+
+.character-dialogue small {
+  display: block;
+  margin-top: 16px;
+  color: var(--muted);
+}
+
+/* =========================================================
+  [최유석 + 이지영 + 구도훈] 조각 안내 / AI 결과
+========================================================= */
+.piece-map-card {
+  display: grid;
+  gap: 12px;
+}
+
+.piece-map-card article,
+.content-card {
+  padding: 18px;
+  background: rgba(255, 247, 232, 0.86);
+  border: 1px solid rgba(126, 91, 54, 0.22);
+  border-radius: 22px;
+  box-shadow: 0 12px 28px rgba(74, 43, 20, 0.1);
+}
+
+.piece-map-card article span {
+  display: inline-grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  margin-bottom: 8px;
+  border-radius: 12px;
+  background: var(--accent);
+  color: white;
+  font-weight: 900;
+}
+
+.piece-map-card article strong {
+  display: block;
+  font-size: 18px;
+}
+
+.piece-map-card article small {
+  display: block;
+  margin-top: 5px;
+  color: var(--muted);
+}
+
+.ai-result-card {
+  display: grid;
+  gap: 8px;
+}
+
+.ai-result-card[data-result-state="success"] .result-emphasis {
+  color: var(--accent);
+}
+
+.ai-result-card[data-result-state="failure"] .result-emphasis {
+  color: #9f2f2f;
+}
+
+.result-reason {
+  margin: 16px 0 0;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.result-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(126, 91, 54, 0.18);
+}
+
+.result-row:last-child {
+  border-bottom: 0;
+}
+
+.result-row span {
+  color: var(--muted);
+}
+
+.result-row strong {
+  color: var(--accent);
+  font-weight: 800;
+}
+
+/* =========================================================
+  [예선 자산 재사용] 조각별 과거·현재 오버레이
+========================================================= */
+.overlay-card {
+  display: grid;
+  gap: 12px;
+}
+
+.overlay-card h2 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.overlay-frame {
+  --archive-opacity: 0.58;
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3; 
+  
+  /* [추가] 화면 세로 폭이 좁을 때 박스 크기를 컴팩트하게 줄여 상단 타이틀 공간을 확보합니다 */
+  max-height: min(26dvh, 240px); 
+  
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: rgba(80, 45, 21, 0.12);
+}
+
+.overlay-frame > img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.overlay-frame .current-image {
+  z-index: 1;
+  opacity: 1;
+}
+
+.overlay-frame .archive-image {
+  z-index: 2;
+  opacity: var(--archive-opacity);
+  mix-blend-mode: multiply;
+}
+
+.overlay-frame[data-mode="current"] .archive-image {
+  opacity: 0;
+}
+
+.overlay-frame[data-mode="archive"] .current-image {
+  opacity: 0;
+}
+
+.overlay-frame[data-mode="archive"] .archive-image {
+  opacity: 1;
+  mix-blend-mode: normal;
+}
+
+.overlay-caption {
+  position: absolute;
+  top: 12px;
+  z-index: 3;
+  padding: 6px 9px;
+  border-radius: 999px;
+  background: rgba(42, 27, 15, 0.76);
+  color: white;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.current-caption { left: 12px; }
+.archive-caption { right: 12px; }
+.overlay-frame[data-archive-available="false"] .archive-caption { display: none; }
+
+.overlay-fallback {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  left: 10px;
+  z-index: 4;
+  padding: 9px 11px;
+  border-radius: 12px;
+  background: rgba(255, 247, 232, 0.92);
+  color: var(--brown-dark);
+  font-size: 12px;
+  font-weight: 750;
+  line-height: 1.45;
+  text-align: center;
+}
+
+.overlay-mode-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.overlay-mode-row .sub-button {
+  min-height: 42px;
+  margin-top: 0;
+  padding: 8px;
+}
+
+.overlay-mode-row .sub-button.selected {
+  border-color: var(--accent);
+  background: rgba(111, 63, 31, 0.1);
+  color: var(--accent);
+}
+
+.overlay-mode-row button:disabled,
+.overlay-play-button:disabled,
+.overlay-opacity-control input:disabled {
+  opacity: 0.42;
+  cursor: not-allowed;
+}
+
+.overlay-play-button {
+  width: 100%;
+  margin-top: 0;
+}
+
+.overlay-opacity-control {
+  display: grid;
+  gap: 8px;
+  padding: 11px 12px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: rgba(255, 250, 240, 0.72);
+}
+
+.overlay-opacity-control span {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.overlay-opacity-control input {
+  width: 100%;
+  accent-color: var(--accent);
+}
+
+.overlay-frame.overlay-playing .archive-image {
+  animation: archiveOverlayReveal 2.8s ease-in-out forwards;
+}
+
+.overlay-frame.overlay-playing .current-image {
+  animation: currentOverlayTone 2.8s ease-in-out forwards;
+}
+
+@keyframes archiveOverlayReveal {
+  from { opacity: 0; transform: scale(1.025); }
+  to { opacity: var(--archive-opacity); transform: scale(1); }
+}
+
+@keyframes currentOverlayTone {
+  from { filter: none; }
+  to { filter: saturate(0.84) brightness(0.94); }
+}
+
+/* =========================================================
+  [최유석 + 이지영] 웹툰 템플릿
+========================================================= */
+.comic-template {
+  display: grid;
+  gap: 14px;
+}
+
+.webtoon-panel-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.webtoon-panel {
+  position: relative;
+  min-height: 205px;
+  overflow: hidden;
+  border: 1px solid rgba(126, 91, 54, 0.22);
+  border-radius: 20px;
+  background: rgba(243, 220, 185, 0.82);
+}
+
+.webtoon-panel > img {
+  width: 100%;
+  height: 116px;
+  display: block;
+  object-fit: cover;
+  background: rgba(80, 45, 21, 0.1);
+}
+
+.webtoon-panel > img:not([src]) {
+  visibility: hidden;
+}
+
+.panel-placeholder {
+  height: 116px;
+  display: grid;
+  place-items: center;
+  color: rgba(111, 63, 31, 0.5);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 38px;
+  font-weight: 800;
+  background: linear-gradient(145deg, rgba(255, 248, 233, 0.8), rgba(201, 152, 60, 0.18));
+}
+
+.panel-copy {
+  padding: 11px 12px 13px;
+}
+
+.panel-copy strong {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--accent);
+  font-size: 12px;
+}
+
+.panel-copy p {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 750;
+  line-height: 1.42;
+  overflow-wrap: anywhere;
+}
+
+.china-summary {
+  padding: 14px 16px;
+  border-radius: 18px;
+  background: rgba(159, 47, 47, 0.09);
+  border: 1px solid rgba(159, 47, 47, 0.18);
+  color: #6e2828;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* =========================================================
+  [이지영] 해금 / 퀴즈 결과 카드
+========================================================= */
+.unlock-card {
+  padding: 24px;
+  text-align: center;
+}
+
+.unlock-card span {
+  display: block;
+  font-size: 38px;
+  margin-bottom: 12px;
+}
+
+.unlock-card h2 {
+  margin: 0 0 10px;
+  color: var(--accent);
+}
+
+.unlock-card p {
+  margin: 0;
+  line-height: 1.6;
+}
+
+.quiz-list {
+  display: grid;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.quiz-list button {
+  width: 100%;
+  padding: 14px;
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  background: rgba(255, 250, 240, 0.9);
+  color: var(--brown-dark);
+  font-weight: 800;
+  line-height: 1.45;
+  cursor: pointer;
+}
+
+.quiz-feedback {
+  margin-top: 14px;
+  padding: 12px;
+  border-radius: 14px;
+  background: rgba(255, 250, 240, 0.86);
+  border: 1px solid var(--line);
+  color: var(--accent);
+  font-weight: 800;
+  line-height: 1.45;
+}
+
+/* =========================================================
+  [최유석 + 이지영] 장소 이야기 웹툰
+========================================================= */
+.place-comic-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.place-comic-grid article {
+  min-height: 116px;
+  border-radius: 22px;
+  padding: 14px;
+  background: rgba(243, 220, 185, 0.82);
+  border: 1px solid rgba(126, 91, 54, 0.22);
+  display: flex;
+  align-items: end;
+  font-weight: 900;
+  line-height: 1.35;
+}
+
+.place-comic-grid article:nth-child(4) {
+  background: rgba(201, 152, 60, 0.24);
+}
+
+/* =========================================================
+  [최유석] 여정필름
+========================================================= */
+.film-strip {
+  display: grid;
+  gap: 12px;
+}
+
+.journey-player-host {
+  min-height: min(40dvh, 380px);
+  place-items: center;
+}
+
+.film-strip article {
+  height: clamp(82px, 12dvh, 104px);
+  border-radius: 22px;
+  overflow: hidden;
+  background: rgba(80, 45, 21, 0.12);
+  border: 1px solid rgba(126, 91, 54, 0.22);
+  display: grid;
+  place-items: center;
+  font-weight: 900;
+  color: var(--brown);
+}
+
+.film-strip video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.film-strip > video,
+.film-strip > img {
+  display: block;
+  width: 100%;
+  height: min(40dvh, 380px);
+  border-radius: 18px;
+  object-fit: cover;
+  background: #1c140f;
+}
+
+.film-unavailable {
+  margin: 0;
+  padding: 24px;
+  color: var(--muted);
+  text-align: center;
+  line-height: 1.5;
+}
+
+.journey-film-result video {
+  display: block;
+  width: 100%;
+  height: min(40dvh, 380px);
+  border-radius: 18px;
+  background: #1c140f;
+  object-fit: contain;
+}
+
+.journey-progress {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 14px 0;
+  padding: 14px 16px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--paper-card);
+}
+
+.journey-progress.hidden { display: none; }
+.journey-progress p { margin: 0; font-size: 14px; line-height: 1.45; }
+.progress-spinner {
+  width: 24px;
+  height: 24px;
+  flex: 0 0 auto;
+  border: 3px solid rgba(111, 63, 31, 0.18);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.85s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+button[data-busy="true"] { cursor: wait; opacity: 0.68; }
+
+/* =========================================================
+  [최유석 + 이지영] 다음 장소 추천 / 약도 / 예약
+========================================================= */
+.recommend-card {
+  padding: 20px;
+}
+
+.recommendation-intro {
+  margin-top: -4px;
+  margin-bottom: 14px;
+}
+
+.recommendation-list {
+  display: grid;
+  gap: 10px;
+}
+
+.recommendation-option {
+  width: 100%;
+  min-height: 0;
+  padding: 14px 15px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: var(--paper-card);
+  color: var(--brown-dark);
+  box-shadow: 0 8px 18px rgba(74, 43, 20, 0.08);
+  text-align: left;
+  cursor: pointer;
+}
+
+.recommendation-option strong,
+.recommendation-option span,
+.recommendation-option small {
+  display: block;
+}
+
+.recommendation-option strong {
+  color: var(--accent);
+  font-size: 16px;
+}
+
+.recommendation-option span {
+  margin-top: 4px;
+  color: var(--brown-soft);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.recommendation-option small {
+  display: -webkit-box;
+  margin-top: 6px;
+  overflow: hidden;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.4;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.recommendation-option.selected,
+.recommendation-option[aria-pressed="true"] {
+  border-color: var(--accent);
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.recommendation-detail-card {
+  padding: 18px;
+}
+
+.detail-link-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.detail-link-row .sub-button {
+  min-height: 48px;
+  margin-top: 0;
+  padding: 10px;
+}
+
+.recommend-card h2 {
+  margin: 6px 0 12px;
+  font-size: 24px;
+}
+
+.route-info {
+  display: flex;
+  gap: 10px;
+  margin: 12px 0;
+}
+
+.route-info span,
+.tag-chip-row span {
+  padding: 8px 11px;
+  border-radius: 999px;
+  background: rgba(111, 63, 31, 0.08);
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.tag-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.mini-map {
+  position: relative;
+  height: 150px;
+  margin: 18px 0;
+  border-radius: 24px;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.4), transparent),
+    #e8cfaa;
+  border: 1px solid rgba(126, 91, 54, 0.22);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.map-node {
+  z-index: 1;
+  padding: 11px 13px;
+  border-radius: 16px;
+  background: rgba(255, 250, 240, 0.94);
+  border: 1px solid rgba(126, 91, 54, 0.22);
+  font-weight: 900;
+  font-size: 13px;
+}
+
+.map-path {
+  position: absolute;
+  width: 56%;
+  height: 4px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+}
+
+/* =========================================================
+  [공통] 로딩 / 토스트 / 반응형
+========================================================= */
+.loader-lens {
+  width: 96px;
+  height: 96px;
+  margin: 0 auto 22px;
+  border-radius: 50%;
+  border: 2px solid var(--accent);
+  display: grid;
+  place-items: center;
+  font-size: 48px;
+  background: rgba(255, 250, 240, 0.82);
+  animation: lensFloat 1.55s ease-in-out infinite;
+}
+
+@keyframes lensFloat {
+  0%, 100% {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 18px rgba(111, 63, 31, 0.12);
+  }
+  50% {
+    transform: translateY(9px);
+    box-shadow: 0 0 24px rgba(111, 63, 31, 0.22);
+  }
+}
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 24px;
+  transform: translateX(-50%);
+  z-index: 100;
+  width: min(360px, calc(100% - 32px));
+  padding: 12px 16px;
+  border-radius: 999px;
+  background: rgba(42, 27, 15, 0.92);
+  color: white;
+  font-size: 13px;
+  text-align: center;
+}
+
+@media (max-height: 820px) {
+  .page {
+    --page-pad-block: 10px;
+    --page-pad-inline: 22px;
+  }
+  .ornament-label { margin-bottom: 8px; }
+  .setup-title {
+    font-size: 37px;
+    margin-bottom: 14px;
+  }
+  .mini-title { margin-bottom: 12px; }
+  .brand-title {
+    font-size: 46px;
+  }
+  .big-button {
+    min-height: 56px;
+    margin-top: 10px;
+    font-size: 21px;
+  }
+  .camera-frame {
+    aspect-ratio: 4 / 3;
+  }
+  .video-frame {
+    height: min(40dvh, 310px);
+    min-height: 230px;
+    aspect-ratio: auto;
+  }
+  .record-intro-visual {
+    height: min(29dvh, 220px);
+    min-height: 160px;
+  }
+  .webtoon-panel { min-height: 172px; }
+  .webtoon-panel > img,
+  .panel-placeholder { height: 94px; }
+  .mini-map { height: 112px; margin: 12px 0; }
+  .piece-map-card { gap: 8px; }
+  .piece-map-card article {
+    display: grid;
+    grid-template-columns: 34px minmax(0, 1fr);
+    column-gap: 10px;
+    padding: 10px 12px;
+  }
+  .piece-map-card article span {
+    grid-row: 1 / 3;
+    margin-bottom: 0;
+  }
+  .piece-map-card article strong { font-size: 16px; }
+  .piece-map-card article small { margin-top: 2px; }
+  .overlay-frame {
+    height: min(29dvh, 220px);
+    aspect-ratio: auto;
+  }
+  .journey-player-host { min-height: min(34dvh, 250px); }
+  .film-strip { gap: 8px; }
+  .film-strip article { height: 70px; }
+  .film-strip > video,
+  .film-strip > img,
+  .journey-film-result video { height: min(34dvh, 250px); }
+  .recommendation-list { gap: 8px; }
+  .recommendation-option { padding: 11px 13px; }
+  .recommendation-option small { -webkit-line-clamp: 1; }
+}
+
+.generation-status {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  z-index: 120;
+  width: min(360px, calc(100% - 36px));
+  padding: 22px;
+  transform: translate(-50%, -50%);
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  background: rgba(255, 247, 233, 0.98);
+  box-shadow: 0 24px 70px rgba(44, 25, 12, 0.28);
+  text-align: center;
+}
+
+.generation-status::before {
+  content: "";
+  display: block;
+  width: 36px;
+  height: 36px;
+  margin: 0 auto 14px;
+  border: 4px solid rgba(111, 63, 31, 0.18);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.85s linear infinite;
+}
+
+.generation-status strong { display: block; color: var(--brown-dark); }
+.generation-status p { margin: 9px 0 0; color: var(--muted); font-size: 14px; line-height: 1.5; }
+.generation-status.hidden { display: none; }
+
+@media (max-width: 500px) {
+  body {
+    display: block; 
+    /* [수정] 실제 스마트폰 환경에서는 무조건 스크롤이 되도록 허용 */
+    overflow: auto !important; 
+  }
+  .app-shell {
+    height: 100vh;
+    height: 100dvh;
+    max-height: none;
+    aspect-ratio: auto; 
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    width: 100%;
+  }
+}
+
+@media (min-width: 560px) {
+  body {
+    /* 배경 이미지가 있다면 잘 보이도록 여백 확보 */
+    padding: 3vh 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .app-shell {
+    /* 기존 높이 설정을 브라우저 창 높이 비례로 변경 */
+    height: 94vh; 
+    min-height: auto;
+    
+    /* [수정] 노트북 화면에서도 얇고 세련된 스마트폰 베젤 느낌 유지 */
+    border: 4px solid #1c1c1e;   /* 12px -> 4px로 슬림하게 변경 */
+    border-radius: 40px;         /* 얇아진 틀에 맞춰 모서리 곡률도 자연스럽게 매칭 */
+    box-shadow: 
+      0 0 0 1px #2c2c2e,         /* 4px -> 1px로 미세 외곽선 축소 */
+      0 25px 60px rgba(44, 25, 12, 0.25); /* 그림자는 부드럽고 무겁지 않게 */
+    
+    /* 브라우저 크기가 극단적으로 작아질 때를 대비한 안전장치 */
+    max-width: 90%; 
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* =========================================================
+  [추가] 아이폰 틀 내부의 스크롤바를 보이지 않게 숨김 (기능은 작동)
+========================================================= */
+/* 크롬, 사파리, 엣지 브라우저용 */
+.page::-webkit-scrollbar {
+  display: none;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+/* 파이어폭스, IE용 */
+.page {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+/* =========================================================
+  [최종 보완] 내용이 길어 상단 타이틀이 잘리는 특정 페이지 예외 처리
+========================================================= */
+#piece-overlay-page .standard-layout,
+#quiz-page .standard-layout,
+#place-story-comic-page .standard-layout {
+  /* 다른 페이지는 건드리지 않고, 이 화면들만 천장 뚫림을 완벽하게 차단합니다 */
+  justify-content: flex-start;
+  padding-top: 8px; /* 숨통을 트여주는 미세 상단 여백 */
+}
+
+/* =========================================================
+  [디자인 시안] 첫 페이지(start-page) 최종 정렬 및 입체 버튼 매칭
+========================================================= */
+/* 1. 기존 HTML 글씨들은 투명하게 숨김 */
+#start-page .ornament-label,
+#start-page .brand-title,
+#start-page .main-title,
+#start-page .sub-text,
+#start-page .bottom-note {
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* 2. 공통 center-layout의 정렬 규칙 보존 */
+#start-page .screen-layout.center-layout {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-end !important;
+  padding-bottom: 72px !important; 
+  z-index: 2;
+}
+
+/* 3. 시안 가이드 특유의 가죽 입체 버튼 (상대 좌표 하강 치트키 세팅) */
+#start-page .big-button {
+  position: relative !important; /* 위치를 자유롭게 움직일 수 있도록 relative 강제 */
+  width: 100%;
+  min-height: 62px;
+  border: 1px solid rgba(255, 235, 180, 0.25);
+  border-radius: 999px;
+  background: linear-gradient(180deg, #78431f 0%, #4a230e 100%);
+  color: var(--gold-light);
+  font-size: 24px;
+  font-weight: 800;
+  box-shadow:
+    0 12px 28px rgba(42, 20, 10, 0.35),
+    inset 0 1px 1px rgba(255, 255, 255, 0.25);
+  cursor: pointer;
+  transition: transform 0.1s ease, filter 0.2s ease;
+  margin-bottom: 0 !important; /* 마진 충돌을 방지하기 위해 제로 초기화 */
+
+  /* 
+    [🔥 진짜 하강 치트키]
+    top 수치를 플러스(+)로 주면 버튼이 원래 있어야 할 자리에서 아래로 쑥 내려갑니다!
+    지금보다 더 내리고 싶다면 35px, 45px 등으로 숫자를 더 키워보세요.
+  */
+  top: 35px !important; 
+}
+
+#start-page .big-button:active {
+  transform: scale(0.98);
+  filter: brightness(0.9);
+}

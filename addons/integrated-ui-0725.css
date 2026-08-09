@@ -1,0 +1,1238 @@
+/* History Pieces 2차 통합 add-on
+   원본 index.html / style.css / script.js는 수정하지 않는다. */
+
+/* 기록새 소개 화면과 목포 안내 화면은 원래 흐름 그대로 유지한다. */
+
+.hp-guide-progress {
+  width: 100%;
+  margin: 14px 0 18px;
+  padding: 17px 18px;
+  border: 1px solid rgba(83, 48, 29, 0.13);
+  border-radius: 22px;
+  background: rgba(255, 252, 245, 0.94);
+  box-shadow: 0 10px 25px rgba(72, 43, 25, 0.08);
+}
+.hp-guide-progress-top { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+.hp-guide-progress-top strong { color:#754326; font-size:13px; }
+.hp-guide-progress-top span { padding:5px 10px; border-radius:999px; background:#f1e6d8; color:#6f3b20; font-size:12px; font-weight:800; }
+.hp-guide-progress-segments { display:grid; grid-template-columns:repeat(3,1fr); gap:7px; margin:13px 0 14px; }
+.hp-guide-progress-segments i { display:block; height:7px; border-radius:999px; background:#ddcfc0; }
+.hp-guide-progress-segments i.active { background:linear-gradient(90deg,#773a20,#b56536); }
+.hp-guide-current { display:grid; grid-template-columns:auto 1fr; column-gap:10px; row-gap:3px; align-items:center; padding:13px 14px; border-radius:17px; background:linear-gradient(180deg,#fffdf8,#f7eee3); border:1px solid rgba(105,58,31,0.10); }
+.hp-guide-current small { grid-row:1 / span 2; display:grid; place-items:center; min-width:43px; min-height:43px; border-radius:14px; background:#783c22; color:#fff; font-size:11px; font-weight:800; }
+.hp-guide-current strong { color:#2f1d12; font-size:17px; line-height:1.3; }
+.hp-guide-current span { color:#776354; font-size:12px; line-height:1.4; }
+
+/* 원본 촬영·업로드·AI 판별 화면과 샘플 버튼에는 스타일을 적용하지 않는다. */
+
+/* 웹툰 페이지: 로컬 고정 웹툰이 종이 질감의 세로 화면으로 표시됨 */
+
+.comic-page {
+  overflow-y: auto !important;
+  -webkit-overflow-scrolling: touch;
+}
+
+.comic-page .screen-layout {
+  min-height: 100%;
+  height: auto !important;
+  overflow: visible !important;
+  padding-bottom: 38px !important;
+}
+
+/* 2026-08-07: 조각 미션 1·2·3 고정 웹툰 */
+.hp-fixed-webtoon-template {
+  width: 100%;
+  margin: 10px 0 18px;
+  padding: 0 !important;
+  overflow: hidden;
+  border: 1px solid rgba(92, 57, 31, 0.26);
+  border-radius: 15px;
+  background: #f2dfc1;
+  box-shadow: 0 13px 30px rgba(63, 36, 21, 0.15);
+}
+
+.hp-fixed-webtoon {
+  width: 100%;
+  margin: 0;
+}
+
+.hp-fixed-webtoon img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  background: #ead6b6;
+}
+
+.hp-fixed-webtoon figcaption {
+  padding: 11px 13px 13px;
+  border-top: 1px solid rgba(92, 57, 31, 0.18);
+  background: rgba(255, 249, 238, 0.94);
+  color: #694126;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-align: center;
+}
+
+.hp-generated-webtoon {
+  position: relative;
+  width: 100%;
+  margin: 12px 0 18px;
+  padding: 17px 13px 20px;
+  border-radius: 9px;
+  background:
+    radial-gradient(circle at 20% 12%, rgba(111, 68, 34, 0.06) 0 1px, transparent 1.5px) 0 0 / 18px 18px,
+    linear-gradient(180deg, #f7e8ce 0%, #f1ddbd 100%);
+  box-shadow: 0 13px 30px rgba(63, 36, 21, 0.15);
+  border: 1px solid rgba(103, 65, 35, 0.18);
+}
+
+.hp-webtoon-heading {
+  margin: 2px 5px 15px;
+  text-align: center;
+}
+
+.hp-webtoon-heading small {
+  display: block;
+  margin-bottom: 5px;
+  color: #805132;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
+.hp-webtoon-heading h2 {
+  margin: 0;
+  color: #382316;
+  font-size: 23px;
+  line-height: 1.25;
+}
+
+.hp-webtoon-panels {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+}
+
+.hp-webtoon-panel {
+  overflow: hidden;
+  border: 1px solid rgba(54, 36, 22, 0.45);
+  border-radius: 4px;
+  background: #efe4d2;
+  box-shadow: 0 3px 10px rgba(61, 39, 24, 0.10);
+}
+
+.hp-webtoon-panel img {
+  display: block;
+  width: 100%;
+  min-height: 210px;
+  max-height: 420px;
+  object-fit: cover;
+  background: #d9c8ad;
+}
+
+.hp-webtoon-image-pending {
+  display: grid;
+  place-items: center;
+  min-height: 230px;
+  padding: 30px;
+  background:
+    linear-gradient(145deg, rgba(75, 48, 28, 0.08), rgba(255, 255, 255, 0.10)),
+    #dfcfb5;
+  color: #765c47;
+  text-align: center;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.hp-webtoon-caption {
+  padding: 12px 13px 14px;
+  background: rgba(255, 250, 240, 0.95);
+  color: #3c2a1f;
+  font-size: 13px;
+  line-height: 1.55;
+  white-space: pre-line;
+}
+
+.hp-webtoon-caption strong {
+  display: block;
+  margin-bottom: 5px;
+  color: #7b4426;
+  font-size: 11px;
+}
+
+.hp-scene-script {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px dashed rgba(85, 52, 28, 0.30);
+}
+
+.hp-scene-script > strong {
+  display: block;
+  margin: 0 2px 10px;
+  color: #5d3822;
+  font-size: 13px;
+}
+
+.hp-scene-list {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.hp-scene-list li {
+  padding: 10px 11px;
+  border-radius: 9px;
+  background: rgba(255, 250, 241, 0.78);
+  color: #493427;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.hp-scene-list b {
+  display: inline-grid;
+  place-items: center;
+  width: 23px;
+  height: 23px;
+  margin-right: 7px;
+  border-radius: 50%;
+  background: #704026;
+  color: #fff;
+  font-size: 10px;
+  vertical-align: top;
+}
+
+.hp-history-note {
+  display: block;
+  margin: 6px 0 0 31px;
+  color: #28599a;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.hp-webtoon-notice {
+  margin-top: 14px;
+  padding: 11px 12px;
+  border-radius: 10px;
+  background: rgba(255, 250, 241, 0.82);
+  color: #6d5948;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+/* 기존 웹툰 템플릿은 데이터가 준비된 뒤 add-on 렌더러가 교체한다. */
+.comic-template.hp-replaced,
+.place-comic-grid.hp-replaced {
+  display: none !important;
+}
+
+@media (max-width: 380px) {
+  .hp-generated-webtoon { padding-left: 10px; padding-right: 10px; }
+}
+
+/* 2026-07-25: 공통 하단 버튼 화살표 겹침 방지
+   원본 style.css는 변경하지 않고 add-on에서만 위치 규칙을 교정한다. */
+.big-button {
+  box-sizing: border-box !important;
+  gap: 12px !important;
+  padding-left: 24px !important;
+  padding-right: 24px !important;
+  text-align: center !important;
+  line-height: 1.25 !important;
+}
+
+.big-button > span {
+  position: static !important;
+  right: auto !important;
+  top: auto !important;
+  flex: 0 0 auto !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 22px !important;
+  min-width: 22px !important;
+  margin-left: 0 !important;
+  line-height: 1 !important;
+  transform: none !important;
+  pointer-events: none !important;
+}
+
+@media (max-width: 380px) {
+  .big-button {
+    gap: 8px !important;
+    padding-left: 18px !important;
+    padding-right: 18px !important;
+    font-size: 20px !important;
+  }
+  .big-button > span {
+    width: 18px !important;
+    min-width: 18px !important;
+  }
+}
+
+/* 2026-07-25 검수 수정: 세 조각을 하나의 연결된 진행 막대로 표시 */
+.hp-guide-progress-segments {
+  gap: 0 !important;
+  height: 8px;
+  overflow: hidden;
+  border: 1px solid rgba(83, 48, 29, 0.10);
+  border-radius: 999px;
+  background: #ddcfc0;
+}
+
+.hp-guide-progress-segments i {
+  height: 100% !important;
+  border-radius: 0 !important;
+}
+
+.hp-guide-progress-segments i + i {
+  border-left: 1px solid rgba(255, 255, 255, 0.55);
+}
+
+/* 조각 웹툰의 내용이 화면보다 길 때 중앙 정렬로 위쪽이 잘리지 않도록 상단 정렬로 고정 */
+.comic-page .screen-layout.standard-layout {
+  flex: 0 0 auto !important;
+  min-height: auto !important;
+  height: auto !important;
+  justify-content: flex-start !important;
+  overflow: visible !important;
+}
+
+.comic-page .hp-generated-webtoon {
+  flex: 0 0 auto;
+}
+
+/* 장소 후보 확인 화면의 물음표를 다른 안내 화면과 같은 깃털펜으로 통일 */
+#place-confirm-page .giroksae-note.before-appear span {
+  width: auto;
+  height: auto;
+  flex: 0 0 auto;
+  border: 0;
+  border-radius: 0;
+  font-size: 26px;
+  line-height: 1;
+}
+
+/* 2026-07-25 추가 검수: 긴 화면의 중앙정렬 때문에 상단 제목이 잘리는 현상 수정
+   원본 레이아웃은 유지하고, 실제로 내용이 긴 화면만 상단부터 스크롤되도록 보정한다. */
+#china-mode-intro-page .screen-layout.setup-layout,
+#nickname-page .screen-layout.setup-layout,
+#first-record-page .screen-layout.record-layout,
+#journey-film-page .screen-layout.standard-layout,
+#next-place-detail-page .screen-layout.standard-layout {
+  flex: 0 0 auto !important;
+  min-height: auto !important;
+  height: auto !important;
+  justify-content: flex-start !important;
+  overflow: visible !important;
+  padding-top: 4px !important;
+  padding-bottom: 30px !important;
+}
+
+/* 긴 화면 진입 시 첫 제목이 베젤 아래에서 바로 보이도록 상단 여백 확보 */
+#china-mode-intro-page,
+#nickname-page,
+#first-record-page,
+#journey-film-page,
+#next-place-detail-page {
+  scroll-padding-top: 18px;
+}
+
+/* 다음 장소 약도: 두 노드 뒤에 가려지던 선을 제거하고
+   '목포역 → 추천 장소'가 명확히 보이는 3열 연결 구조로 표시 */
+#next-place-detail-page .mini-map {
+  display: grid !important;
+  grid-template-columns: minmax(66px, 0.85fr) minmax(46px, 0.45fr) minmax(112px, 1.35fr) !important;
+  align-items: center !important;
+  justify-content: stretch !important;
+  gap: 8px !important;
+  min-height: 112px !important;
+  height: auto !important;
+  padding: 18px 14px !important;
+  overflow: visible !important;
+}
+
+#next-place-detail-page .map-node {
+  position: relative !important;
+  z-index: 2 !important;
+  min-width: 0 !important;
+  width: 100% !important;
+  padding: 12px 9px !important;
+  text-align: center !important;
+  line-height: 1.35 !important;
+  overflow-wrap: anywhere !important;
+  word-break: keep-all !important;
+}
+
+#next-place-detail-page .map-path {
+  position: relative !important;
+  z-index: 3 !important;
+  width: 100% !important;
+  height: 4px !important;
+  min-width: 0 !important;
+  border-radius: 999px !important;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2)) !important;
+}
+
+#next-place-detail-page .map-path::after {
+  content: "→";
+  position: absolute;
+  right: -4px;
+  top: 50%;
+  transform: translateY(-52%);
+  padding-left: 3px;
+  background: #e8cfaa;
+  color: var(--accent);
+  font-size: 21px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+@media (max-width: 360px) {
+  #next-place-detail-page .mini-map {
+    grid-template-columns: minmax(58px, 0.8fr) minmax(38px, 0.35fr) minmax(100px, 1.25fr) !important;
+    gap: 6px !important;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+  }
+  #next-place-detail-page .map-node {
+    padding-left: 7px !important;
+    padding-right: 7px !important;
+    font-size: 12px !important;
+  }
+}
+
+/* 2026-07-25 전 화면 자동 잘림 방지
+   실제 내용이 화면 높이를 넘는 경우에만 JS가 hp-overflow-layout을 붙인다. */
+.screen-layout.hp-overflow-layout {
+  flex: 0 0 auto !important;
+  min-height: auto !important;
+  height: auto !important;
+  justify-content: flex-start !important;
+  overflow: visible !important;
+  padding-bottom: 30px !important;
+}
+
+/* 기록새 이미지는 실제 파일 대신 사진 모양 이모티콘 + 기록새 텍스트 자리표시자로 보여준다. */
+.hp-giroksae-placeholder {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  flex: 0 0 auto !important;
+  min-width: 58px !important;
+  min-height: 58px !important;
+  padding: 10px 12px !important;
+  border: 1px dashed rgba(126, 91, 54, 0.28) !important;
+  border-radius: 16px !important;
+  background: rgba(255, 248, 235, 0.92) !important;
+  color: #7b685a !important;
+  box-sizing: border-box !important;
+  text-align: center !important;
+}
+
+.hp-giroksae-placeholder-icon {
+  font-size: 18px !important;
+  line-height: 1 !important;
+}
+
+.hp-giroksae-placeholder-label {
+  font-size: 14px !important;
+  font-weight: 800 !important;
+  line-height: 1.2 !important;
+}
+
+.hp-giroksae-placeholder-large {
+  width: 170px !important;
+  height: 170px !important;
+  min-width: 170px !important;
+  min-height: 170px !important;
+  border-radius: 34px !important;
+  box-shadow: 0 22px 60px rgba(0, 0, 0, 0.42) !important;
+  flex-direction: column !important;
+  gap: 10px !important;
+}
+
+.hp-giroksae-placeholder-large .hp-giroksae-placeholder-icon {
+  font-size: 36px !important;
+}
+
+.hp-giroksae-placeholder-large .hp-giroksae-placeholder-label {
+  font-size: 22px !important;
+}
+
+.hp-giroksae-placeholder-panel {
+  display: flex !important;
+  width: 100% !important;
+  min-width: 100% !important;
+  min-height: 116px !important;
+  height: 116px !important;
+  border-radius: 0 !important;
+  border: 0 !important;
+  border-bottom: 1px solid rgba(126, 91, 54, 0.22) !important;
+  box-shadow: none !important;
+  background: linear-gradient(145deg, rgba(255, 248, 233, 0.8), rgba(201, 152, 60, 0.18)) !important;
+}
+
+/* 2026-07-25 최종 전 화면 잘림 방지
+   짧은 화면은 기존처럼 중앙 정렬하고, 내용이 높이를 넘을 때는 safe center가 자동으로 상단 정렬한다. */
+.page.active > .screen-layout:not(.center-layout) {
+  flex: 0 0 auto !important;
+  width: 100% !important;
+  min-height: 100% !important;
+  height: auto !important;
+  justify-content: safe center !important;
+  overflow: visible !important;
+  padding-top: 10px !important;
+  padding-bottom: 34px !important;
+}
+
+/* 웹툰처럼 확실히 긴 화면은 처음부터 맨 위에서 시작한다. */
+.page.active.comic-page > .screen-layout,
+#journey-film-page.active > .screen-layout,
+#nickname-page.active > .screen-layout,
+#first-record-page.active > .screen-layout,
+#reservation-page.active > .screen-layout,
+#next-place-detail-page.active > .screen-layout {
+  justify-content: flex-start !important;
+}
+
+/* 페이지의 첫 제목이 스마트폰 베젤 밑으로 들어가지 않도록 최소 여백 고정 */
+.page.active > .screen-layout:not(.center-layout) > .ornament-label:first-of-type,
+.page.active > .screen-layout:not(.center-layout) > .mini-title:first-of-type,
+.page.active > .screen-layout:not(.center-layout) > .setup-title:first-of-type {
+  flex: 0 0 auto !important;
+}
+
+/* 추천 경로는 모든 후보에 동일하게 '목포역 → 선택 목적지' 순서로 표시한다. */
+#next-place-detail-page .mini-map.hp-route-map {
+  display: grid !important;
+  grid-template-columns: minmax(72px, 0.8fr) 44px minmax(118px, 1.35fr) !important;
+  align-items: center !important;
+  gap: 8px !important;
+  min-height: 118px !important;
+  height: auto !important;
+  padding: 18px 14px !important;
+  overflow: visible !important;
+}
+
+#next-place-detail-page .mini-map.hp-route-map .map-node {
+  position: relative !important;
+  z-index: 2 !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  padding: 12px 8px !important;
+  text-align: center !important;
+  word-break: keep-all !important;
+  overflow-wrap: anywhere !important;
+}
+
+#next-place-detail-page .mini-map.hp-route-map .hp-route-arrow {
+  position: relative !important;
+  z-index: 4 !important;
+  display: grid !important;
+  place-items: center !important;
+  width: 44px !important;
+  min-width: 44px !important;
+  height: 44px !important;
+  border-radius: 999px !important;
+  background: rgba(255, 250, 240, 0.92) !important;
+  border: 1px solid rgba(126, 91, 54, 0.26) !important;
+  color: var(--accent) !important;
+  font-size: 25px !important;
+  font-weight: 900 !important;
+  line-height: 1 !important;
+  box-shadow: 0 4px 10px rgba(75, 44, 25, 0.10) !important;
+}
+
+@media (max-width: 360px) {
+  #next-place-detail-page .mini-map.hp-route-map {
+    grid-template-columns: minmax(62px, 0.78fr) 36px minmax(104px, 1.3fr) !important;
+    gap: 6px !important;
+    padding: 15px 10px !important;
+  }
+  #next-place-detail-page .mini-map.hp-route-map .hp-route-arrow {
+    width: 36px !important;
+    min-width: 36px !important;
+    height: 36px !important;
+    font-size: 21px !important;
+  }
+}
+
+/* =========================================================
+   2026-08-07 와이어프레임 화면 흐름
+========================================================= */
+.wireframe-page {
+  overflow-y: auto !important;
+  -webkit-overflow-scrolling: touch;
+}
+
+.wireframe-page > .screen-layout {
+  flex: 0 0 auto !important;
+  width: 100% !important;
+  min-height: 100% !important;
+  height: auto !important;
+  justify-content: safe center !important;
+  overflow: visible !important;
+  padding-top: 10px !important;
+  padding-bottom: 34px !important;
+}
+
+.wireframe-page.wire-quiz-page > .screen-layout,
+#wire-reflection-page > .screen-layout {
+  justify-content: flex-start !important;
+}
+
+.wire-single-place-card {
+  display: block !important;
+}
+
+.wire-single-place-card article {
+  min-height: 150px;
+  align-content: center;
+  text-align: center;
+}
+
+.wire-single-place-card article span {
+  margin: 0 auto 12px;
+}
+
+.wire-feather-note > span {
+  flex: 0 0 auto;
+  font-size: 25px;
+  line-height: 1;
+}
+
+.wire-confirm-frame {
+  min-height: 280px;
+}
+
+.wire-confirm-frame .camera-preview {
+  width: 100%;
+  height: 100%;
+  min-height: 280px;
+  object-fit: cover;
+}
+
+/* 샘플 진행은 임의 사진을 만들지 않고 원본 통합본의 빈 사진 상태를 확장해 표시한다. */
+.camera-empty.sample-photo-selected strong {
+  font-size: 42px;
+  line-height: 1;
+}
+
+.camera-empty.sample-photo-selected small {
+  color: var(--brown-dark);
+  font-size: 17px;
+  font-weight: 900;
+}
+
+.sample-photo-placeholder {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 10px;
+  background: rgba(245, 225, 195, 0.84);
+  color: var(--brown-dark);
+  text-align: center;
+}
+
+.sample-photo-placeholder span {
+  font-size: 42px;
+  line-height: 1;
+}
+
+.sample-photo-placeholder strong {
+  font-size: 17px;
+  font-weight: 900;
+}
+
+.overlay-sample-placeholder {
+  z-index: 1;
+}
+
+.wire-confirm-actions {
+  display: grid;
+  grid-template-columns: minmax(0, 0.72fr) minmax(0, 1.28fr);
+  gap: 10px;
+  width: 100%;
+}
+
+.wire-confirm-actions .sub-button,
+.wire-confirm-actions .big-button {
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+}
+
+.wire-place-result-icon {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  margin-bottom: 12px;
+  border: 2px solid var(--accent);
+  border-radius: 50%;
+  color: var(--accent);
+  font-size: 27px;
+  font-weight: 900;
+}
+
+.wire-verified-place {
+  margin-top: 15px;
+  padding: 17px 14px;
+  border: 1px solid rgba(126, 91, 54, 0.28);
+  border-radius: 5px 18px 5px 18px;
+  background: rgba(255, 250, 240, 0.82);
+  color: var(--brown-dark);
+  font-size: 18px;
+  font-weight: 850;
+  text-align: center;
+  word-break: keep-all;
+}
+
+.wire-record-card {
+  display: grid;
+  place-items: center;
+  min-height: 235px;
+}
+
+.wire-record-card .tag {
+  justify-self: start;
+}
+
+.wire-record-icon {
+  display: grid;
+  place-items: center;
+  width: 92px;
+  height: 92px;
+  border: 2px solid rgba(111, 63, 31, 0.46);
+  border-radius: 50%;
+  background: rgba(255, 250, 240, 0.74);
+  color: var(--accent);
+  font-size: 34px;
+  box-shadow: 0 9px 21px rgba(76, 43, 23, 0.12);
+}
+
+.wire-choice-list {
+  width: 100%;
+}
+
+.wire-choice-list button {
+  position: relative;
+  display: grid;
+  gap: 6px;
+  width: 100%;
+  text-align: left;
+  word-break: keep-all;
+}
+
+.wire-choice-list button b {
+  color: var(--accent);
+  font-size: 12px;
+}
+
+.wire-choice-list button.selected {
+  border-color: var(--accent) !important;
+  background: rgba(111, 63, 31, 0.11) !important;
+  box-shadow: 0 0 0 2px rgba(111, 63, 31, 0.12);
+}
+
+.wire-location-card {
+  display: grid;
+  place-items: center;
+  min-height: 205px;
+  text-align: center;
+}
+
+.wire-location-symbol {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  border: 1px solid rgba(111, 63, 31, 0.32);
+  border-radius: 50%;
+  background: rgba(255, 249, 238, 0.8);
+  color: var(--accent);
+  font-size: 33px;
+}
+
+.wire-order-display {
+  margin-top: 4px;
+  padding: 13px 11px;
+  border: 1px dashed rgba(111, 63, 31, 0.36);
+  border-radius: 12px;
+  background: rgba(255, 250, 240, 0.72);
+  color: var(--muted);
+  text-align: center;
+}
+
+.wire-order-display strong {
+  color: var(--accent);
+  font-size: 18px;
+}
+
+[data-wire-final-order][data-order]:not([data-order=""])::after {
+  content: attr(data-order);
+  position: absolute;
+  top: 9px;
+  right: 10px;
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: white;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+#wire-surprise-feedback {
+  margin-top: 12px;
+  line-height: 1.55;
+}
+
+#wire-surprise-feedback strong {
+  color: var(--accent);
+  font-size: 16px;
+}
+
+@media (max-width: 380px) {
+  .wire-confirm-frame,
+  .wire-confirm-frame .camera-preview {
+    min-height: 235px;
+  }
+
+  .wire-confirm-actions {
+    grid-template-columns: minmax(0, 0.68fr) minmax(0, 1.32fr);
+    gap: 7px;
+  }
+
+  .wire-confirm-actions .big-button,
+  .wire-confirm-actions .sub-button {
+    padding-right: 12px !important;
+    padding-left: 12px !important;
+    font-size: 16px !important;
+  }
+}
+
+/* =========================================================
+   2026-07-25 최종 보정 2
+   1) 언어/국가 선택 카드의 내부 스크롤 복원
+   2) 추천 경로의 목적지 박스가 휴대폰 프레임 밖으로 나가지 않도록 폭 제한
+   공통틀 파일은 수정하지 않고 add-on에서만 보정한다.
+========================================================= */
+
+/* 설정 화면은 페이지 전체가 아니라 목록 카드 안에서 스크롤한다. */
+#language-page.active,
+#country-page.active {
+  overflow-y: hidden !important;
+}
+
+#language-page.active > .screen-layout.setup-layout,
+#country-page.active > .screen-layout.setup-layout {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  height: 100% !important;
+  justify-content: flex-start !important;
+  overflow: hidden !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+#language-page .setting-card.list-card,
+#country-page .setting-card.list-card {
+  flex: 1 1 0 !important;
+  min-height: 118px !important;
+  max-height: none !important;
+  overflow-x: hidden !important;
+  overflow-y: scroll !important;
+  overscroll-behavior: contain !important;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(111, 63, 31, 0.55) rgba(111, 63, 31, 0.10);
+}
+
+#language-page .setting-card.list-card::-webkit-scrollbar,
+#country-page .setting-card.list-card::-webkit-scrollbar {
+  width: 7px;
+}
+
+#language-page .setting-card.list-card::-webkit-scrollbar-track,
+#country-page .setting-card.list-card::-webkit-scrollbar-track {
+  background: rgba(111, 63, 31, 0.08);
+  border-radius: 999px;
+}
+
+#language-page .setting-card.list-card::-webkit-scrollbar-thumb,
+#country-page .setting-card.list-card::-webkit-scrollbar-thumb {
+  background: rgba(111, 63, 31, 0.48);
+  border: 2px solid transparent;
+  border-radius: 999px;
+  background-clip: padding-box;
+}
+
+#language-page .big-button,
+#country-page .big-button {
+  flex: 0 0 auto !important;
+  margin-top: 14px !important;
+}
+
+/* 추천 카드 안에서 출발지, 화살표, 목적지가 항상 한 줄의 카드 폭 안에 머문다. */
+#next-place-detail-page .recommendation-detail-card {
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow: hidden !important;
+}
+
+#next-place-detail-page .mini-map.hp-route-map {
+  box-sizing: border-box !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  grid-template-columns: minmax(0, 0.82fr) 34px minmax(0, 1.28fr) !important;
+  gap: 6px !important;
+  min-height: 112px !important;
+  padding: 15px 10px !important;
+  overflow: hidden !important;
+}
+
+#next-place-detail-page .mini-map.hp-route-map .map-node {
+  box-sizing: border-box !important;
+  width: auto !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  padding: 10px 6px !important;
+  overflow: hidden !important;
+  overflow-wrap: anywhere !important;
+  word-break: keep-all !important;
+  white-space: normal !important;
+  text-align: center !important;
+  font-size: clamp(10px, 3.1vw, 13px) !important;
+  line-height: 1.3 !important;
+}
+
+#next-place-detail-page .mini-map.hp-route-map .hp-route-arrow {
+  box-sizing: border-box !important;
+  width: 34px !important;
+  min-width: 34px !important;
+  height: 34px !important;
+  font-size: 20px !important;
+}
+
+@media (max-width: 360px) {
+  #next-place-detail-page .mini-map.hp-route-map {
+    grid-template-columns: minmax(0, 0.78fr) 30px minmax(0, 1.32fr) !important;
+    gap: 4px !important;
+    padding: 13px 8px !important;
+  }
+
+  #next-place-detail-page .mini-map.hp-route-map .map-node {
+    padding: 9px 5px !important;
+    font-size: 10px !important;
+  }
+
+  #next-place-detail-page .mini-map.hp-route-map .hp-route-arrow {
+    width: 30px !important;
+    min-width: 30px !important;
+    height: 30px !important;
+    font-size: 18px !important;
+  }
+}
+
+/* =========================================================
+   2026-07-25 설정 화면 실제 스크롤 최종 보정
+   - 자동 레이아웃 보정과 충돌하지 않도록 명시적 높이를 부여한다.
+   - 카드 내부 스크롤을 기본으로 하고 페이지 전체 스크롤을 안전망으로 둔다.
+========================================================= */
+#language-page.active,
+#country-page.active {
+  display: flex !important;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  overscroll-behavior-y: contain !important;
+  -webkit-overflow-scrolling: touch !important;
+  scroll-padding-top: 12px !important;
+}
+
+#language-page.active > .screen-layout.setup-layout,
+#country-page.active > .screen-layout.setup-layout {
+  flex: 0 0 auto !important;
+  width: 100% !important;
+  min-height: 100% !important;
+  height: auto !important;
+  justify-content: flex-start !important;
+  overflow: visible !important;
+  padding-top: 0 !important;
+  padding-bottom: 18px !important;
+}
+
+#language-page .setting-card.list-card,
+#country-page .setting-card.list-card {
+  display: block !important;
+  flex: 0 0 auto !important;
+  width: 100% !important;
+  height: clamp(220px, 36dvh, 330px) !important;
+  min-height: 220px !important;
+  max-height: 330px !important;
+  margin-top: 18px !important;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  overscroll-behavior: contain !important;
+  -webkit-overflow-scrolling: touch !important;
+  touch-action: pan-y !important;
+  scrollbar-gutter: stable !important;
+  scrollbar-width: auto !important;
+  scrollbar-color: rgba(111, 63, 31, 0.72) rgba(111, 63, 31, 0.12) !important;
+}
+
+#language-page .setting-card.list-card::-webkit-scrollbar,
+#country-page .setting-card.list-card::-webkit-scrollbar {
+  width: 10px !important;
+  display: block !important;
+}
+
+#language-page .setting-card.list-card::-webkit-scrollbar-track,
+#country-page .setting-card.list-card::-webkit-scrollbar-track {
+  background: rgba(111, 63, 31, 0.10) !important;
+  border-radius: 999px !important;
+}
+
+#language-page .setting-card.list-card::-webkit-scrollbar-thumb,
+#country-page .setting-card.list-card::-webkit-scrollbar-thumb {
+  min-height: 44px !important;
+  background: rgba(111, 63, 31, 0.70) !important;
+  border: 2px solid rgba(255, 247, 232, 0.92) !important;
+  border-radius: 999px !important;
+}
+
+#language-page .setting-card.list-card .select-row,
+#country-page .setting-card.list-card .select-row {
+  flex: 0 0 auto !important;
+}
+
+#language-page .big-button,
+#country-page .big-button {
+  flex: 0 0 auto !important;
+  margin-top: 14px !important;
+  margin-bottom: 4px !important;
+}
+
+@media (max-height: 720px) {
+  #language-page .setting-card.list-card,
+  #country-page .setting-card.list-card {
+    height: 230px !important;
+    min-height: 230px !important;
+  }
+}
+
+
+/* 2026-07-27 페이지 스크롤 고정 보정
+   화면 내용이나 레이아웃 재검사가 실행되어도 사용자의 스크롤 위치를 되돌리지 않는다. */
+.page.active:not(#language-page):not(#country-page) {
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  overscroll-behavior-y: contain !important;
+  -webkit-overflow-scrolling: touch !important;
+  touch-action: pan-y !important;
+  scroll-behavior: auto !important;
+}
+
+.page.active:not(#language-page):not(#country-page) > .screen-layout {
+  flex-shrink: 0 !important;
+}
+
+/* 2026-08-07 와이어프레임 챗봇 연결 */
+.wire-chatbot-button {
+  position: absolute;
+  top: max(12px, env(safe-area-inset-top));
+  right: 12px;
+  z-index: 45;
+  min-width: 48px;
+  min-height: 42px;
+  padding: 7px 10px;
+  border: 2px solid #59412f;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.96);
+  color: #322219;
+  box-shadow: 0 3px 0 rgba(50, 34, 25, 0.25);
+  font: 800 13px/1.1 inherit;
+  cursor: pointer;
+}
+
+.wire-chatbot-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+  background: rgba(34, 24, 17, 0.48);
+}
+
+.wire-chatbot-modal.hidden {
+  display: none !important;
+}
+
+.wire-chatbot-panel {
+  width: min(390px, 100%);
+  max-height: min(620px, 88dvh);
+  display: grid;
+  grid-template-rows: auto minmax(180px, 1fr) auto auto;
+  overflow: hidden;
+  border: 3px solid #5f432f;
+  border-radius: 22px;
+  background: #fff8ec;
+  box-shadow: 0 18px 50px rgba(30, 18, 10, 0.32);
+}
+
+.wire-chatbot-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 15px 16px;
+  background: #765033;
+  color: #fff;
+}
+
+.wire-chatbot-header h2 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.wire-chatbot-close {
+  width: 34px;
+  height: 34px;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.wire-chatbot-messages {
+  min-height: 220px;
+  padding: 16px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.wire-chatbot-message {
+  width: fit-content;
+  max-width: 85%;
+  margin: 0 0 10px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  font-size: 14px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+
+.wire-chatbot-message.bot {
+  margin-right: auto;
+  border: 1px solid #dcc4a7;
+  background: #f4e5d1;
+  color: #3d291c;
+}
+
+.wire-chatbot-message.user {
+  margin-left: auto;
+  background: #765033;
+  color: #fff;
+}
+
+.wire-chatbot-quick {
+  display: flex;
+  gap: 7px;
+  padding: 0 12px 10px;
+  overflow-x: auto;
+}
+
+.wire-chatbot-quick button {
+  flex: 0 0 auto;
+  padding: 8px 10px;
+  border: 1px solid #9f7958;
+  border-radius: 999px;
+  background: #fff;
+  color: #5d3d27;
+  font: 700 12px/1.2 inherit;
+  cursor: pointer;
+}
+
+.wire-chatbot-form {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+  padding: 12px;
+  border-top: 1px solid #dec9ae;
+  background: #f8ead7;
+}
+
+.wire-chatbot-form input {
+  min-width: 0;
+  height: 44px;
+  padding: 0 12px;
+  border: 1px solid #9f7958;
+  border-radius: 10px;
+  background: #fff;
+  color: #322219;
+  font: 500 14px/1.2 inherit;
+}
+
+.wire-chatbot-form button {
+  min-width: 62px;
+  border: 0;
+  border-radius: 10px;
+  background: #765033;
+  color: #fff;
+  font: 800 14px/1.2 inherit;
+  cursor: pointer;
+}
+
+/* QR 진입 이후 최신 본선 흐름에서 사용하지 않는 구버전 화면 */
+#start-page,
+#china-mode-intro-page,
+#first-record-page,
+#first-record-camera-page,
+#place-loading-page,
+#place-confirm-page,
+.select-row.disabled {
+  display: none !important;
+}
+
+.wire-verified-place:empty {
+  display: none;
+}
+
+.wire-reflection-input-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.wire-reflection-input-row input {
+  min-width: 0;
+  min-height: 44px;
+  padding: 0 12px;
+  border: 1px solid #9f7958;
+  border-radius: 10px;
+  background: #fffdf8;
+  color: #322219;
+  font: inherit;
+}
+
+.wire-reflection-input-row .sub-button {
+  width: auto;
+  min-width: 72px;
+  margin: 0;
+}

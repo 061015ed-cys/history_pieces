@@ -1,0 +1,11 @@
+History Pieces scroll fix structural verification
+PASS - explicit language/country list height constraint
+PASS - card overflow-y auto
+PASS - touch-action pan-y
+PASS - desktop wheel fallback handler
+PASS - keyboard scroll handler
+PASS - language/country excluded from automatic overflow layout conversion
+PASS - CSS and JS cache-busting query applied by run_integrated.py
+PASS - JavaScript syntax check
+PASS - Python syntax check
+PASS - local server injection check

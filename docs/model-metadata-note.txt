@@ -1,0 +1,7 @@
+PTH model metadata note
+
+- The three files contain PyTorch state_dict weights.
+- The weight keys verify a torchvision ResNet-50 backbone and a 2-class Sequential(Dropout, Linear) classifier.
+- The PTH files do not contain the original training class names or class order.
+- addons/model-contract.json currently maps positiveClassIndex to 1 so the models can connect to the existing common target/fail labels.
+- Before the final field demonstration, confirm the training class order or test with actual labeled validation photos. This semantic class-order point cannot be proven from the PTH weights alone.

@@ -1,0 +1,87 @@
+{
+  "schema_version": 1,
+  "place_id": "MMH2",
+  "view_id": "mokpo-modern-history-museum-2-01",
+  "candidate_id": "MMH2_HIST1932_TO_MODERN_20260731_120517_SIFT_V1",
+  "approval_status": "approved",
+  "available": true,
+  "overlay_ready": true,
+  "reason_code": "OK",
+  "query_asset_id": "MMH2_0731_0079",
+  "capture_group_id": "MMH2_V2_G007",
+  "independent_outputs": {
+    "current_image": {
+      "path": "data/processed/v2/extracted/2026-07-31/MMH2/MHH2_2/MHH2_2/20260731_121430.jpg",
+      "available": true
+    },
+    "historical_source_image": {
+      "path": "data/historical_progressed/MMH2_1932_p041_no078_original.jpg",
+      "available": true
+    },
+    "aligned_historical_rgba": {
+      "path": "evaluation/mmh2_historical_overlay_activation_2026-08-02/aligned_historical_rgba.png",
+      "sha256": "c9932a69b84a50af1c1ba8d6936fef33e0742d95ac2b3d95f7f0b759c5f90b4b",
+      "width": 4128,
+      "height": 3096,
+      "format": "PNG",
+      "mode": "RGBA",
+      "available": true,
+      "global_opacity_baked": false,
+      "frontend_opacity_range": [
+        0.0,
+        1.0
+      ]
+    },
+    "historical_alpha_mask": {
+      "path": "evaluation/mmh2_historical_overlay_activation_2026-08-02/historical_alpha_mask.png",
+      "sha256": "fc5feff0b43cf7865409c396011346fea352d001918ebb7140739a00c75bd40c",
+      "width": 4128,
+      "height": 3096,
+      "format": "PNG",
+      "mode": "L",
+      "available": true,
+      "represents": "content mask, inward feather, and lower taper; excludes static opacity 0.50"
+    },
+    "static_overlay_preview": {
+      "path": "evaluation/mmh2_historical_overlay_review_2026-08-02/final_overlay_v2.png",
+      "sha256": "c71752a54ed768cbe4e29a29e15918771d8e0f3b8e9b89cc47186cb9359732cf",
+      "available": true,
+      "approved": true,
+      "static_opacity": 0.5
+    },
+    "overlay_metadata": {
+      "path": "evaluation/mmh2_historical_overlay_activation_2026-08-02/overlay_metadata.json",
+      "available": true
+    }
+  },
+  "composition": {
+    "historical_to_query_homography": [
+      [
+        1.488091576204,
+        -0.24949289497,
+        558.788058035763
+      ],
+      [
+        -0.309758005654,
+        1.731912688508,
+        743.116082885743
+      ],
+      [
+        -0.000161244937,
+        -0.000125356197,
+        1.0
+      ]
+    ],
+    "static_preview_opacity": 0.5,
+    "rgba_global_opacity_baked": false,
+    "alpha_mask_outside_changed_pixel_count": 0
+  },
+  "failure_guards": {
+    "aligned_only": true,
+    "retry_blocked": true,
+    "unsupported_blocked": true,
+    "place_view_check": true,
+    "orb_thresholds_changed": false
+  },
+  "service_integration_todos": []
+}

@@ -1,0 +1,152 @@
+{
+  "schemaVersion": 1,
+  "placeId": "HNB",
+  "status": "approved_for_demo_composition",
+  "visualReviewStatus": "passed_for_demo_composition_cleanup",
+  "alignmentMode": "composition",
+  "comparisonMode": "full-frame-crossfade",
+  "precisionClaim": "not a homography success",
+  "displayLabel": "AI 복원 장면",
+  "historicalFactStatus": "illustrative",
+  "runtimeGeneration": false,
+  "canvas": {
+    "width": 3096,
+    "height": 4128
+  },
+  "currentCaptureId": "HNB_FC_0052",
+  "modernElementCleanup": [
+    "left entrance modern vehicle",
+    "right background high-rise",
+    "left background modern architecture",
+    "right entrance projecting sign and generated text",
+    "foreground modern manhole and facilities"
+  ],
+  "source": {
+    "current": {
+      "path": "data/processed/v2/extracted/first_capture/HNB/구호남은행목포지점/구호남은행목포지점/20260730_174906.jpg",
+      "sha256": "29eeca50c5bef10e9b58cb7bc57f8ff9c77a1ff55a90a039d396fde4388af5be"
+    },
+    "historicalOriginal": {
+      "path": "data/historical/HNB/HNB_1930s_honam_bank_historical_original.jpg.jpg",
+      "sha256": "2918ab13c6c5e47221654af6e49b69a7051c30b3000a5bbf0635b38ea53633c5"
+    },
+    "supersededRestoration": {
+      "path": "evaluation/hnb_composition_final_2026-08-04/ai_restored_scene_hnb_composition_v4.jpg",
+      "sha256": "d4cbf486ae3ec2dfeaf93d69a50de6c51c81a318f07ab6fbc1d560158c3a7b61"
+    },
+    "imagegenCandidate": {
+      "path": "evaluation/hnb_composition_final_2026-08-04/imagegen_cleanup_candidate_v2.png",
+      "sha256": "3a7a6fe0b7a5e3b7fd753d0c86be2de92810a8e66419ec4bbf5f4236f43216d9"
+    }
+  },
+  "generation": {
+    "tool": "built-in image_gen",
+    "settings": {
+      "runtimeGeneration": false,
+      "candidateLimit": 2
+    },
+    "selectedCandidate": 2,
+    "promptSummary": "Preserve v4 bank camera coordinates and architecture; remove five modern-element groups; restore blank-sign 1932 low-rise surroundings with no text.",
+    "postprocess": "Register candidate globally to v4, then restore reviewed v4 architectural anchor pixels through a feathered lock mask excluding contaminated entrance/sign regions; no local or architectural warp.",
+    "candidateRegistration": {
+      "feature": "SIFT candidate-to-v4 registration",
+      "goodMatches": 130,
+      "inliers": 67,
+      "inlierRatio": 0.5153846153846153,
+      "matrix": [
+        [
+          1.0036920354450771,
+          0.0012776809225536563,
+          -5.362767499720767
+        ],
+        [
+          0.0006268322177144482,
+          1.0038245763505516,
+          -6.357405481210381
+        ],
+        [
+          1.8732661113942434e-07,
+          7.730354149732098e-07,
+          1.0
+        ]
+      ]
+    }
+  },
+  "compositionRegistration": {
+    "applied": true,
+    "method": "candidate-to-v4 global registration followed by selective v4 architectural anchor lock",
+    "precisionClaim": "not a precision historical alignment",
+    "localWarp": false,
+    "geometricWarpOnLockedBuilding": false
+  },
+  "crossfadeReview": {
+    "states": {
+      "0": "evaluation/hnb_composition_final_2026-08-04/crossfade_v5_000.jpg",
+      "25": "evaluation/hnb_composition_final_2026-08-04/crossfade_v5_025.jpg",
+      "50": "evaluation/hnb_composition_final_2026-08-04/crossfade_v5_050.jpg",
+      "75": "evaluation/hnb_composition_final_2026-08-04/crossfade_v5_075.jpg",
+      "100": "evaluation/hnb_composition_final_2026-08-04/crossfade_v5_100.jpg"
+    },
+    "status": "passed",
+    "browserReview": "evaluation/hnb_composition_cleanup_review_2026-08-04/browser/browser_review_v5.json",
+    "viewports": [
+      "430x932",
+      "390x844"
+    ]
+  },
+  "sources": {
+    "data/processed/v2/extracted/first_capture/HNB/구호남은행목포지점/구호남은행목포지점/20260730_174906.jpg": "29eeca50c5bef10e9b58cb7bc57f8ff9c77a1ff55a90a039d396fde4388af5be",
+    "data/historical/HNB/HNB_1930s_honam_bank_historical_original.jpg.jpg": "2918ab13c6c5e47221654af6e49b69a7051c30b3000a5bbf0635b38ea53633c5",
+    "evaluation/hnb_composition_final_2026-08-04/ai_restored_scene_hnb_composition_v4.jpg": "d4cbf486ae3ec2dfeaf93d69a50de6c51c81a318f07ab6fbc1d560158c3a7b61",
+    "evaluation/hnb_composition_final_2026-08-04/imagegen_cleanup_candidate_v2.png": "3a7a6fe0b7a5e3b7fd753d0c86be2de92810a8e66419ec4bbf5f4236f43216d9"
+  },
+  "outputs": {
+    "aiRestoredScene": {
+      "path": "evaluation/hnb_composition_final_2026-08-04/ai_restored_scene_hnb_composition_v5.jpg",
+      "sha256": "6a063dc654f15c7ffcff3fd3072990f4d8b17217564d3b100a76c8657942b4be"
+    },
+    "fullFrameRgba": {
+      "path": "evaluation/hnb_composition_final_2026-08-04/composition_restored_rgba_hnb_v5.png",
+      "sha256": "95bddb3cf89be77babf7bd93055e7308721bdfe4925b2715555f267c00c6ffd9"
+    },
+    "fullFrameMask": {
+      "path": "evaluation/hnb_composition_final_2026-08-04/composition_full_frame_mask_hnb_v5.png",
+      "sha256": "7fb84681acb53a7410371e7fd45de665d84b233ab02fdea9e9070cdf5bbe3b59"
+    },
+    "preview": {
+      "path": "evaluation/hnb_composition_final_2026-08-04/composition_preview_hnb_v5.jpg",
+      "sha256": "6a063dc654f15c7ffcff3fd3072990f4d8b17217564d3b100a76c8657942b4be"
+    },
+    "renders": {
+      "0": "evaluation/hnb_composition_final_2026-08-04/crossfade_v5_000.jpg",
+      "25": "evaluation/hnb_composition_final_2026-08-04/crossfade_v5_025.jpg",
+      "50": "evaluation/hnb_composition_final_2026-08-04/crossfade_v5_050.jpg",
+      "75": "evaluation/hnb_composition_final_2026-08-04/crossfade_v5_075.jpg",
+      "100": "evaluation/hnb_composition_final_2026-08-04/crossfade_v5_100.jpg"
+    },
+    "contactSheet": "evaluation/hnb_composition_final_2026-08-04/hnb_composition_cleanup_review_v5.jpg",
+    "historicalBuildingLockMask": {
+      "path": "evaluation/hnb_composition_final_2026-08-04/historical_building_lock_mask_hnb_v5.png",
+      "sha256": "142e5b529b5b3652dfd20b733eeb8cf19a381e9a48f26221afe994ce2ce76cf9"
+    },
+    "aiBackgroundGenerationMask": {
+      "path": "evaluation/hnb_composition_final_2026-08-04/ai_background_generation_mask_hnb_v5.png",
+      "sha256": "452163550d8e72f106710bffe2cb6cba348e159adec2be8b94bebf787000f156"
+    },
+    "registeredCandidate": {
+      "path": "evaluation/hnb_composition_final_2026-08-04/imagegen_cleanup_candidate_v2_registered.png",
+      "sha256": "400fad26cebdc14630e5345a851d76cbe535c91ad97863e47e09c582e51b5e65"
+    }
+  },
+  "outputHashes": {
+    "evaluation/hnb_composition_final_2026-08-04/ai_restored_scene_hnb_composition_v5.jpg": "6a063dc654f15c7ffcff3fd3072990f4d8b17217564d3b100a76c8657942b4be",
+    "evaluation/hnb_composition_final_2026-08-04/composition_restored_rgba_hnb_v5.png": "95bddb3cf89be77babf7bd93055e7308721bdfe4925b2715555f267c00c6ffd9",
+    "evaluation/hnb_composition_final_2026-08-04/composition_preview_hnb_v5.jpg": "6a063dc654f15c7ffcff3fd3072990f4d8b17217564d3b100a76c8657942b4be",
+    "evaluation/hnb_composition_final_2026-08-04/historical_building_lock_mask_hnb_v5.png": "142e5b529b5b3652dfd20b733eeb8cf19a381e9a48f26221afe994ce2ce76cf9",
+    "evaluation/hnb_composition_final_2026-08-04/ai_background_generation_mask_hnb_v5.png": "452163550d8e72f106710bffe2cb6cba348e159adec2be8b94bebf787000f156",
+    "evaluation/hnb_composition_final_2026-08-04/composition_full_frame_mask_hnb_v5.png": "7fb84681acb53a7410371e7fd45de665d84b233ab02fdea9e9070cdf5bbe3b59",
+    "evaluation/hnb_composition_final_2026-08-04/imagegen_cleanup_candidate_v2_registered.png": "400fad26cebdc14630e5345a851d76cbe535c91ad97863e47e09c582e51b5e65",
+    "evaluation/hnb_composition_final_2026-08-04/hnb_composition_cleanup_review_v5.jpg": "baf4a02071e884f3ab71a1a3c3999537241eedbf95ca714e363957410c37327b"
+  },
+  "generatedAt": "2026-08-04T13:24:36.452966+00:00"
+}
