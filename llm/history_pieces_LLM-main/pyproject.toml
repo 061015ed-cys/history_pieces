@@ -1,0 +1,37 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mokpo-history-chatbot"
+version = "0.1.0"
+description = "목포 근대역사 다국어 RAG 챗봇 프로토타입"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
+api = ["fastapi>=0.115", "uvicorn>=0.30"]
+embedding = ["sentence-transformers>=5.1,<6"]
+
+[project.scripts]
+history-chatbot = "history_chatbot.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+history_chatbot = [
+  "web/static/*",
+  "chat/static/assets/giroksae/*.png",
+  "chat/static/assets/backgrounds/*.png",
+]
+
+[tool.pytest.ini_options]
+addopts = "-q -p no:cacheprovider"
+testpaths = ["tests"]
+pythonpath = ["src"]
+markers = [
+  "integration: requires locally cached external models or runtime data",
+]

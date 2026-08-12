@@ -148,6 +148,39 @@
     })
   });
 
+  const PIECE_CHAT = Object.freeze({
+    1: Object.freeze({
+      titleKo: "기록새 챗봇 · 조각 1",
+      titleZh: "记录鸟聊天助手 · 碎片1",
+      greetingKo: "조각 1 목포역에 관한 감상과 궁금한 점을 물어봐.",
+      greetingZh: "可以询问关于碎片1木浦站的感受和问题。",
+      quickKo: ["목포역은 어떤 장소였어?", "옛 목포역 사람들 이야기", "조각 1 기록 방법"],
+      quickZh: ["木浦站曾是什么地方？", "旧木浦站里的人们", "碎片1记录方法"],
+      placeKo: "조각 1은 목포역의 간판과 역을 오간 사람들의 흔적을 살펴보는 기록이야.",
+      placeZh: "碎片1记录木浦站的站名标识，以及曾在车站往来的人们。"
+    }),
+    2: Object.freeze({
+      titleKo: "기록새 챗봇 · 조각 2",
+      titleZh: "记录鸟聊天助手 · 碎片2",
+      greetingKo: "조각 2 호남은행 목포지점에 관한 감상과 궁금한 점을 물어봐.",
+      greetingZh: "可以询问关于碎片2湖南银行木浦支店的感受和问题。",
+      quickKo: ["호남은행은 어떤 곳이었어?", "음악 공간으로 바뀐 이유", "조각 2 기록 방법"],
+      quickZh: ["湖南银行曾是什么地方？", "为何变成音乐空间？", "碎片2记录方法"],
+      placeKo: "조각 2는 현재 목포 대중음악의 전당으로 쓰이는 옛 호남은행 목포지점의 변화를 살펴보는 기록이야.",
+      placeZh: "碎片2记录旧湖南银行木浦支店变为如今木浦大众音乐殿堂的变化。"
+    }),
+    3: Object.freeze({
+      titleKo: "기록새 챗봇 · 조각 3",
+      titleZh: "记录鸟聊天助手 · 碎片3",
+      greetingKo: "조각 3 동양척식주식회사 목포지점에 관한 감상과 궁금한 점을 물어봐.",
+      greetingZh: "可以询问关于碎片3东方拓殖株式会社木浦支店的感受和问题。",
+      quickKo: ["이 건물의 과거를 알려줘", "이곳 사람들의 이야기", "조각 3 기록 방법"],
+      quickZh: ["请介绍这座建筑的过去", "这里的人们的故事", "碎片3记录方法"],
+      placeKo: "조각 3은 현재 목포근대역사관 2관인 옛 동양척식주식회사 목포지점과 그곳을 지나간 사람들의 역사를 살펴보는 기록이야.",
+      placeZh: "碎片3记录如今木浦近代历史馆2馆所在的旧东方拓殖株式会社木浦支店及相关人们的历史。"
+    })
+  });
+
   const UI = Object.freeze({
     ko: Object.freeze({
       photoCapture: "사진 촬영", photoConfirm: "현재 사진으로\n확정하시겠습니까?", no: "아니오", yes: "예",
@@ -218,6 +251,10 @@
   let reflectionPiece = 1;
   let finalOrder = [];
   const previewUrls = new Map();
+  const pieceChatSessions = new Map();
+  const pieceChatHistories = new Map();
+  const pieceChatRequests = new Set();
+  let activeChatPiece = 1;
 
   function appState() {
     return global.appState || {};
@@ -646,13 +683,77 @@
     });
   }
 
-  function configureChatbot() {
+  function currentChatPiece() {
+    const active = document.querySelector(".page.active");
+    const direct = active && active.id.match(/(?:piece|record)-([123])/);
+    if (direct) return Number(direct[1]);
+    if (active && active.id.includes("reflection")) return reflectionPiece;
+    if (active && active.id.startsWith("wire-")) return pendingPiece;
+    const statePiece = Number(appState().currentPiece);
+    return [1, 2, 3].includes(statePiece) ? statePiece : ([1, 2, 3].includes(pendingPiece) ? pendingPiece : 1);
+  }
+
+  function pieceChatCopy(pieceNumber) {
+    const config = PIECE_CHAT[pieceNumber] || PIECE_CHAT[1];
+    const chinese = isChineseLanguage();
+    return {
+      title: chinese ? config.titleZh : config.titleKo,
+      greeting: chinese ? config.greetingZh : config.greetingKo,
+      quick: chinese ? config.quickZh : config.quickKo,
+      place: chinese ? config.placeZh : config.placeKo
+    };
+  }
+
+  function pieceChatHistory(pieceNumber) {
+    if (!pieceChatHistories.has(pieceNumber)) {
+      pieceChatHistories.set(pieceNumber, [
+        { role: "bot", message: pieceChatCopy(pieceNumber).greeting, kind: "greeting" }
+      ]);
+    }
+    return pieceChatHistories.get(pieceNumber);
+  }
+
+  function renderChatbotHistory(pieceNumber) {
+    const messages = document.getElementById("wire-chatbot-messages");
+    if (!messages) return;
+    messages.replaceChildren();
+    pieceChatHistory(pieceNumber).forEach((entry) => {
+      const bubble = document.createElement("p");
+      bubble.className = `wire-chatbot-message ${entry.role}`;
+      bubble.textContent = entry.message;
+      messages.appendChild(bubble);
+    });
+    if (pieceChatRequests.has(pieceNumber)) {
+      const loading = document.createElement("p");
+      loading.className = "wire-chatbot-message bot";
+      loading.dataset.chatLoading = "true";
+      loading.textContent = isChineseLanguage() ? "记录鸟正在准备回答…" : "기록새가 답변을 준비하고 있어…";
+      messages.appendChild(loading);
+    }
+    messages.scrollTop = messages.scrollHeight;
+  }
+
+  function addChatbotMessage(role, message, pieceNumber = activeChatPiece, kind = "message") {
+    const value = String(message || "").trim();
+    if (!value) return;
+    pieceChatHistory(pieceNumber).push({ role, message: value, kind });
+    if (appState().chatOpen && activeChatPiece === pieceNumber) renderChatbotHistory(pieceNumber);
+  }
+
+  function addReflectionPrompt(pieceNumber, question) {
+    const history = pieceChatHistory(pieceNumber);
+    if (history.some((entry) => entry.kind === "reflection-prompt")) return;
+    history.push({ role: "bot", message: question, kind: "reflection-prompt" });
+  }
+
+  function configureChatbot(pieceNumber = currentChatPiece()) {
     const copy = ui();
+    const chatCopy = pieceChatCopy(pieceNumber);
     document.querySelectorAll(".wire-chatbot-button").forEach((button) => {
       button.textContent = copy.chatbot;
-      button.setAttribute("aria-label", copy.chatbotTitle);
+      button.setAttribute("aria-label", chatCopy.title);
     });
-    text("#wire-chatbot-title", copy.chatbotTitle);
+    text("#wire-chatbot-title", chatCopy.title);
     const close = document.querySelector(".wire-chatbot-close");
     if (close) close.setAttribute("aria-label", copy.close);
     const input = document.getElementById("wire-chatbot-input");
@@ -660,30 +761,27 @@
     text("#wire-chatbot-send", copy.send);
     const quick = document.getElementById("wire-chatbot-quick");
     if (quick) {
-      quick.innerHTML = [copy.helpMission, copy.helpPlace, copy.helpRecord]
+      quick.innerHTML = chatCopy.quick
         .map((label) => `<button type="button" data-chatbot-prompt="${label}">${label}</button>`)
         .join("");
     }
   }
 
-  function addChatbotMessage(role, message) {
-    const messages = document.getElementById("wire-chatbot-messages");
-    if (!messages) return;
-    const bubble = document.createElement("p");
-    bubble.className = `wire-chatbot-message ${role}`;
-    bubble.textContent = message;
-    messages.appendChild(bubble);
-    messages.scrollTop = messages.scrollHeight;
+  function resetPieceChats() {
+    pieceChatSessions.clear();
+    pieceChatHistories.clear();
+    pieceChatRequests.clear();
+    activeChatPiece = 1;
   }
 
   function openChatbot() {
-    const modal = document.getElementById("wire-chatbot-modal");
-    const messages = document.getElementById("wire-chatbot-messages");
-    if (!modal || !messages) return;
-    appState().chatOpen = true;
-    if (!messages.children.length) addChatbotMessage("bot", ui().chatbotGreeting);
-    modal.classList.remove("hidden");
-    document.getElementById("wire-chatbot-input")?.focus();
+    activeChatPiece = currentChatPiece();
+    const chatbotUrl = new URL("/chatbot/", window.location.origin);
+    chatbotUrl.searchParams.set("piece", String(activeChatPiece));
+    chatbotUrl.searchParams.set("locale", isChineseLanguage() ? "zh-CN" : "ko");
+    const chatbotWindow = window.open(chatbotUrl.toString(), "_blank");
+    if (chatbotWindow) chatbotWindow.opener = null;
+    else window.location.assign(chatbotUrl.toString());
   }
 
   function closeChatbot() {
@@ -691,16 +789,84 @@
     appState().chatOpen = false;
   }
 
-  function answerChatbot(prompt) {
+  async function ensurePieceChatSession(pieceNumber) {
+    if (pieceChatSessions.has(pieceNumber)) return pieceChatSessions.get(pieceNumber);
+    const response = await fetch("/api/chat/session", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        piece: pieceNumber,
+        locale: isChineseLanguage() ? "zh-CN" : "ko"
+      })
+    });
+    const payload = await response.json().catch(() => ({}));
+    if (!response.ok || !payload.session_id) {
+      throw new Error(payload.error || "CHAT_SESSION_CREATE_FAILED");
+    }
+    pieceChatSessions.set(pieceNumber, payload.session_id);
+    return payload.session_id;
+  }
+
+  async function requestPieceChatAnswer(pieceNumber, message, chatMode = "piece_chat", allowRetry = true) {
+    const sessionId = await ensurePieceChatSession(pieceNumber);
+    const response = await fetch("/api/chat/message", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        piece: pieceNumber,
+        session_id: sessionId,
+        message,
+        chat_mode: chatMode,
+        locale: isChineseLanguage() ? "zh-CN" : "ko"
+      })
+    });
+    const payload = await response.json().catch(() => ({}));
+    if (response.status === 409 && allowRetry) {
+      pieceChatSessions.delete(pieceNumber);
+      return requestPieceChatAnswer(pieceNumber, message, chatMode, false);
+    }
+    if (!response.ok) throw new Error(payload.error || "CHAT_REQUEST_FAILED");
+    const answer = String(payload.response_text || payload.answer || "").trim();
+    if (!answer) throw new Error("CHAT_EMPTY_RESPONSE");
+    return answer;
+  }
+
+  function fallbackPieceChatAnswer(pieceNumber, prompt) {
     const copy = ui();
     const value = String(prompt || "").trim();
-    if (!value) return;
-    addChatbotMessage("user", value);
+    const chatCopy = pieceChatCopy(pieceNumber);
     let answer = copy.botFallback;
     if (value === copy.helpMission || /미션|촬영|任务|拍摄/.test(value)) answer = copy.botMission;
-    else if (value === copy.helpPlace || /장소|목포|地点|木浦/.test(value)) answer = copy.botPlace;
+    else if (value === copy.helpPlace || /장소|목포|역|은행|역사관|건물|음악|地点|木浦|银行|历史馆|建筑|音乐/.test(value)) answer = chatCopy.place;
     else if (value === copy.helpRecord || /기록|영상|记录|视频/.test(value)) answer = copy.botRecord;
-    addChatbotMessage("bot", answer);
+    return answer;
+  }
+
+  async function answerChatbot(prompt) {
+    const pieceNumber = activeChatPiece || currentChatPiece();
+    const value = String(prompt || "").trim();
+    if (!value || pieceChatRequests.has(pieceNumber)) return;
+    addChatbotMessage("user", value, pieceNumber);
+    pieceChatRequests.add(pieceNumber);
+    renderChatbotHistory(pieceNumber);
+    const input = document.getElementById("wire-chatbot-input");
+    const send = document.getElementById("wire-chatbot-send");
+    if (input) input.disabled = true;
+    if (send) send.disabled = true;
+    try {
+      const answer = await requestPieceChatAnswer(pieceNumber, value, "free_chat");
+      addChatbotMessage("bot", answer, pieceNumber);
+    } catch (_error) {
+      addChatbotMessage("bot", fallbackPieceChatAnswer(pieceNumber, value), pieceNumber);
+    } finally {
+      pieceChatRequests.delete(pieceNumber);
+      if (input) input.disabled = false;
+      if (send) send.disabled = false;
+      if (appState().chatOpen && activeChatPiece === pieceNumber) {
+        renderChatbotHistory(pieceNumber);
+        input?.focus();
+      }
+    }
   }
 
   function configureAll() {
@@ -909,7 +1075,29 @@
     }
     text('[data-wire-action="reflection-text"]', isChineseLanguage() ? "输入" : "입력");
     text('[data-wire-action="reflection-skip"]', isChineseLanguage() ? "跳过" : "건너뛰기");
+    addReflectionPrompt(pieceNumber, config.reflectionQuestion);
+    ensurePieceChatSession(pieceNumber).catch(() => {});
     show("wire-reflection-page");
+  }
+
+  async function resolveReflectionResponse(pieceNumber, userMessage, fallbackReply) {
+    const nextButton = document.querySelector('#wire-reflection-result-page [data-wire-action="reflection-next"]');
+    pieceChatRequests.add(pieceNumber);
+    if (nextButton) nextButton.disabled = true;
+    addChatbotMessage("user", userMessage, pieceNumber, "reflection-answer");
+    text("#wire-reflection-reply", isChineseLanguage() ? "记录鸟正在准备回答…" : "기록새가 답변을 준비하고 있어…");
+    try {
+      const answer = await requestPieceChatAnswer(pieceNumber, userMessage);
+      text("#wire-reflection-reply", answer);
+      addChatbotMessage("bot", answer, pieceNumber, "reflection-reply");
+    } catch (_error) {
+      text("#wire-reflection-reply", fallbackReply);
+      addChatbotMessage("bot", fallbackReply, pieceNumber, "reflection-reply-fallback");
+    } finally {
+      pieceChatRequests.delete(pieceNumber);
+      if (nextButton) nextButton.disabled = false;
+      if (appState().chatOpen && activeChatPiece === pieceNumber) renderChatbotHistory(pieceNumber);
+    }
   }
 
   function showReflectionReply(pieceNumber, optionIndex) {
@@ -925,8 +1113,8 @@
     appState().storyTags = [...new Set([...(appState().storyTags || []), ...tags])];
     text("#wire-reflection-result-label", `${config.label} · ${config.verifiedPlace}`);
     html("#wire-reflection-result-title", config.reflectionTitle.replace("\n", "<br>"));
-    text("#wire-reflection-reply", config.reflectionReply);
     show("wire-reflection-result-page");
+    resolveReflectionResponse(pieceNumber, value, config.reflectionReply);
   }
 
   function saveReflectionText(pieceNumber, skip = false) {
@@ -941,10 +1129,14 @@
     const config = pieceConfig(pieceNumber);
     text("#wire-reflection-result-label", `${config.label} · ${config.verifiedPlace}`);
     html("#wire-reflection-result-title", config.reflectionTitle.replace("\n", "<br>"));
-    text("#wire-reflection-reply", skip
-      ? (isChineseLanguage() ? "没关系。你留下的画面本身也是一份记录。" : "괜찮아. 네가 남긴 장면 자체도 하나의 기록이니까.")
-      : config.reflectionReply);
     show("wire-reflection-result-page");
+    const fallbackReply = skip
+      ? (isChineseLanguage() ? "没关系。你留下的画面本身也是一份记录。" : "괜찮아. 네가 남긴 장면 자체도 하나의 기록이니까.")
+      : config.reflectionReply;
+    const chatMessage = skip
+      ? (isChineseLanguage() ? "这次我想跳过感想。" : "이번 감상은 건너뛸게.")
+      : value;
+    resolveReflectionResponse(pieceNumber, chatMessage, fallbackReply);
   }
 
   function showTransition(pieceNumber) {
@@ -1313,8 +1505,7 @@
     document.addEventListener("click", (event) => {
       if (event.target.closest("[data-language], [data-country]")) {
         queueMicrotask(() => {
-          const messages = document.getElementById("wire-chatbot-messages");
-          if (messages) messages.innerHTML = "";
+          resetPieceChats();
           configureAll();
         });
       }

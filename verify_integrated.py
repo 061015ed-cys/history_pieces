@@ -29,11 +29,18 @@ required_files = [
     "addons/timetrace/dist/adapters.js",
     "addons/timetrace/dist/timetrace.css",
     "addons/timetrace/config/places-integrated.json",
+    "llm/history_pieces_LLM-main/src/history_chatbot/chat/service.py",
+    "llm/history_pieces_LLM-main/src/history_chatbot/chat/orchestrator.py",
+    "llm/history_pieces_LLM-main/data/development_real/index_ready/chunks.jsonl",
+    "llm/history_pieces_LLM-main/data/development_real/index_ready/index_manifest.json",
     "addons/webtoon-reference/piece-1/HP_C01_FIRST_ASSIGNMENT.png",
     "addons/webtoon-reference/piece-1/HP_C02_MOKPO_STATION_CROWD_OBSERVATION_FINAL.png",
     "addons/webtoon-reference/piece-1/HP_C03_MST_WAIT_FINAL.png",
     "addons/webtoon-reference/piece-1/HP_C04_MST_SHOOT.png",
-    "addons/webtoon-reference/piece-2-style.jpg",
+    "addons/webtoon-reference/piece-2/HP_C05_HNB_ARRIVAL.png",
+    "addons/webtoon-reference/piece-2/HP_C06_HNB_ACCIDENTAL_PEOPLE.png",
+    "addons/webtoon-reference/piece-2/HP_C07_HNB_HOLDER_PAUSE.png",
+    "addons/webtoon-reference/piece-2/HP_C08_HNB_NO_RESHOOT.png",
     "addons/webtoon-reference/piece-3-style.jpg",
     "assets/images/guide_strict.png",
     "assets/images/giroksae-mission.png",
@@ -143,6 +150,27 @@ for marker in [
     if marker not in wireframe_source:
         errors.append(f"WIREFRAME_MARKER_MISSING: {marker}")
 
+for marker in [
+    "PIECE_CHAT",
+    "/api/chat/session",
+    "/api/chat/message",
+    "pieceChatSessions",
+    "resolveReflectionResponse",
+]:
+    if marker not in wireframe_source:
+        errors.append(f"PIECE_CHAT_FRONTEND_MARKER_MISSING: {marker}")
+
+server_source = (ROOT / "run_integrated.py").read_text(encoding="utf-8")
+for marker in [
+    "PIECE_CHAT_CONTEXT",
+    "initialize_chat_runtime",
+    'clean_path == "/api/chat/session"',
+    'clean_path == "/api/chat/message"',
+    "_CHAT_SESSION_PIECES.get(session_id) != piece",
+]:
+    if marker not in server_source:
+        errors.append(f"PIECE_CHAT_SERVER_MARKER_MISSING: {marker}")
+
 timetrace_host = (ROOT / "addons/timetrace-host-0807.js").read_text(encoding="utf-8")
 for marker in [
     '1: "MST"',
@@ -226,7 +254,10 @@ for marker in [
     "HP_C02_MOKPO_STATION_CROWD_OBSERVATION_FINAL.png",
     "HP_C03_MST_WAIT_FINAL.png",
     "HP_C04_MST_SHOOT.png",
-    "piece-2-style.jpg",
+    "HP_C05_HNB_ARRIVAL.png",
+    "HP_C06_HNB_ACCIDENTAL_PEOPLE.png",
+    "HP_C07_HNB_HOLDER_PAUSE.png",
+    "HP_C08_HNB_NO_RESHOOT.png",
     "piece-3-style.jpg",
 ]:
     if marker not in fixed_runtime:

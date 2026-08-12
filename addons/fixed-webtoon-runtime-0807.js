@@ -24,8 +24,25 @@
       alt: "첫 번째 조각 4컷 고정 웹툰 - 목포역에서 시작된 사진사의 이야기"
     },
     2: {
-      image: "addons/webtoon-reference/piece-2-style.jpg",
-      alt: "두 번째 조각 고정 웹툰 - 목포 대중음악의 전당과 호남은행 목포지점"
+      panels: Object.freeze([
+        {
+          image: "addons/webtoon-reference/piece-2/HP_C05_HNB_ARRIVAL.png",
+          alt: "조각 2 웹툰 5컷 - 호남은행 목포지점에 도착해 촬영을 준비하는 사진사"
+        },
+        {
+          image: "addons/webtoon-reference/piece-2/HP_C06_HNB_ACCIDENTAL_PEOPLE.png",
+          alt: "조각 2 웹툰 6컷 - 호남은행 목포지점 앞 인물들이 우연히 사진에 담기는 장면"
+        },
+        {
+          image: "addons/webtoon-reference/piece-2/HP_C07_HNB_HOLDER_PAUSE.png",
+          alt: "조각 2 웹툰 7컷 - 촬영을 멈추고 은행으로 들어가는 인물들을 바라보는 사진사"
+        },
+        {
+          image: "addons/webtoon-reference/piece-2/HP_C08_HNB_NO_RESHOOT.png",
+          alt: "조각 2 웹툰 8컷 - 재촬영하지 않고 호남은행 목포지점을 떠나는 사진사"
+        }
+      ]),
+      alt: "두 번째 조각 5·6·7·8컷 고정 웹툰 - 호남은행 목포지점에서 이어지는 사진사의 이야기"
     },
     3: {
       image: "addons/webtoon-reference/piece-3-style.jpg",
@@ -63,7 +80,7 @@
       panels.setAttribute("role", "list");
       panels.setAttribute("aria-label", item.alt);
 
-      item.panels.forEach((panel, index) => {
+      item.panels.forEach((panel) => {
         const panelFrame = document.createElement("div");
         panelFrame.className = "hp-fixed-webtoon-panel";
         panelFrame.setAttribute("role", "listitem");
@@ -74,12 +91,7 @@
         image.loading = "eager";
         image.decoding = "async";
 
-        const panelNumber = document.createElement("span");
-        panelNumber.className = "hp-fixed-webtoon-number";
-        panelNumber.textContent = String(index + 1).padStart(2, "0");
-        panelNumber.setAttribute("aria-hidden", "true");
-
-        panelFrame.append(image, panelNumber);
+        panelFrame.appendChild(image);
         panels.appendChild(panelFrame);
       });
 
@@ -93,13 +105,6 @@
       figure.appendChild(image);
     }
 
-    const caption = document.createElement("figcaption");
-    const chinese = state() && state().language === "zh-CN";
-    caption.textContent = chinese
-      ? (pieceNumber === 1 ? "故事碎片 1 · 四格固定漫画" : `故事碎片 ${pieceNumber} · 固定漫画`)
-      : (pieceNumber === 1 ? "이야기 조각 1 · 4컷 고정 웹툰" : `이야기 조각 ${pieceNumber} · 고정 웹툰`);
-
-    figure.appendChild(caption);
     template.appendChild(figure);
   }
 

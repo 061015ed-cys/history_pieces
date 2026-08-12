@@ -2,19 +2,16 @@
 setlocal EnableExtensions
 cd /d "%~dp0"
 
-rem Prefer the full Python model server when it is already available.
+rem Prefer the Python integration server so the three piece-specific LLM chats are available.
 where py >nul 2>nul
 if errorlevel 1 goto no_install
 
-py -c "import torch, torchvision, PIL" >nul 2>nul
-if errorlevel 1 goto no_install
-
-echo Starting History Pieces with the integrated AI model server...
+echo Starting History Pieces with the integrated LLM and AI server...
 py run_integrated.py
 if not errorlevel 1 exit /b 0
 
 echo.
-echo The AI model server could not start. Switching to no-install mode.
+echo The integrated Python server could not start. Switching to no-install mode.
 
 :no_install
 call "%~dp0START_NO_INSTALL.bat"

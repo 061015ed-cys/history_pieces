@@ -1,0 +1,21 @@
+/* History Pieces 2026-08-10 background artwork mapping.
+   TimeTrace is deliberately excluded so its camera/overlay UI stays unchanged. */
+
+main.app-shell > section.page:not(#timetrace-page):not(#giroksae-intro-page) > .page-bg {
+  background: #f1d7ab url("../assets/images/hp-bg-main.png") center center / cover no-repeat !important;
+}
+
+main.app-shell > section.page:not(#timetrace-page):not(#giroksae-intro-page) > .page-bg::before,
+main.app-shell > section.page:not(#timetrace-page):not(#giroksae-intro-page) > .page-bg::after {
+  display: none !important;
+  content: none !important;
+}
+
+#giroksae-intro-page {
+  background: #0b2135 url("../assets/images/hp-bg-giroksae-dialogue.png") center center / cover no-repeat !important;
+}
+
+#giroksae-intro-page::before {
+  display: none !important;
+  content: none !important;
+}
