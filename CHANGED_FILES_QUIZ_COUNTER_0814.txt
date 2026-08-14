@@ -1,0 +1,12 @@
+History Pieces · 모바일 퀴즈 선택 안내 잘림 수정
+
+변경 파일
+- index.html
+- addons/requested-updates-0814.js
+- addons/requested-updates-0814.css
+
+수정 내용
+- 선택 안내 문구를 모바일 한 줄 길이로 축약
+- 선택 안내 문구에만 반응형 글자 크기와 줄바꿈 방지 적용
+- 최대 2개 선택 및 세 번째 선택 비활성화 동작 유지
+- 그 외 화면, 기능, 지도, 촬영, TimeTrace, 웹툰, 영상 흐름은 변경하지 않음

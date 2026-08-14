@@ -1331,6 +1331,11 @@
     const target = event.target.closest("button, [role='button']");
     if (!target) return;
 
+    // 공통 이전·종료·갤러리 버튼은 뒤에서 등록된 전용 컨트롤러가 처리한다.
+    if (target.closest("[data-hp-back], [data-hp-end-experience], [data-hp-gallery-target], [data-hp-end-cancel], [data-hp-end-confirm]")) {
+      return;
+    }
+
     if (target.dataset.language) {
       appState().language = target.dataset.language;
       document.documentElement.lang = target.dataset.language;
@@ -1378,6 +1383,21 @@
     if (target.dataset.action === "save-nickname") {
       stopEvent(event);
       saveNicknameAndStart();
+      return;
+    }
+
+    if (target.dataset.action === "load-sample-first-photo") {
+      stopEvent(event);
+      if (typeof global.loadSampleFirstPhoto === "function") global.loadSampleFirstPhoto();
+      if (typeof global.analyzeFirstPhoto === "function") global.analyzeFirstPhoto();
+      return;
+    }
+
+    if (target.dataset.action === "load-sample-piece-photo") {
+      stopEvent(event);
+      const pieceNumber = Number(target.dataset.piece);
+      if (typeof global.loadSamplePiecePhoto === "function") global.loadSamplePiecePhoto(pieceNumber);
+      runDetection(pieceNumber);
       return;
     }
 
