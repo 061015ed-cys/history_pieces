@@ -226,7 +226,10 @@
     title.textContent = data.name;
     const theme = document.createElement("em");
     theme.className = "recommendation-theme";
-    theme.textContent = `${data.rank || ""}${data.rank ? "순위 · " : ""}${data.theme || ""}`;
+    const rank = data.rank || "";
+    theme.textContent = getState()?.language === "zh-CN"
+      ? `${rank ? `第${rank}位 · ` : ""}${data.theme || ""}`
+      : `${rank}${rank ? "순위 · " : ""}${data.theme || ""}`;
     const meta = document.createElement("span");
     meta.textContent = data.tags.join(" · ");
     const reason = document.createElement("small");

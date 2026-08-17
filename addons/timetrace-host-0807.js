@@ -1,9 +1,15 @@
-import { mountTimeTrace } from "./timetrace/dist/timetrace.js";
+import { mountTimeTrace } from "./timetrace/dist/timetrace.js?v=20260816-zh-audit-v1";
 
 const PLACE_BY_PIECE = Object.freeze({
   1: "MST",
   2: "HNB",
   3: "MMH2",
+});
+
+const PLACE_ZH_BY_PIECE = Object.freeze({
+  1: Object.freeze({ current: "木浦站", historical: "木浦站", completion: "获得第一把记录钥匙" }),
+  2: Object.freeze({ current: "木浦大众音乐殿堂", historical: "旧湖南银行木浦支店", completion: "获得第二把记录钥匙" }),
+  3: Object.freeze({ current: "木浦近代历史馆2馆", historical: "旧东洋拓殖株式会社木浦支店", completion: "获得第三把记录钥匙" }),
 });
 
 const MANIFEST_URL = "./addons/timetrace/config/places-integrated.json";
@@ -69,8 +75,10 @@ function retryPiece(pieceNumber) {
 async function open(pieceNumber) {
   const piece = Number(pieceNumber);
   const placeId = PLACE_BY_PIECE[piece];
+  const chinese = state().language === "zh-CN";
+  const placeZh = PLACE_ZH_BY_PIECE[piece];
   if (!placeId) {
-    notify("TimeTrace 장소 정보를 찾지 못해 안전 화면으로 이동합니다.");
+    notify(chinese ? "未找到TimeTrace地点信息，将进入安全画面。" : "TimeTrace 장소 정보를 찾지 못해 안전 화면으로 이동합니다.");
     show("piece-overlay-page");
     return;
   }
@@ -84,12 +92,12 @@ async function open(pieceNumber) {
 
   const root = document.getElementById("timetrace-root");
   if (!root) {
-    notify("TimeTrace 화면을 찾지 못해 안전 화면으로 이동합니다.");
+    notify(chinese ? "未找到TimeTrace画面，将进入安全画面。" : "TimeTrace 화면을 찾지 못해 안전 화면으로 이동합니다.");
     show("piece-overlay-page");
     return;
   }
 
-  root.innerHTML = '<p class="loading"><i></i>TimeTrace를 준비하고 있습니다.</p>';
+  root.innerHTML = `<p class="loading"><i></i>${chinese ? "正在准备TimeTrace。" : "TimeTrace를 준비하고 있습니다."}</p>`;
   show("timetrace-page");
 
   try {
@@ -99,6 +107,12 @@ async function open(pieceNumber) {
       embedded: true,
       scenario: "retake-back",
       placeId,
+      locale: chinese ? "zh-CN" : "ko",
+      currentPlaceName: chinese ? placeZh.current : undefined,
+      currentDisplayName: chinese ? placeZh.current : undefined,
+      historicalPlaceName: chinese ? placeZh.historical : undefined,
+      historicalDisplayName: chinese ? placeZh.historical : undefined,
+      completionSequenceLabel: chinese ? placeZh.completion : undefined,
       manifestUrl: MANIFEST_URL,
       autoAdvance: false,
       initialCaptureUrl: currentPhotoUrl(piece),
@@ -141,7 +155,7 @@ async function open(pieceNumber) {
       error: String(error),
     };
     dispose();
-    notify("TimeTrace를 불러오지 못해 안전 모드로 계속합니다.");
+    notify(chinese ? "无法加载TimeTrace，将以安全模式继续。" : "TimeTrace를 불러오지 못해 안전 모드로 계속합니다.");
     continueAfterTimeTrace(piece);
   }
 }

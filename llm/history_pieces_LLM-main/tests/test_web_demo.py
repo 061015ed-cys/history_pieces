@@ -8,6 +8,7 @@ from fastapi.testclient import TestClient
 from history_chatbot.chat.api import create_app
 from history_chatbot.chat.demo_journey import InMemoryDemoJourneyProvider
 from history_chatbot.chat.service import ChatApplicationService, create_development_orchestrator
+from history_chatbot.models.remote import RemoteLLMError
 
 
 @pytest.fixture
@@ -127,6 +128,63 @@ def test_free_chat_rag_citations_greeting_and_insufficient_evidence(client: Test
     assert missing.status_code == 200
     assert missing.json()["request_state"] == "insufficient_evidence"
     assert missing.json()["citations"] == []
+    assert missing.json()["status"] == "insufficient_evidence"
+    assert missing.json()["suggested_questions"]
+    assert "직접 연결되는 인물" in missing.json()["response_text"]
+    assert "추측하지 않습니다" not in missing.json()["response_text"]
+
+
+def test_out_of_scope_question_does_not_call_retrieval_llm_or_become_error(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    engine = create_development_orchestrator(
+        runtime_dir=tmp_path / "runtime", session_path=tmp_path / "sessions.json",
+    )
+    monkeypatch.setattr(
+        engine.llm,
+        "complete",
+        lambda _request: pytest.fail("retrieval-empty must not call the LLM"),
+    )
+    api = TestClient(create_app(ChatApplicationService(engine), InMemoryDemoJourneyProvider()))
+    session_id = new_session(api)["session_id"]
+    response = api.post("/api/chat/free", json={
+        "session_id": session_id,
+        "user_message": "양자컴퓨터의 큐비트 오류 정정 방법을 설명해 주세요.",
+    })
+    body = response.json()
+    assert response.status_code == 200
+    assert body["used_chunks"] == 0
+    assert body["request_state"] == "success"
+    assert body["ui_state"] == "active"
+    assert body["error"] is None
+    assert "역사 이야기를 중심" in body["response_text"]
+    assert body["suggested_questions"]
+
+
+def test_remote_backend_failure_is_explicit_application_error(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    engine = create_development_orchestrator(
+        runtime_dir=tmp_path / "runtime", session_path=tmp_path / "sessions.json",
+    )
+    monkeypatch.setattr(
+        engine.llm,
+        "complete",
+        lambda _request: (_ for _ in ()).throw(
+            RemoteLLMError("connection_error", "원격 LLM 서버에 연결할 수 없습니다.")
+        ),
+    )
+    api = TestClient(create_app(ChatApplicationService(engine), InMemoryDemoJourneyProvider()))
+    session_id = new_session(api)["session_id"]
+    response = api.post("/api/chat/free", json={
+        "session_id": session_id,
+        "user_message": "붉은 등대 전시관은 언제 만들어졌어요?",
+    })
+    body = response.json()
+    assert response.status_code == 200
+    assert body["status"] == "llm_error"
+    assert body["request_state"] == "error" and body["ui_state"] == "error"
+    assert body["error"]["code"] == "connection_error"
 
 
 def test_free_chat_does_not_complete_piece_and_return_preserves_state(client: TestClient) -> None:
@@ -181,12 +239,25 @@ def test_unsupported_action_and_invalid_payload_are_structured(client: TestClien
 
 def test_client_state_uses_safe_dom_and_guarded_ui_logic(client: TestClient) -> None:
     script = client.get("/static/app.js").text
+    styles = client.get("/static/styles.css").text
     assert ".innerHTML" not in script and "textContent" in script
     assert 'state.request === "loading"' in script
     assert "renderCitations(result.citations)" in script
     assert 'toggle.hidden = valid.length === 0' in script
     assert "action_code: action" in script
+    assert 'appendMessage("assistant", result.response_text, "", result.output_domain)' in script
+    assert 'result.request_state !== "error"' in script
+    assert '.free-state[data-state="insufficient_evidence"] .status-dot' in styles
+    assert '.free-state[data-state="error"] .status-dot,.free-state[data-state="insufficient_evidence"]' not in styles
     assert 'to_mode: "game"' in script
+    assert 'byId("piece-input").blur()' in script
+    assert 'byId("free-input").blur()' in script
+    assert 'byId("piece-input").focus()' not in script
+    assert 'byId("free-input").focus()' not in script
+    assert "autoFocus" not in script
+    assert "renderSuggestions(INITIAL_SUGGESTIONS)" in script
+    assert 'for="piece-input"' not in client.get("/").text
+    assert 'for="free-input"' not in client.get("/").text
     assert "IMAGE ASSET" not in script
 
 
@@ -197,6 +268,8 @@ def test_integrated_ui_has_accessible_mode_and_asset_contract(client: TestClient
     assert 'role="dialog"' in html and 'aria-modal="true"' in html
     assert 'aria-live="polite"' in html and 'aria-label="자유대화 메시지"' in html
     assert 'id="return-to-game"' in html and 'id="citation-toggle"' in html
+    assert 'id="close-free-chat"' not in html
+    assert html.count('class="return-button"') == 1
     assert "prefers-reduced-motion" in styles
     assert "@media (max-width:640px)" in styles
     assert 'event.key === "Escape"' in script
@@ -205,3 +278,22 @@ def test_integrated_ui_has_accessible_mode_and_asset_contract(client: TestClient
         assert f"background_{index:02}.png" in script or f"background_{index:02}.png" in styles
     assert "result.next_action_code" in script
     assert "result.output_domain" in script
+
+
+def test_free_chat_opens_directly_without_appreciation_controls_or_image_text_background(
+    client: TestClient,
+) -> None:
+    html = client.get("/").text
+    styles = client.get("/static/styles.css").text
+    script = client.get("/static/app.js").text
+    panel = html.split('id="free-chat-panel"', 1)[1].split("</section>\n  </div>", 1)[0]
+
+    assert 'data-quick=' not in panel
+    assert 'data-action=' not in panel
+    assert "감상 건너뛰기" not in panel
+    assert "잠시 쉬기" not in panel
+    assert "다음 조각으로" not in panel
+    assert '["floating-chat", "open-free-chat", "header-free-chat"]' in script
+    assert '.journey-stage { --stage-image:' in styles
+    assert 'background:#321b0f;' in styles
+    assert 'background-image:var(--stage-image)' not in styles

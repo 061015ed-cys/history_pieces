@@ -43,6 +43,8 @@ def test_v1_chat_uses_history_for_interpretation_and_retrieved_chunks_for_ground
         "/api/v1/chat",
         json={
             "message": "그 건물은 무엇인가요?",
+            "current_place_id": "demo-place",
+            "current_piece_id": "demo-piece-1",
             "history": [
                 {"role": "user", "content": "가상 해솔관을 알려줘"},
                 {"role": "assistant", "content": "자료를 확인해 볼게요."},
@@ -62,6 +64,10 @@ def test_v1_chat_uses_history_for_interpretation_and_retrieved_chunks_for_ground
         ("assistant", "자료를 확인해 볼게요."),
     ]
     assert "이전 대화는 후속 질문 해석에만 사용" in request.system_prompt
+    assert "대화 문맥 해석 | 역사적 사실의 근거가 아님" in request.user_prompt
+    assert "가상 해솔관" in request.user_prompt
+    assert "demo-place" not in request.user_prompt
+    assert "demo-piece" not in request.user_prompt
 
 
 def test_v1_chat_falls_back_without_calling_llm_when_evidence_is_missing(
@@ -75,9 +81,8 @@ def test_v1_chat_falls_back_without_calling_llm_when_evidence_is_missing(
     )
 
     assert response.status_code == 200
-    assert response.json() == {
-        "answer": "제공된 역사 자료에서 충분한 근거를 찾지 못했습니다."
-    }
+    assert "정확히 설명하기 어려워요" in response.json()["answer"]
+    assert "추측" not in response.json()["answer"]
     assert llm.requests == []
 
 

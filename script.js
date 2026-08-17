@@ -296,12 +296,9 @@ document.addEventListener("click", (event) => {
   [최유석] 언어 선택
 ========================================================= */
 document.querySelectorAll("[data-language]").forEach((button) => {
-  button.addEventListener("click", () => {
-    if (button.classList.contains("disabled")) return;
-    appState.language = button.dataset.language;
-    document.documentElement.lang = appState.language;
-    setSelectedRow(button, "[data-language]");
-    applyCultureCopy();
+  button.addEventListener("click", (event) => {
+    if (event.__historyPiecesSetupHandled) return;
+    selectLanguage(button.dataset.language, button);
   });
 });
 
@@ -309,25 +306,63 @@ document.querySelectorAll("[data-language]").forEach((button) => {
   [최유석 + 이지영] 국가/문화권 선택
 ========================================================= */
 document.querySelectorAll("[data-country]").forEach((button) => {
-  button.addEventListener("click", () => {
+  button.addEventListener("click", (event) => {
+    if (event.__historyPiecesSetupHandled) return;
     if (button.classList.contains("disabled")) {
       showToast(uiText("unsupportedCulture", { name: button.textContent.trim() }));
       return;
     }
-    appState.culture = button.dataset.country;
-
-    // ❌ 기존 오류 코드: document.body.dataset.culture = appState.culture;
-    // ➔ 롤백/치환이 정상적으로 작동하도록 HTML 표준 속성을 직접 바꿔줍니다.
-    document.body.setAttribute("data-culture", appState.culture);
-
-    applyCultureCopy();
-    setSelectedRow(button, "[data-country]");
+    selectCountry(button.dataset.country, button);
   });
 });
 
+function applyCultureCopySafely() {
+  try {
+    applyCultureCopy();
+    return true;
+  } catch (error) {
+    console.error("[History Pieces] 설정 화면 번역 갱신 오류", error);
+    try {
+      window.HistoryPiecesI18n?.apply(appState.language);
+    } catch (fallbackError) {
+      console.error("[History Pieces] 기본 번역 적용 오류", fallbackError);
+    }
+    return false;
+  }
+}
+
+function selectLanguage(language, selectedButton = null) {
+  const button = selectedButton || document.querySelector(`[data-language="${language}"]`);
+  if (!button || button.classList.contains("disabled")) return false;
+  appState.language = language;
+  document.documentElement.lang = language;
+  setSelectedRow(button, "[data-language]");
+  applyCultureCopySafely();
+  return true;
+}
+
+function selectCountry(culture, selectedButton = null) {
+  const button = selectedButton || document.querySelector(`[data-country="${culture}"]`);
+  if (!button || button.classList.contains("disabled")) return false;
+
+  const linkedLanguage = culture === "china" ? "zh-CN" : "ko";
+  const linkedLanguageButton = document.querySelector(`[data-language="${linkedLanguage}"]`);
+  appState.language = linkedLanguage;
+  document.documentElement.lang = linkedLanguage;
+  if (linkedLanguageButton) setSelectedRow(linkedLanguageButton, "[data-language]");
+
+  appState.culture = culture;
+  document.body.setAttribute("data-culture", culture);
+  setSelectedRow(button, "[data-country]");
+  applyCultureCopySafely();
+  return true;
+}
+
 function confirmCountry() {
-  applyCultureCopy();
-  showPage("nickname-page");
+  const nextPageId = appState.culture === "china" ? "china-mode-intro-page" : "nickname-page";
+  applyCultureCopySafely();
+  showPage(nextPageId);
+  return nextPageId;
 }
 
 function setSelectedRow(selectedButton, selector) {
@@ -343,6 +378,12 @@ function setSelectedRow(selectedButton, selector) {
   const selectedMark = selectedButton.querySelector("i");
   if (selectedMark) selectedMark.textContent = "✓";
 }
+
+window.HistoryPiecesSetupSelection = Object.freeze({
+  selectLanguage,
+  selectCountry,
+  confirmCountry
+});
 
 /* =========================================================
   [최유석 + 이지영] 닉네임 저장
@@ -804,21 +845,24 @@ const pieceBaseData = {
     caption: "목포역의 현재 모습과 사람들의 움직임을 기록합니다.",
     line: "목포에서 처음 마주한 장면을 기록한 조각이야.",
     chinaLine: "중국의 철도역이 도시의 첫인상을 만드는 공간이듯, 목포역도 목포를 처음 마주하는 자리야.",
-    zh: "中文摘要：木浦站是进入木浦旧城区的第一道入口。"
+    zh: "中文摘要：木浦站是进入木浦旧城区的第一道入口。",
+    chinaZh: "中文摘要：如同中国的铁路车站常构成城市的第一印象，木浦站也是初次认识木浦的起点。"
   },
   2: {
     title: "목포 대중음악의 전당과 호남은행",
     caption: "현재의 음악 공간에서 과거 호남은행 목포지점의 흔적을 찾습니다.",
     line: "공간의 쓰임은 바뀌어도 그 안에 쌓인 시간은 남아 있어.",
     chinaLine: "동아시아 개항도시의 금융 건축과 비교하며 공간의 변화를 살펴보자.",
-    zh: "中文摘要：在如今的木浦大众音乐殿堂中寻找湖南银行木浦支店的历史痕迹。"
+    zh: "中文摘要：在如今的木浦大众音乐殿堂中寻找湖南银行木浦支店的历史痕迹。",
+    chinaZh: "中文摘要：与东亚开港城市的金融建筑相比较，观察旧湖南银行木浦支店如何转变为今天的音乐文化空间。"
   },
   3: {
     title: "목포근대역사관 2관과 동양척식주식회사",
     caption: "현재의 박물관 건물에서 동양척식주식회사 목포지점의 기록을 확인합니다.",
     line: "건물은 말이 없지만 그곳을 지나간 사람들의 이야기는 기록에 남아 있어.",
     chinaLine: "동아시아 근대사의 연결 속에서 이 건물에 남은 흔적을 함께 살펴보자.",
-    zh: "中文摘要：在木浦近代历史馆2馆中确认东方拓殖株式会社木浦支店的历史记录。"
+    zh: "中文摘要：在木浦近代历史馆2馆中确认东洋拓殖株式会社木浦支店的历史记录。",
+    chinaZh: "中文摘要：从东亚近代史的联系出发，确认旧东洋拓殖株式会社木浦支店建筑中留下的历史痕迹。"
   }
 };
 
@@ -832,9 +876,9 @@ async function generatePieceComicData(pieceNumber) {
     caption: approved.caption,
     // [수정] 국가(culture)가 china여도 언어가 한국어면 한국어 대사가 나오도록 변경
     giroksaeLine: isChineseLanguage
-      ? base.zh.replace(/^中文摘要：/, "")
+      ? (appState.culture === "china" ? base.chinaZh : base.zh).replace(/^中文摘要：/, "")
       : `${appState.nickname}, ${base.line}`,
-    zhSummary: isChineseLanguage ? base.zh : "",
+    zhSummary: isChineseLanguage ? (appState.culture === "china" ? base.chinaZh : base.zh) : "",
     showZh: isChineseLanguage
   };
 }
@@ -971,7 +1015,7 @@ function generatePlaceStoryData() {
     line: isChineseLanguage
       ? getCopyData().giroksae_dialogue.place_story
       : `${appState.nickname}, 세 조각을 모두 모았네. 이제 목포역이 단순한 역이 아니라 도시의 기억으로 보일 거야.`,
-    zh: "中文摘要：三个线索连接起来，形成了木浦站作为城市入口、旧城区起点 and 生活空间的故事。",
+    zh: "中文摘要：三个线索连接起来，形成了木浦站作为城市入口、旧城区起点与生活空间的故事。",
     showZh: isChineseLanguage
   };
 }
@@ -1362,7 +1406,7 @@ function applyCultureCopy() {
   setTextBySelector("#place-confirm-page .before-appear p", copy.system_ui.analysis_result_dialogue);
   setTextBySelector("#mokpo-guide-page .giroksae-note p", appState.language === "zh-CN"
     ? "好。我们按顺序去找藏在木浦站里的三个碎片吧。"
-    : "좋아. 목포역에 숨은 세 조각을 차례로 찾아보자.");
+    : "좋아. 첫 번째 이야기 조각은 목포역에 있어. 목포역으로 이동해 기록을 시작해보자.");
   setTextBySelector("#unlock-giroksae-line", copy.giroksae_dialogue.unlock_page);
   setTextBySelector("#place-story-line", copy.giroksae_dialogue.place_story);
   setTextBySelector("#journey-film-page .giroksae-note p", appState.language === "zh-CN"

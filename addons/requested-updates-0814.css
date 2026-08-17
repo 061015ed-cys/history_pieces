@@ -228,3 +228,97 @@
     margin: 0 6px 8px;
   }
 }
+
+/* 2026-08-15 요청: 촬영·건너뛰기·조각 진행 안내 문구 대비 강화 */
+#first-record-camera-page [data-action="load-sample-first-photo"],
+#piece-1-upload-page [data-action="load-sample-piece-photo"],
+#piece-2-upload-page [data-action="load-sample-piece-photo"],
+#piece-3-upload-page [data-action="load-sample-piece-photo"],
+#record-1-page [data-action="load-sample-record"],
+#record-2-page [data-action="load-sample-record"],
+#record-3-page [data-action="load-sample-record"],
+#wire-reflection-page [data-wire-action="reflection-skip"],
+#pdf-place-complete-page #pdf-progress-text {
+  color: #fff !important;
+  text-shadow: 0 1px 3px rgba(44, 25, 13, .72);
+}
+
+/* 장소 미션 1·2·3을 같은 제목 구조로 정돈 */
+#piece-1-mission-page .standard-layout,
+#piece-2-mission-page .standard-layout,
+#piece-3-mission-page .standard-layout {
+  justify-content: flex-start !important;
+  padding-top: 18px !important;
+}
+
+#piece-1-mission-page .ornament-label,
+#piece-2-mission-page .ornament-label,
+#piece-3-mission-page .ornament-label {
+  width: 100%;
+  margin: 0;
+  padding: 15px 50px 8px;
+  border-top: 2px solid rgba(75, 51, 34, .72);
+  font-size: clamp(11px, 3.3vw, 14px);
+  line-height: 1.35;
+}
+
+#piece-1-mission-page .mini-title,
+#piece-2-mission-page .mini-title,
+#piece-3-mission-page .mini-title {
+  width: 100%;
+  margin: 0;
+  padding: 0 18px 16px;
+  border-bottom: 2px solid rgba(75, 51, 34, .72);
+  font-size: clamp(27px, 8vw, 35px);
+  line-height: 1.24;
+}
+
+#piece-3-mission-page .mini-title {
+  font-size: clamp(24px, 7vw, 30px);
+}
+
+#piece-1-mission-page .content-card,
+#piece-2-mission-page .content-card,
+#piece-3-mission-page .content-card {
+  margin: 0;
+  padding: 16px 12px 10px;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  text-align: center;
+  backdrop-filter: none;
+}
+
+#piece-1-mission-page .content-card .tag,
+#piece-2-mission-page .content-card .tag,
+#piece-3-mission-page .content-card .tag,
+#piece-1-mission-page .content-card h2,
+#piece-2-mission-page .content-card h2,
+#piece-3-mission-page .content-card h2 {
+  display: none;
+}
+
+#piece-1-mission-page .content-card .description,
+#piece-2-mission-page .content-card .description,
+#piece-3-mission-page .content-card .description {
+  margin: 0;
+  font-size: clamp(13px, 3.8vw, 16px);
+  font-weight: 700;
+  line-height: 1.6;
+}
+
+/* 다음 장소 지도 안의 문구는 아래 안내 영역으로 이동 */
+.hp-next-route-text,
+.hp-next-map-guide {
+  margin: 8px 0 0;
+  color: #4f3a29;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.55;
+  text-align: left;
+}
+
+.hp-next-map-guide {
+  margin-top: 5px;
+  font-weight: 600;
+}

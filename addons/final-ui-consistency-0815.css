@@ -1,0 +1,283 @@
+/* 2026-08-15 최종 확정: 조각 화면 상단과 제한된 보조 문구만 정돈 */
+.hp-unified-piece-header .screen-layout {
+  padding-top: calc(env(safe-area-inset-top, 0px) + 76px) !important;
+}
+
+.hp-unified-piece-header .screen-layout > .ornament-label,
+.hp-unified-piece-header .screen-layout > [data-guide-label] {
+  box-sizing: border-box;
+  width: min(100%, 520px);
+  min-height: 42px;
+  margin: 0 auto 12px;
+  padding: 10px 10px 9px;
+  border-top: 1px solid rgba(76, 54, 39, .55);
+  border-bottom: 1px solid rgba(76, 54, 39, .55);
+  font-size: clamp(12px, 3.5vw, 15px);
+  line-height: 1.4;
+  text-align: center;
+  overflow-wrap: normal;
+  word-break: keep-all;
+}
+
+.hp-unified-piece-header .screen-layout > .mini-title,
+.hp-unified-piece-header .screen-layout > .setup-title {
+  box-sizing: border-box;
+  width: min(100%, 520px);
+  min-height: 62px;
+  margin: 0 auto 14px;
+  padding: 0 8px 13px;
+  border-bottom: 1px solid rgba(76, 54, 39, .55);
+  line-height: 1.25;
+  text-align: center;
+  overflow-wrap: normal;
+  word-break: keep-all;
+}
+
+/* 2026-08-17: 언어/여행자 조합별 긴 문구 화면 최종 보정 */
+#china-mode-intro-page.active {
+  display: flex !important;
+}
+
+main.app-shell > .page:not(#timetrace-page),
+main.app-shell > .page:not(#timetrace-page) > .screen-layout,
+main.app-shell > .page:not(#timetrace-page) > .screen-layout > * {
+  box-sizing: border-box;
+  min-width: 0;
+  max-width: 100%;
+}
+
+main.app-shell > .page:not(#timetrace-page) > .screen-layout {
+  width: 100% !important;
+  margin-right: auto !important;
+  margin-left: auto !important;
+}
+
+main.app-shell > .page:not(#timetrace-page) .screen-layout > :is(
+  .main-title,
+  .setup-title,
+  .mini-title,
+  .ornament-label
+) {
+  align-self: stretch;
+  width: 100% !important;
+  max-width: 100% !important;
+  margin-right: auto !important;
+  margin-left: auto !important;
+  padding-right: 10px !important;
+  padding-left: 10px !important;
+  text-align: center !important;
+  white-space: normal !important;
+  overflow-wrap: anywhere;
+}
+
+main.app-shell > .page:not(#timetrace-page) .screen-layout > .setup-title {
+  font-size: clamp(24px, 6.8vw, 29px) !important;
+  line-height: 1.22 !important;
+}
+
+main.app-shell > .page:not(#timetrace-page) .screen-layout > .mini-title {
+  font-size: clamp(22px, 6.2vw, 27px) !important;
+  line-height: 1.28 !important;
+}
+
+main.app-shell > .page:not(#timetrace-page) :is(
+  .setting-card,
+  .content-card,
+  .giroksae-note,
+  .guide-note,
+  .quiz-list,
+  .wire-choice-list,
+  .wire-confirm-actions,
+  .wire-reflection-input-row
+) {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+}
+
+main.app-shell > .page:not(#timetrace-page) :is(
+  .giroksae-note,
+  .guide-note,
+  .select-row,
+  .quiz-list button,
+  .wire-choice-list button
+) > * {
+  min-width: 0;
+  max-width: 100%;
+}
+
+main.app-shell > .page:not(#timetrace-page) :is(.giroksae-note, .guide-note) > p,
+main.app-shell > .page:not(#timetrace-page) .select-row > span {
+  flex: 1 1 auto;
+}
+
+main.app-shell > .page:not(#timetrace-page) .select-row > i {
+  flex: 0 0 28px;
+}
+
+:lang(zh-CN) main.app-shell > .page:not(#timetrace-page) :is(
+  h1,
+  h2,
+  h3,
+  p,
+  strong,
+  small,
+  label,
+  button,
+  .setup-desc,
+  .description
+) {
+  white-space: normal !important;
+  word-break: normal !important;
+  overflow-wrap: anywhere !important;
+}
+
+:lang(zh-CN) #wire-reflection-page .wire-choice-list button {
+  height: auto;
+  min-height: 68px;
+  padding-right: 16px;
+  padding-left: 16px;
+}
+
+#first-record-camera-page [data-action="load-sample-first-photo"],
+#piece-1-upload-page [data-action="load-sample-piece-photo"],
+#piece-2-upload-page [data-action="load-sample-piece-photo"],
+#piece-3-upload-page [data-action="load-sample-piece-photo"],
+#record-1-page [data-action="load-sample-record"],
+#record-2-page [data-action="load-sample-record"],
+#record-3-page [data-action="load-sample-record"],
+#wire-reflection-page [data-wire-action="reflection-skip"],
+#pdf-place-complete-page #pdf-progress-text,
+#journey-film-page [data-action="share-instagram"],
+#journey-film-page .bottom-note,
+.hp-unified-piece-header > .screen-layout > .text-button,
+.hp-unified-piece-header .small-guide {
+  color: #fff !important;
+  text-shadow: 0 1px 3px rgba(44, 25, 13, .72) !important;
+}
+
+#pdf-preference-back-button,
+#hp-recommend-reason-page [data-next="pdf-preference-page"],
+#pdf-journey-detail-back {
+  color: #fff !important;
+}
+
+#quiz-page [data-wire-final-order][data-order]:not([data-order=""])::after {
+  content: none !important;
+  display: none !important;
+}
+
+.hp-unified-piece-header .screen-layout > .mini-title,
+.hp-unified-piece-header .screen-layout > .setup-title,
+#piece-1-mission-page .mini-title,
+#piece-2-mission-page .mini-title,
+#piece-3-mission-page .mini-title {
+  padding-right: 12px !important;
+  padding-left: 12px !important;
+  text-align: center !important;
+  text-wrap: balance;
+}
+
+/* OSM 임베드 하단의 문제점 보고/API 약관 영역은 지도 프레임 밖으로 잘라낸다. */
+.hp-live-map iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100% !important;
+  height: calc(100% + 44px) !important;
+}
+
+/* 임베드 지도 제공자의 하단 링크 문구를 확실히 가리되 지도 클릭·경로 표시는 유지한다. */
+.hp-live-map::after {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  height: 27px;
+  background: linear-gradient(180deg, rgba(234, 229, 216, 0), rgba(234, 229, 216, .98) 52%);
+  content: "";
+  pointer-events: none;
+}
+
+.page:not([id*="timetrace"]):not(#piece-overlay-page) .screen-layout > .setup-title,
+.page:not([id*="timetrace"]):not(#piece-overlay-page) .screen-layout > .mini-title {
+  box-sizing: border-box;
+  width: 100% !important;
+  margin-right: auto !important;
+  margin-left: auto !important;
+  padding-right: 12px !important;
+  padding-left: 12px !important;
+  text-align: center !important;
+  text-wrap: balance;
+}
+
+#country-page .ornament-label,
+#country-page .setup-title,
+#country-page .setup-desc {
+  width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+  text-align: center !important;
+}
+
+.hp-replay-page,
+.hp-replay-page .screen-layout {
+  height: 100%;
+  min-height: 0;
+  overflow: hidden !important;
+}
+
+.hp-replay-page .hp-replay-media {
+  min-height: 0;
+  max-height: none;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.hp-replay-page [data-hp-summary-action="return-summary"] {
+  flex: 0 0 auto;
+}
+
+#language-page .ornament-label,
+#language-page .setup-title,
+#country-page .ornament-label,
+#country-page .setup-title {
+  box-sizing: border-box;
+  width: 100%;
+}
+
+#language-page .setup-title,
+#country-page .setup-title {
+  min-height: 74px;
+  margin-bottom: 0;
+  word-break: keep-all;
+}
+
+@media (max-width: 390px) {
+  .hp-unified-piece-header .screen-layout {
+    padding-top: calc(env(safe-area-inset-top, 0px) + 70px) !important;
+  }
+}
+
+/* 2026-08-16: 설정·촬영·확인 화면의 제목이 모바일 폭에서 커지거나 치우치지 않도록 제한 */
+#language-page .screen-layout > .setup-title,
+#country-page .screen-layout > .setup-title,
+.hp-unified-piece-header .screen-layout > .setup-title {
+  display: block;
+  align-self: center;
+  box-sizing: border-box;
+  width: 100% !important;
+  max-width: 100%;
+  margin-right: auto !important;
+  margin-left: auto !important;
+  padding-right: 12px !important;
+  padding-left: 12px !important;
+  font-size: clamp(24px, 6.8vw, 29px) !important;
+  line-height: 1.2;
+  letter-spacing: -0.045em;
+  text-align: center !important;
+  white-space: normal;
+  overflow-wrap: normal;
+  word-break: keep-all;
+}

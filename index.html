@@ -11,12 +11,13 @@
   <link rel="stylesheet" href="addons/timetrace/dist/timetrace.css?v=20260807-three-piece-integration">
   <link rel="stylesheet" href="addons/timetrace-host-0807.css?v=20260809-mobile-guide-compact-v2">
   <link rel="stylesheet" href="addons/photo-composition-guide-0809.css?v=20260809-three-place-v1">
-  <link rel="stylesheet" href="addons/pdf-ux-0809.css?v=20260809-theme-flow-v4">
+  <link rel="stylesheet" href="addons/pdf-ux-0809.css?v=20260817-continuous-comic-v1">
   <link rel="stylesheet" href="addons/history-pieces-backgrounds-0810.css?v=20260810-background-v1">
   <link rel="stylesheet" href="addons/history-pieces-fonts-0810.css?v=20260810-font-guide-v1">
   <link rel="stylesheet" href="addons/high-quality-video-recorder-0812.css?v=20260812-hd-video-v1">
-  <link rel="stylesheet" href="addons/experience-controls-0813.css?v=20260813-sample-gallery-v2">
-  <link rel="stylesheet" href="addons/requested-updates-0814.css?v=20260814-quiz-counter-fit-v2">
+  <link rel="stylesheet" href="addons/experience-controls-0813.css?v=20260815-no-timetrace-back-v1">
+  <link rel="stylesheet" href="addons/requested-updates-0814.css?v=20260815-requested-fixes-v1">
+  <link rel="stylesheet" href="addons/final-ui-consistency-0815.css?v=20260817-four-route-layout-v1">
   <link rel="stylesheet" href="addons/theme-map-updates-0814.css?v=20260814-all-route-preview-v2">
 </head>
 
@@ -180,8 +181,6 @@
             <i>›</i>
           </button>
         </div>
-
-        <p class="small-guide">지원 국가 및 서비스는 순차적으로 확대될 예정입니다.</p>
 
         <button type="button" class="big-button" data-action="confirm-country">
           다음 <span>→</span>
@@ -403,7 +402,7 @@
           <!-- 깨진 이미지를 정상화하고 글자도 한국어로 명시 -->
           <img src="assets/images/giroksae-mission.png" alt="미션을 안내하는 기록새"
             style="display: block !important; visibility: visible !important;">
-          <p>좋아. 목포역에 숨은 세 조각을 차례로 찾아보자.</p>
+          <p>좋아. 첫 번째 이야기 조각은 목포역에 있어. 목포역으로 이동해 기록을 시작해보자.</p>
         </div>
         <button type="button" class="big-button" data-next="piece-1-mission-page">
           첫 번째 조각 찾기 <span>→</span>
@@ -804,13 +803,13 @@
 
       <div class="screen-layout standard-layout">
         <p class="ornament-label">이야기 조각 3</p>
-        <h1 class="mini-title">사람들이 오가던<br>역전의 풍경을 찾아보세요</h1>
+        <h1 class="mini-title">목포근대역사관 2관<br>촬영해주세요</h1>
 
         <div class="content-card">
           <p class="tag">미션</p>
-          <h2>이동과 만남의 흔적</h2>
+          <h2>목포근대역사관 2관</h2>
           <p class="description">
-            목포역은 교통시설이면서 동시에 사람들의 만남과 생활이 교차하던 장소입니다.
+            목포근대역사관 2관 건물이 보이도록 촬영해주세요.
           </p>
         </div>
 
@@ -826,7 +825,7 @@
 
       <div class="screen-layout record-layout">
         <p class="ornament-label">조각 3 기록</p>
-        <h1 class="setup-title">역전의 풍경을<br>기록해주세요</h1>
+        <h1 class="setup-title">목포근대역사관 2관<br>촬영해주세요</h1>
 
         <div class="camera-frame">
           <img id="piece-3-photo-preview" class="camera-preview hidden" alt="조각 3 사진 미리보기">
@@ -835,8 +834,8 @@
             <span class="corner rt"></span>
             <span class="corner lb"></span>
             <span class="corner rb"></span>
-            <strong>역전 풍경 단서 사진 업로드</strong>
-            <small>사람들의 이동과 생활 흔적을 확인합니다.</small>
+            <strong>화면을 눌러 사진 선택 또는 촬영</strong>
+            <small>목포근대역사관 2관 건물이 잘 보이도록 촬영해주세요.</small>
           </label>
           <input id="piece-3-photo-input" class="hidden-input piece-photo-input" data-piece="3" type="file"
             accept="image/*" capture="environment">
@@ -993,15 +992,26 @@
       <div class="page-bg bg-record"></div>
 
       <div class="screen-layout standard-layout">
-        <p class="ornament-label">장소 이야기 웹툰</p>
+        <p class="ornament-label">장소 이야기 웹툰 · 1/2</p>
         <h1 id="place-story-title" class="mini-title">목포역의 세 조각이<br>하나의 이야기로 이어졌습니다</h1>
 
-        <div class="place-comic-grid">
-          <article id="place-panel-1">목포의 첫 관문</article>
-          <article id="place-panel-2">원도심으로 향하는 길</article>
-          <article id="place-panel-3">사람들이 오가던 역전</article>
-          <article id="place-panel-4">목포역 이야기 완성</article>
-        </div>
+        <div class="place-comic-grid" data-story-page="1"></div>
+
+        <button type="button" class="big-button" data-next="place-story-comic-page-2">
+          다음 8컷 보기 <span>→</span>
+        </button>
+      </div>
+    </section>
+
+
+    <section id="place-story-comic-page-2" class="page comic-page" data-owner="최유석/이지영">
+      <div class="page-bg bg-record"></div>
+
+      <div class="screen-layout standard-layout">
+        <p class="ornament-label">장소 이야기 웹툰 · 2/2</p>
+        <h1 id="place-story-title-2" class="mini-title">목포역의 세 조각이<br>하나의 이야기로 이어졌습니다</h1>
+
+        <div class="place-comic-grid" data-story-page="2"></div>
 
         <div class="giroksae-note">
           <img src="assets/images/giroksae-reward.png" alt="완성된 이야기를 보여주는 기록새">
@@ -1243,20 +1253,21 @@
 
   <script src="modules/i18n.js"></script>
   <script src="modules/dohun-ai.js"></script>
-  <script src="script.js"></script>
+  <script src="script.js?v=20260817-setup-selection-v3"></script>
   <script src="modules/journey-film-0715.js"></script>
-  <script src="modules/yuseok-recommendation-0716.js"></script>
+  <script src="modules/yuseok-recommendation-0716.js?v=20260816-zh-audit-v1"></script>
   <script src="addons/dohun-model-bridge-0725.js"></script>
-  <script src="addons/integrated-ui-0725.js?v=20260808-giroksae-timetrace-final-v1"></script>
-  <script src="addons/fixed-webtoon-runtime-0807.js?v=20260808-giroksae-timetrace-final-v1"></script>
-  <script src="addons/wireframe-flow-0807.js?v=20260813-sample-autodetect-v2"></script>
-  <script src="addons/pdf-ux-0809.js?v=20260809-theme-flow-v4"></script>
-  <script src="addons/photo-composition-guide-0809.js?v=20260809-three-place-v1"></script>
+  <script src="addons/integrated-ui-0725.js?v=20260815-progress-entry-v3"></script>
+  <script src="addons/fixed-webtoon-runtime-0807.js?v=20260817-piece3-four-panel-v1"></script>
+  <script src="addons/wireframe-flow-0807.js?v=20260817-piece-copy-feedback-v2"></script>
+  <script src="addons/pdf-ux-0809.js?v=20260817-place-story-16-two-pages-v1"></script>
+  <script src="addons/photo-composition-guide-0809.js?v=20260816-zh-audit-v3"></script>
   <script src="addons/high-quality-video-recorder-0812.js?v=20260812-hd-video-v1"></script>
-  <script src="addons/experience-controls-0813.js?v=20260813-sample-gallery-v2"></script>
-  <script src="addons/requested-updates-0814.js?v=20260814-quiz-counter-fit-v3"></script>
-  <script src="addons/theme-map-updates-0814.js?v=20260814-all-route-preview-v2"></script>
-  <script type="module" src="addons/timetrace-host-0807.js?v=20260808-giroksae-timetrace-final-v1"></script>
+  <script src="addons/experience-controls-0813.js?v=20260815-no-timetrace-back-v1"></script>
+  <script src="addons/requested-updates-0814.js?v=20260816-zh-audit-v3"></script>
+  <script src="addons/final-ui-consistency-0815.js?v=20260816-zh-audit-v4"></script>
+  <script src="addons/theme-map-updates-0814.js?v=20260816-zh-audit-v5"></script>
+  <script type="module" src="addons/timetrace-host-0807.js?v=20260816-zh-audit-v2"></script>
 </body>
 
 </html>

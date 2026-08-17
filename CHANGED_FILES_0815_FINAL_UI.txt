@@ -1,0 +1,43 @@
+History Pieces 2026-08-15 final UI consistency update
+
+Modified files
+- index.html: final cache versions, new consistency CSS/JS load, first-piece Giroksae copy
+- script.js: first-piece Giroksae fallback copy
+- addons/integrated-ui-0725.js: first-piece Giroksae runtime copy
+- addons/photo-composition-guide-0809.js: final three-place criteria and AI explanation
+- addons/requested-updates-0814.js: matching fallback criteria, failure X, 3/3 copy/button, synchronous idempotent render
+- addons/requested-updates-0814.css: preserved; its white helper copy is narrowly overridden by the final CSS
+- addons/wireframe-flow-0807.js: Blob preview URLs reused for the same source
+- addons/pdf-ux-0809.js: completion-only 'next clue' copy changed to 'next piece'
+- addons/final-ui-consistency-0815.js: one-time state-based header renderer and camera re-entry reset
+- addons/final-ui-consistency-0815.css: safe-area header geometry, scoped gray helper copy, replay scroll containment, language layout stability
+
+Explicitly preserved
+- TimeTrace internals/assets/configuration
+- place-story mission screens, final place quiz and their route logic
+- next-place recommendation/map/theme features
+- Detection model files, thresholds and reference assets
+- chatbot modal and per-piece conversation flow
+- webtoon images/order and final QR guidance
+
+Verification
+- python verify_integrated.py: PASSED
+- python verify_fonts_0810.py: PASSED
+- JavaScript syntax checks: PASSED
+- HTML local asset reference check: PASSED (0 missing)
+- local HTTP checks for changed JS/CSS and representative video: 200 OK
+
+Follow-up update
+- TimeTrace 이후 조각 2·3 표기: 구 호남은행 목포지점 / 구 동양척식주식회사 목포지점
+- 지도 iframe 하단 문제점 보고/API 약관 영역 프레임 밖으로 제한
+- 진입 화면 진행률을 완료 조각 수(0/3, 1/3, 2/3) 기준으로 변경
+- 조각 2·3도 공통 진입 안내 화면을 거치도록 경로 복구
+- 하단 샘플/건너뛰기/부가 문구 흰색 처리
+- 긴 촬영 제목 가운데 정렬 및 균형 줄바꿈
+- 테마 문구: 음식/항구도시의 맛과 생활, 도시의 변화/거리와 건축에 남은 시간, 예술/음악과 문학으로 만나는 목포
+
+Final follow-up
+- OpenStreetMap 하단 제공자 링크 영역을 지도 카드 안에서 시각적으로 차단
+- country-page가 조각 상단 통일 대상에 잘못 포함되던 범위를 제한하고 '여행자 설정' 복구
+- 조각 완료 버튼의 showMissionDirect 우회를 제거해 조각 2·3 진입 안내 화면 표시
+- TimeTrace를 제외한 일반 화면의 직접 자식 큰 제목을 동일 폭으로 가운데 정렬

@@ -8,7 +8,7 @@
 (function installExperienceControls(global) {
   "use strict";
 
-  const BACK_EXCLUDED = new Set(["start-page", "language-page", "service-ended-page"]);
+  const BACK_EXCLUDED = new Set(["start-page", "language-page", "timetrace-page", "service-ended-page"]);
   const TRANSIENT_PAGES = new Set(["place-loading-page", "wire-place-loading-page"]);
   const MISSION_PAGES = [1, 2, 3].map((piece) => `piece-${piece}-mission-page`);
   const GALLERY_INPUTS = Object.freeze([

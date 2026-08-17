@@ -44,9 +44,27 @@
       ]),
       alt: "두 번째 조각 5·6·7·8컷 고정 웹툰 - 호남은행 목포지점에서 이어지는 사진사의 이야기"
     },
+    // Legacy placeholder piece-3-style.jpg remains packaged for compatibility only; it is not rendered.
     3: {
-      image: "addons/webtoon-reference/piece-3-style.jpg",
-      alt: "세 번째 조각 고정 웹툰 - 목포근대역사관 2관과 동양척식주식회사 목포지점"
+      panels: Object.freeze([
+        {
+          image: "addons/webtoon-reference/piece-3/HP_C09_MMH2_FARMER_GROUP.png",
+          alt: "조각 3 웹툰 9컷 - 목포근대역사관 2관 앞 사람들을 살피는 사진사"
+        },
+        {
+          image: "addons/webtoon-reference/piece-3/HP_C10_MMH2_RECONSIDERING_PEOPLE_FINAL_STATION_V3.png",
+          alt: "조각 3 웹툰 10컷 - 촬영 구도를 다시 생각하는 사진사"
+        },
+        {
+          image: "addons/webtoon-reference/piece-3/HP_C11_MMH2_FINAL_APPROVED.png",
+          alt: "조각 3 웹툰 11컷 - 최종 구도로 사진을 촬영하는 사진사"
+        },
+        {
+          image: "addons/webtoon-reference/piece-3/HP_C12_MMH2_INTENTIONAL_PEOPLE.png",
+          alt: "조각 3 웹툰 12컷 - 사람과 장소의 기록을 함께 남기는 사진사"
+        }
+      ]),
+      alt: "세 번째 조각 9·10·11·12컷 고정 웹툰 - 목포근대역사관 2관에서 이어지는 사진사의 이야기"
     }
   });
 
@@ -54,6 +72,10 @@
 
   function state() {
     return global.appState || null;
+  }
+
+  function isChinese() {
+    return state()?.language === "zh-CN";
   }
 
   function renderFixedPiece(pieceNumber) {
@@ -78,16 +100,16 @@
       const panels = document.createElement("div");
       panels.className = "hp-fixed-webtoon-panels";
       panels.setAttribute("role", "list");
-      panels.setAttribute("aria-label", item.alt);
+      panels.setAttribute("aria-label", isChinese() ? `故事碎片${pieceNumber}固定漫画` : item.alt);
 
-      item.panels.forEach((panel) => {
+      item.panels.forEach((panel, index) => {
         const panelFrame = document.createElement("div");
         panelFrame.className = "hp-fixed-webtoon-panel";
         panelFrame.setAttribute("role", "listitem");
 
         const image = document.createElement("img");
         image.src = panel.image;
-        image.alt = panel.alt;
+        image.alt = isChinese() ? `故事碎片${pieceNumber}漫画第${index + 1}格` : panel.alt;
         image.loading = "eager";
         image.decoding = "async";
 
@@ -99,7 +121,7 @@
     } else {
       const image = document.createElement("img");
       image.src = item.image;
-      image.alt = item.alt;
+      image.alt = isChinese() ? `故事碎片${pieceNumber}固定漫画` : item.alt;
       image.loading = "eager";
       image.decoding = "async";
       figure.appendChild(image);

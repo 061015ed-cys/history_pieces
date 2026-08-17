@@ -4,7 +4,7 @@
   const COPY = {
     ko: {
       label: "이야기 조각 진행",
-      count: (piece) => `${piece}/3`,
+      count: (completed) => `${completed}/3`,
       current: "현재 조각",
       button: {
         1: "첫 번째 조각 찾기",
@@ -12,14 +12,14 @@
         3: "세 번째 조각 찾기"
       },
       pieces: {
-        1: { title: "목포의 첫 관문", clue: "목포역 간판" },
-        2: { title: "원도심으로 향하는 길", clue: "역 앞 광장과 방향" },
-        3: { title: "사람들이 오가던 역전", clue: "이동과 생활의 흔적" }
+        1: { ordinal: "첫 번째 조각", place: "목포역", title: "목포의 첫 관문", clue: "목포역 간판", guideLine: "좋아. 첫 번째 이야기 조각은 목포역에 있어. 목포역으로 이동해 기록을 시작해보자." },
+        2: { ordinal: "두 번째 조각", place: "목포 대중음악의 전당", title: "목포 대중음악의 전당", clue: "구 호남은행 목포지점의 흔적", guideLine: "좋아. 두 번째 이야기 조각은 목포 대중음악의 전당에 있어. 목포 대중음악의 전당으로 이동해 기록을 시작해보자." },
+        3: { ordinal: "세 번째 조각", place: "목포근대역사관 2관", title: "목포근대역사관 2관", clue: "구 동양척식주식회사 목포지점의 흔적", guideLine: "좋아. 세 번째 이야기 조각은 목포근대역사관 2관에 있어. 목포근대역사관 2관으로 이동해 기록을 시작해보자." }
       }
     },
     "zh-CN": {
       label: "故事碎片进度",
-      count: (piece) => `${piece}/3`,
+      count: (completed) => `${completed}/3`,
       current: "当前碎片",
       button: {
         1: "寻找第一块碎片",
@@ -27,9 +27,9 @@
         3: "寻找第三块碎片"
       },
       pieces: {
-        1: { title: "木浦的第一道门户", clue: "木浦站招牌" },
-        2: { title: "通往旧城区的路", clue: "站前广场与方向" },
-        3: { title: "人来人往的站前", clue: "移动与生活的痕迹" }
+        1: { ordinal: "第一个故事碎片", place: "木浦站", title: "木浦的第一道门户", clue: "木浦站招牌", guideLine: "好。第一个故事碎片就在木浦站。前往木浦站开始记录吧。" },
+        2: { ordinal: "第二个故事碎片", place: "木浦大众音乐殿堂", title: "木浦大众音乐殿堂", clue: "旧湖南银行木浦支店的痕迹", guideLine: "好。第二个故事碎片就在木浦大众音乐殿堂。前往木浦大众音乐殿堂开始记录吧。" },
+        3: { ordinal: "第三个故事碎片", place: "木浦近代历史馆2馆", title: "木浦近代历史馆2馆", clue: "旧东洋拓殖株式会社木浦支店的痕迹", guideLine: "好。第三个故事碎片就在木浦近代历史馆2馆。前往木浦近代历史馆2馆开始记录吧。" }
       }
     }
   };
@@ -139,7 +139,10 @@
 
     setTextIfPresent("#giroksae-intro-text", introLines[0] || "");
     setTextIfPresent("#place-confirm-page .before-appear p", copy.system_ui && copy.system_ui.analysis_result_dialogue);
-    setTextIfPresent("#mokpo-guide-page .giroksae-note p", isZh ? "好。我们按顺序去找藏在木浦站里的三个碎片吧。" : "좋아. 목포역에 숨은 세 조각을 차례로 찾아보자.");
+    const guideCopy = COPY[language()];
+    const renderedGuidePiece = Number(document.getElementById("mokpo-guide-page")?.dataset.hpGuidePiece);
+    const guidePiece = [1, 2, 3].includes(renderedGuidePiece) ? renderedGuidePiece : currentPiece();
+    setTextIfPresent("#mokpo-guide-page .giroksae-note p", guideCopy.pieces[guidePiece].guideLine);
     setTextIfPresent("#unlock-giroksae-line", copy.giroksae_dialogue && copy.giroksae_dialogue.unlock_page);
     setTextIfPresent("#place-story-line", copy.giroksae_dialogue && copy.giroksae_dialogue.place_story);
     setTextIfPresent("#journey-film-page .giroksae-note p", isZh ? "好。下一段记录，就在那里继续吧。" : "좋아. 다음 기록은 그곳에서 이어가자.");
@@ -337,6 +340,20 @@
     const c = COPY[language()];
     const piece = [1, 2, 3].includes(Number(requestedPiece)) ? Number(requestedPiece) : currentPiece();
     const mission = c.pieces[piece];
+    const completed = piece - 1;
+    page.dataset.hpGuidePiece = String(piece);
+
+    const pageLabel = page.querySelector(".ornament-label");
+    if (pageLabel) pageLabel.textContent = mission.ordinal;
+    title.textContent = mission.place;
+
+    const mapCard = page.querySelector(".piece-map-card");
+    if (mapCard) {
+      mapCard.classList.add("wire-single-place-card");
+      mapCard.innerHTML = `<article><span>${String(piece).padStart(2, "0")}</span><strong>${mission.ordinal} · ${mission.place}</strong><small>${mission.clue}</small></article>`;
+    }
+
+    setTextIfPresent("#mokpo-guide-page .giroksae-note p", mission.guideLine);
 
     let shell = page.querySelector(".hp-guide-progress");
     if (!shell) {
@@ -348,10 +365,10 @@
     shell.innerHTML = `
       <div class="hp-guide-progress-top">
         <strong>${c.label}</strong>
-        <span>${c.count(piece)}</span>
+        <span>${c.count(completed)}</span>
       </div>
-      <div class="hp-guide-progress-segments" aria-label="${c.label}" role="progressbar" aria-valuemin="1" aria-valuemax="3" aria-valuenow="${piece}">
-        ${[1, 2, 3].map((index) => `<i class="${index <= piece ? "active" : ""}"></i>`).join("")}
+      <div class="hp-guide-progress-segments" aria-label="${c.label}" role="progressbar" aria-valuemin="0" aria-valuemax="3" aria-valuenow="${completed}">
+        ${[1, 2, 3].map((index) => `<i class="${index <= completed ? "active" : ""}"></i>`).join("")}
       </div>
       <div class="hp-guide-current">
         <small>${c.current} ${String(piece).padStart(2, "0")}</small>

@@ -15,6 +15,21 @@ const GUIDANCE_COPY = {
   LOWER_PHONE: { label: "휴대폰을 조금 낮춰 주세요", detail: "건물 지붕과 지면이 함께 보이게 맞춰 주세요", icon: "arrow", direction: "down" },
 };
 
+const GUIDANCE_COPY_ZH = {
+  MOVE_BACK: { label: "请向后移动，直到建筑两侧边角都进入引导线内。", detail: "请同时确认屋顶、建筑底部和左右留白。", icon: "arrow", direction: "back" },
+  MOVE_FORWARD: { label: "请稍微向前移动", detail: "让建筑贴近引导边框", icon: "arrow", direction: "forward" },
+  MOVE_LEFT: { label: "请将相机向左转", detail: "将建筑中心对准引导线", icon: "arrow", direction: "left" },
+  MOVE_RIGHT: { label: "请将相机向右转", detail: "将建筑中心对准引导线", icon: "arrow", direction: "right" },
+  OCCLUSION: { label: "建筑边角被遮挡了", detail: "请保持画面，等待遮挡消失", icon: "eye", direction: "hold" },
+  LOWER_PHONE: { label: "请稍微放低手机", detail: "让建筑屋顶与地面同时入镜", icon: "arrow", direction: "down" },
+};
+
+const GUIDANCE_STAGE_ZH = [
+  ["正在寻找可与历史记录重合的构图", "正在确认建筑屋顶与外轮廓", 28],
+  ["请后退，直到建筑两侧边角进入引导线内", "再远一点就能与历史照片进行比较", 54],
+  ["很好，建筑整体轮廓已经出现", "请暂时保持这个构图", 82],
+];
+
 const COMPARISON_DESCRIPTIONS = {
   current: "오늘 촬영한 현재의 모습입니다.",
   restored: "실제 역사 기록을 바탕으로 AI가 복원한 장면입니다.",
@@ -29,10 +44,25 @@ const DIRECTION_PRESENTATION = Object.freeze({
   hold: { glyph: "○", shortLabel: "구도 유지" },
 });
 
+const DIRECTION_PRESENTATION_ZH = Object.freeze({
+  back: { glyph: "↓", shortLabel: "向后一步" },
+  forward: { glyph: "↑", shortLabel: "稍微向前" },
+  left: { glyph: "←", shortLabel: "向左移动" },
+  right: { glyph: "→", shortLabel: "向右移动" },
+  down: { glyph: "↓", shortLabel: "放低手机" },
+  hold: { glyph: "○", shortLabel: "保持构图" },
+});
+
+let currentLocale = "ko";
+const isChinese = () => currentLocale === "zh-CN";
+const tr = (ko, zh) => isChinese() ? zh : ko;
+
 export function getComparisonDescription(view, historicalYear = 1932) {
   return view === "historical"
-    ? `${historicalYear}년의 실제 역사 기록입니다.`
-    : COMPARISON_DESCRIPTIONS[view] ?? COMPARISON_DESCRIPTIONS.restored;
+    ? tr(`${historicalYear}년의 실제 역사 기록입니다.`, `这是${historicalYear}年的真实历史记录。`)
+    : isChinese()
+      ? ({ current: "这是今天拍摄的当前景象。", restored: "这是AI根据真实历史记录复原的场景。" }[view] ?? "这是AI根据真实历史记录复原的场景。")
+      : COMPARISON_DESCRIPTIONS[view] ?? COMPARISON_DESCRIPTIONS.restored;
 }
 
 const state = {
@@ -60,7 +90,9 @@ export const pathToUrl = (path) => {
   const relative = repositoryPart ? `${repositoryPart[1]}/${repositoryPart[2]}` : normalized.replace(/^\.\//, "");
   return `/${relative.split("/").map(encodeURIComponent).join("/")}`;
 };
-export const formatPieceLabel = (pieceNumber) => `${pieceNumber === 2 ? "두" : pieceNumber === 3 ? "세" : "첫"} 번째 기록 열쇠 획득`;
+export const formatPieceLabel = (pieceNumber) => isChinese()
+  ? `获得第${pieceNumber}把记录钥匙`
+  : `${pieceNumber === 2 ? "두" : pieceNumber === 3 ? "세" : "첫"} 번째 기록 열쇠 획득`;
 export const overlayOpacityAtElapsed = (elapsed, duration = 1800, target = 1) => (
   target * Math.min(1, Math.max(0, elapsed / duration))
 );
@@ -86,14 +118,14 @@ function icon(name) {
   return `<svg aria-hidden="true" viewBox="0 0 24 24">${paths[name] ?? paths.archive}</svg>`;
 }
 
-function shell(content, data, { eyebrow = "TIMETRACE", title = "시간의 조각", compact = false } = {}) {
+function shell(content, data, { eyebrow = "TIMETRACE", title = tr("시간의 조각", "时间碎片"), compact = false } = {}) {
   const pieceNumber = data?.sequenceIndex ?? data?.pieceNumber ?? 1;
   const totalPieces = data?.sequenceTotal ?? data?.totalPieces ?? 3;
   return `
     <section class="app-shell${compact ? " app-shell--compact" : ""}">
       <header class="topbar">
         <div><p class="eyebrow">${eyebrow}</p><h1>${title}</h1></div>
-        <span class="piece-count" aria-label="기록 열쇠 진행도">${String(pieceNumber).padStart(2, "0")} <i></i> ${String(totalPieces).padStart(2, "0")}</span>
+        <span class="piece-count" aria-label="${tr("기록 열쇠 진행도", "记录钥匙进度")}">${String(pieceNumber).padStart(2, "0")} <i></i> ${String(totalPieces).padStart(2, "0")}</span>
       </header>
       ${content}
     </section>`;
@@ -115,26 +147,26 @@ function missionResult(data, scenario) {
     return shell(`
       <section class="status-panel status-panel--fail">
         <span class="status-mark">${icon("close")}</span>
-        <p class="overline">미션 판정 완료</p>
-        <h2>장소가 미션과 일치하지 않아요</h2>
-        <p>${data.reason === "SUBJECT_NOT_FOUND" ? "요청된 건물이 사진에서 확인되지 않았습니다." : "요청된 장소가 화면에 충분히 담기지 않았습니다."}</p>
+        <p class="overline">${tr("미션 판정 완료", "任务判定完成")}</p>
+        <h2>${tr("장소가 미션과 일치하지 않아요", "地点与任务不一致")}</h2>
+        <p>${data.reason === "SUBJECT_NOT_FOUND" ? tr("요청된 건물이 사진에서 확인되지 않았습니다.", "照片中未识别到指定建筑。") : tr("요청된 장소가 화면에 충분히 담기지 않았습니다.", "指定地点未完整进入画面。")}</p>
       </section>
-      <button class="primary" data-action="retry">다시 촬영하기</button>
-    `, data, { eyebrow: "MISSION CHECK", title: "장소 확인" });
+      <button class="primary" data-action="retry">${tr("다시 촬영하기", "重新拍摄")}</button>
+    `, data, { eyebrow: "MISSION CHECK", title: tr("장소 확인", "确认地点") });
   }
   const ready = data.alignmentStatus === "ready";
   const unsupported = data.alignmentStatus === "unsupported";
   return shell(`
     <section class="status-panel status-panel--success">
       <span class="status-mark">${icon("check")}</span>
-      <p class="overline">미션 성공</p>
-      <h2>${ready ? "미션 완료! 장소의 흔적을 찾았어요." : "미션 완료! 장소의 흔적을 찾았어요."}</h2>
-      <p>${ready ? "현재 사진에서 과거 기록의 위치를 바로 맞출 수 있습니다." : unsupported ? "이 사진은 시간 기록과 맞추기 어려워 다시 촬영이 필요합니다." : "과거 기록과 더 정확히 겹치도록 구도를 한 번 보정할 수 있어요."}</p>
+      <p class="overline">${tr("미션 성공", "任务成功")}</p>
+      <h2>${tr("미션 완료! 장소의 흔적을 찾았어요.", "任务完成！找到了地点的历史痕迹。")}</h2>
+      <p>${ready ? tr("현재 사진에서 과거 기록의 위치를 바로 맞출 수 있습니다.", "可以直接将当前照片与历史记录的位置对齐。") : unsupported ? tr("이 사진은 시간 기록과 맞추기 어려워 다시 촬영이 필요합니다.", "这张照片难以与时间记录对齐，需要重新拍摄。") : tr("과거 기록과 더 정확히 겹치도록 구도를 한 번 보정할 수 있어요.", "可以再调整一次构图，使其与历史记录更准确地重合。")}</p>
       ${placeIdentity(data)}
     </section>
-    <button class="primary" data-action="${ready ? "align" : unsupported ? "retry" : "guide"}">${ready ? "시간 기록 보기" : unsupported ? "다시 촬영하기" : "시간 맞추기"}</button>
-    ${!ready && !unsupported ? '<button class="secondary" data-action="continue-current">현재 사진으로 계속</button>' : ""}
-  `, data, { eyebrow: "MISSION PASSED", title: "미션 판정" });
+    <button class="primary" data-action="${ready ? "align" : unsupported ? "retry" : "guide"}">${ready ? tr("시간 기록 보기", "查看时间记录") : unsupported ? tr("다시 촬영하기", "重新拍摄") : tr("시간 맞추기", "对准时间")}</button>
+    ${!ready && !unsupported ? `<button class="secondary" data-action="continue-current">${tr("현재 사진으로 계속", "使用当前照片继续")}</button>` : ""}
+  `, data, { eyebrow: "MISSION PASSED", title: tr("미션 판정", "任务判定") });
 }
 
 function guidanceOverlay(profile = {}) {
@@ -162,34 +194,34 @@ function guidanceScreen(data, scenarioData, mode) {
   const replacementRequired = guidance?.demoAssetStatus === "replacement_required";
   const mediaFit = guidance?.objectFit ?? "contain";
   const mediaPosition = guidance?.objectPosition ?? "50% 0%";
-  const initialCopy = guidance?.stageCopy?.[0] ?? ["과거 기록과 겹칠 수 있는 구도를 찾고 있어요", "건물의 지붕과 외곽선을 확인하고 있습니다"];
+  const initialCopy = isChinese() ? GUIDANCE_STAGE_ZH[0] : guidance?.stageCopy?.[0] ?? ["과거 기록과 겹칠 수 있는 구도를 찾고 있어요", "건물의 지붕과 외곽선을 확인하고 있습니다"];
   const direction = guidance?.direction ?? guidance?.code?.replace("MOVE_", "").toLowerCase() ?? "back";
-  const directionUi = DIRECTION_PRESENTATION[direction] ?? DIRECTION_PRESENTATION.back;
-  const successInstruction = guidance?.successInstruction ?? "구도 고정 완료";
+  const directionUi = isChinese() ? (DIRECTION_PRESENTATION_ZH[direction] ?? DIRECTION_PRESENTATION_ZH.back) : (DIRECTION_PRESENTATION[direction] ?? DIRECTION_PRESENTATION.back);
+  const successInstruction = isChinese() ? "构图已固定" : guidance?.successInstruction ?? "구도 고정 완료";
   return shell(`
     ${placeIdentity(data, state.identityHistorical)}
     <section class="camera-stage${state.ready ? " camera-stage--ready" : ""}">
-    ${!video && captureStill ? `<img class="camera-fallback" src="${pathToUrl(captureStill)}" alt="${data.currentDisplayName ?? data.currentPlaceName ?? data.placeName ?? data.placeId} 현재 사진" style="object-fit:${mediaFit};object-position:${mediaPosition}"/>` : ""}
+    ${!video && captureStill ? `<img class="camera-fallback" src="${pathToUrl(captureStill)}" alt="${data.currentDisplayName ?? data.currentPlaceName ?? data.placeName ?? data.placeId}${tr(" 현재 사진", "当前照片")}" style="object-fit:${mediaFit};object-position:${mediaPosition}"/>` : ""}
 
-${video ? `<video class="camera-video" src="${pathToUrl(video.path)}" muted playsinline autoplay preload="auto" style="object-fit:${mediaFit};object-position:${mediaPosition}" data-playback-rate="${guidance.playbackRate ?? 1}" data-segment-start="${guidance.segmentStartSeconds ?? 0}" data-segment-end="${guidance.segmentEndSeconds ?? ""}"></video>` : !captureStill ? `<div class="camera-placeholder"><span>LIVE CAMERA SURFACE</span><p>호스트 카메라 스트림 연결 대기</p></div>` : ""}<div class="camera-shade"></div>
+${video ? `<video class="camera-video" src="${pathToUrl(video.path)}" muted playsinline autoplay preload="auto" style="object-fit:${mediaFit};object-position:${mediaPosition}" data-playback-rate="${guidance.playbackRate ?? 1}" data-segment-start="${guidance.segmentStartSeconds ?? 0}" data-segment-end="${guidance.segmentEndSeconds ?? ""}"></video>` : !captureStill ? `<div class="camera-placeholder"><span>LIVE CAMERA SURFACE</span><p>${tr("호스트 카메라 스트림 연결 대기", "等待连接主机相机画面")}</p></div>` : ""}<div class="camera-shade"></div>
       ${guidanceOverlay(guidance?.arOverlay)}
       <span class="shutter-flash" aria-hidden="true"></span>
-      <div class="camera-meta"><span>${video ? "촬영 구도 안내" : captureStill ? mode === "demo" ? "구도 분석 데모" : "HOST CAPTURE" : "LIVE-READY"}</span><span>시도 ${data.retry.attempt} / ${data.retry.maxAttempts}</span></div>
-      <span class="tracking-status" data-tracking-status>건물 윤곽 인식</span>
+      <div class="camera-meta"><span>${video ? tr("촬영 구도 안내", "拍摄构图引导") : captureStill ? mode === "demo" ? tr("구도 분석 데모", "构图分析演示") : "HOST CAPTURE" : "LIVE-READY"}</span><span>${tr("시도", "尝试")} ${data.retry.attempt} / ${data.retry.maxAttempts}</span></div>
+      <span class="tracking-status" data-tracking-status>${tr("건물 윤곽 인식", "识别建筑轮廓")}</span>
       <span class="move-cue${state.ready ? " move-cue--locked" : ""}" data-move-cue data-direction="${direction}" aria-hidden="true">${state.ready ? `${icon("check")}<small>${successInstruction}</small>` : `${directionUi.glyph}<small>${guidance?.shortLabel ?? directionUi.shortLabel}</small>`}</span>
       <div class="guidance-pill" role="status">
         <div data-guide-slot></div>
-        <div><strong data-guidance-title>${state.ready ? successInstruction : initialCopy[0]}</strong><small data-guidance-detail>${state.ready ? `${data.historicalYear}년의 모습과 비교를 시작합니다` : initialCopy[1]}</small></div>
+        <div><strong data-guidance-title>${state.ready ? successInstruction : initialCopy[0]}</strong><small data-guidance-detail>${state.ready ? tr(`${data.historicalYear}년의 모습과 비교를 시작합니다`, `开始与${data.historicalYear}年的景象进行比较`) : initialCopy[1]}</small></div>
       </div>
-      ${!replacementRequired && mode === "demo" ? `<button class="skip-link" data-action="skip-guidance">안내 건너뛰기</button>` : ""}
+      ${!replacementRequired && mode === "demo" ? `<button class="skip-link" data-action="skip-guidance">${tr("안내 건너뛰기", "跳过引导")}</button>` : ""}
     </section>
     <div class="guidance-footer">
-      <div class="alignment-progress"><div><span>정합 준비</span><output data-guidance-progress>12%</output></div><progress max="100" value="12" data-guidance-progress-bar>12%</progress></div>
-      <p data-guidance-status><span class="pulse-dot"></span>${state.ready ? successInstruction : "구도 분석 중"}</p>
-      <button class="primary" data-action="align-retake" ${state.ready && !replacementRequired ? "" : "disabled"}>이 구도로 기록하기</button>
-      ${mode === "live" && !state.ready ? `<p class="live-note">실제 정합 완료 응답을 받으면 활성화됩니다.</p>` : ""}
+      <div class="alignment-progress"><div><span>${tr("정합 준비", "准备对齐")}</span><output data-guidance-progress>12%</output></div><progress max="100" value="12" data-guidance-progress-bar>12%</progress></div>
+      <p data-guidance-status><span class="pulse-dot"></span>${state.ready ? successInstruction : tr("구도 분석 중", "正在分析构图")}</p>
+      <button class="primary" data-action="align-retake" ${state.ready && !replacementRequired ? "" : "disabled"}>${tr("이 구도로 기록하기", "按此构图记录")}</button>
+      ${mode === "live" && !state.ready ? `<p class="live-note">${tr("실제 정합 완료 응답을 받으면 활성화됩니다.", "收到实际对齐完成结果后即可使用。")}</p>` : ""}
     </div>
-  `, data, { eyebrow: "ALIGNMENT GUIDE", title: "시간 맞추기", compact: true });
+  `, data, { eyebrow: "ALIGNMENT GUIDE", title: tr("시간 맞추기", "对准时间"), compact: true });
 }
 
 function selectedCurrent(data) {
@@ -203,39 +235,44 @@ function cardLayers(data, active = state.comparison) {
   const historical = pathToUrl(data.overlay.historicalSourceImage);
   return `
     <div class="photo-layers" id="timetrace-photo-panel" role="tabpanel" data-view="${active}" style="--view-duration:450ms;--restored-opacity:${state.opacity}">
-      <img class="photo-current" src="${current}" alt="선택된 현재 사진" />
-      ${restored ? `<img class="photo-restored" src="${restored}" alt="역사 기록을 조건으로 사전 생성하고 검수한 AI 복원 장면" style="opacity:${state.opacity}" />` : ""}
-      <img class="photo-historical" src="${historical}" alt="${data.historicalYear}년 역사 원본 사진" />
+      <img class="photo-current" src="${current}" alt="${tr("선택된 현재 사진", "已选择的当前照片")}" />
+      ${restored ? `<img class="photo-restored" src="${restored}" alt="${tr("역사 기록을 조건으로 사전 생성하고 검수한 AI 복원 장면", "根据历史记录预先生成并审核的AI复原场景")}" style="opacity:${state.opacity}" />` : ""}
+      <img class="photo-historical" src="${historical}" alt="${tr(`${data.historicalYear}년 역사 원본 사진`, `${data.historicalYear}年历史原始照片`)}" />
       <div class="photo-vignette"></div>
     </div>`;
 }
 
 function comparisonScreen(data, selected = "initial") {
-  const tabs = [["current", "현재 사진"], ["restored", "AI 복원"], ["historical", `${data.historicalYear} 원본`]];
+  const tabs = [["current", tr("현재 사진", "当前照片")], ["restored", tr("AI 복원", "AI复原")], ["historical", tr(`${data.historicalYear} 원본`, `${data.historicalYear}年原图`)]];
   return shell(`
-    <p class="selection-note"><span>${icon("check")}</span>${selected === "retake" ? "AI가 더 적합한 보정 사진을 선택했어요" : "촬영한 사진을 과거 기록과 맞췄어요"}</p>
+    <p class="selection-note"><span>${icon("check")}</span>${selected === "retake" ? tr("AI가 더 적합한 보정 사진을 선택했어요", "AI已选择更适合的校正照片") : tr("촬영한 사진을 과거 기록과 맞췄어요", "已将拍摄照片与历史记录对齐")}</p>
     ${placeIdentity(data, true)}
     <article class="record-card">
       <div class="record-photo">
         ${cardLayers(data)}
         <span class="year-stamp" data-year-stamp>AI RESTORED</span>
-        <span class="restoration-badge" data-restoration-badge>AI 복원 장면</span>
-        <button class="replay" data-action="replay" aria-label="시간의 겹침 보기">${icon("play")}<span>시간의 겹침 보기</span></button>
+        <span class="restoration-badge" data-restoration-badge>${tr("AI 복원 장면", "AI复原场景")}</span>
+        <button class="replay" data-action="replay" aria-label="${tr("시간의 겹침 보기", "查看时间重叠")}">${icon("play")}<span>${tr("시간의 겹침 보기", "查看时间重叠")}</span></button>
       </div>
       <div class="card-caption"><p>ARCHIVE NO. ${data.placeId}-${data.historicalYear}</p><h2>${data.historicalDisplayName ?? data.historicalPlaceName ?? data.placeName ?? data.placeId}</h2><span data-comparison-description aria-live="polite" aria-atomic="true">${getComparisonDescription(state.comparison, data.historicalYear)}</span></div>
     </article>
     <div class="compare-controls">
-      <div class="tabs" role="tablist" aria-label="사진 비교">
+      <div class="tabs" role="tablist" aria-label="${tr("사진 비교", "照片对比")}">
         ${tabs.map(([id, label]) => `<button id="timetrace-tab-${id}" role="tab" aria-controls="timetrace-photo-panel" aria-selected="${state.comparison === id}" tabindex="${state.comparison === id ? 0 : -1}" data-view="${id}">${label}</button>`).join("")}
       </div>
-      <label class="opacity-control" ${state.comparison === "restored" ? "" : "hidden"}><span>AI 복원 장면</span><input type="range" min="0" max="100" value="${Math.round(state.opacity * 100)}" data-action="opacity" aria-label="현재 사진 위 AI 복원 장면 투명도"/><output>${Math.round(state.opacity * 100)}%</output></label>
+      <label class="opacity-control" ${state.comparison === "restored" ? "" : "hidden"}><span>${tr("AI 복원 장면", "AI复原场景")}</span><input type="range" min="0" max="100" value="${Math.round(state.opacity * 100)}" data-action="opacity" aria-label="${tr("현재 사진 위 AI 복원 장면 투명도", "当前照片上AI复原场景的透明度")}"/><output>${Math.round(state.opacity * 100)}%</output></label>
     </div>
-    <button class="primary" data-action="complete">기록 열쇠 획득</button>
-  `, data, { eyebrow: "ARCHIVE DISCOVERED", title: "기록 비교" });
+    <button class="primary" data-action="complete">${tr("기록 열쇠 획득", "获得记录钥匙")}</button>
+  `, data, { eyebrow: "ARCHIVE DISCOVERED", title: tr("기록 비교", "记录对比") });
 }
 
 function alignmentScreen(data) {
-  const messages = [
+  const messages = isChinese() ? [
+    "正在寻找建筑边角",
+    "正在将窗户和屋顶线与历史记录对齐",
+    "正在把已对齐建筑的周边复原为过去景象",
+    "AI复原场景已完成",
+  ] : [
     "건물의 모서리를 찾고 있어요",
     "창문과 지붕선을 과거 기록과 맞추고 있어요",
     "정합된 건물 주변을 과거 풍경으로 복원하고 있어요",
@@ -244,18 +281,18 @@ function alignmentScreen(data) {
   return shell(`
     ${placeIdentity(data, state.identityHistorical)}
     <section class="alignment-stage alignment-place-${String(data.placeId).toLowerCase()} alignment-step-${state.alignmentStep}" aria-live="polite">
-      <button class="animation-skip" data-action="skip-alignment">건너뛰기</button>
+      <button class="animation-skip" data-action="skip-alignment">${tr("건너뛰기", "跳过")}</button>
       <article class="alignment-card">
-        <img class="alignment-current" src="${pathToUrl(selectedCurrent(data))}" alt="선택된 현재 사진"/>
-        ${data.overlay.aiRestoredScene ? `<img class="alignment-restored" src="${pathToUrl(data.overlay.aiRestoredScene)}" alt="사전 생성된 AI 복원 장면"/>` : ""}
+        <img class="alignment-current" src="${pathToUrl(selectedCurrent(data))}" alt="${tr("선택된 현재 사진", "已选择的当前照片")}"/>
+        ${data.overlay.aiRestoredScene ? `<img class="alignment-restored" src="${pathToUrl(data.overlay.aiRestoredScene)}" alt="${tr("사전 생성된 AI 복원 장면", "预先生成的AI复原场景")}"/>` : ""}
         <img class="alignment-past" src="${pathToUrl(data.overlay.alignedHistoricalRgba)}" alt=""/>
         <div class="record-lines" aria-hidden="true"><i></i><i></i><i></i></div>
         <span class="card-join" aria-hidden="true"></span>
-        <span class="alignment-restoration-label">AI 복원 장면</span>
+        <span class="alignment-restoration-label">${tr("AI 복원 장면", "AI复原场景")}</span>
       </article>
       <div class="alignment-copy"><span data-alignment-number>0${state.alignmentStep + 1}</span><p data-alignment-message>${messages[state.alignmentStep]}</p></div>
     </section>
-  `, data, { eyebrow: "TIME ALIGNMENT", title: "시간 기록 정합" });
+  `, data, { eyebrow: "TIME ALIGNMENT", title: tr("시간 기록 정합", "时间记录对齐") });
 }
 
 function completeScreen(data, selected) {
@@ -263,18 +300,18 @@ function completeScreen(data, selected) {
     <section class="completion">
       <div class="piece-lock" aria-hidden="true">${icon("archive")}<i></i></div>
       <p class="overline">STORY KEY ACQUIRED</p>
-      <h2>옛 이야기의 열쇠가<br/>획득되었습니다</h2>
+      <h2>${tr("옛 이야기의 열쇠가<br/>획득되었습니다", "已获得<br/>往昔故事的钥匙")}</h2>
       <p>${data.completionSequenceLabel ?? formatPieceLabel(data.sequenceIndex ?? data.pieceNumber)}</p>
-      <article class="mini-card"><img src="${pathToUrl(data.overlay.aiRestoredScene)}" alt="획득한 기록 열쇠의 AI 복원 대표 장면"/><div><strong>${data.historicalDisplayName ?? data.historicalPlaceName ?? data.placeName ?? data.placeId}</strong><span>${data.historicalYear}</span></div></article>
-      <div class="join-mark" aria-label="다음 시간의 조각과 연결될 위치"><i></i><i></i><i></i></div>
+      <article class="mini-card"><img src="${pathToUrl(data.overlay.aiRestoredScene)}" alt="${tr("획득한 기록 열쇠의 AI 복원 대표 장면", "已获得记录钥匙的AI复原代表场景")}"/><div><strong>${data.historicalDisplayName ?? data.historicalPlaceName ?? data.placeName ?? data.placeId}</strong><span>${data.historicalYear}</span></div></article>
+      <div class="join-mark" aria-label="${tr("다음 시간의 조각과 연결될 위치", "与下一个时间碎片连接的位置")}"><i></i><i></i><i></i></div>
     </section>
-    <button class="primary" data-action="finish">완료</button>
-    <p class="integration-note">다음 화면은 호스트가 완료 결과를 받은 뒤 결정합니다.</p>
-  `, data, { eyebrow: "TIMETRACE COMPLETE", title: "기록 보관함" });
+    <button class="primary" data-action="finish">${tr("완료", "完成")}</button>
+    <p class="integration-note">${tr("다음 화면은 호스트가 완료 결과를 받은 뒤 결정합니다.", "主程序收到完成结果后将决定下一画面。")}</p>
+  `, data, { eyebrow: "TIMETRACE COMPLETE", title: tr("기록 보관함", "记录档案盒") });
 }
 
-function loadingScreen(message = "기록을 불러오는 중입니다") {
-  return shell(`<section class="loading"><i></i><p>${message}</p></section>`, null, { title: "시간의 조각" });
+function loadingScreen(message = tr("기록을 불러오는 중입니다", "正在加载记录")) {
+  return shell(`<section class="loading"><i></i><p>${message}</p></section>`, null, { title: tr("시간의 조각", "时间碎片") });
 }
 
 function liveWaiting(data) {
@@ -282,11 +319,11 @@ function liveWaiting(data) {
     <section class="status-panel">
       <span class="status-mark status-mark--waiting">···</span>
       <p class="overline">LIVE ADAPTER</p>
-      <h2>AI 결과를 기다리고 있어요</h2>
-      <p>실시간 AI는 이 UI에서 모사하지 않습니다. 호스트가 Mission AI와 TimeTrace 응답을 adapter에 전달하면 같은 흐름이 시작됩니다.</p>
-      <p class="todo">TODO(api): ${data.missingFields.join(", ") || "응답 연결"}</p>
+      <h2>${tr("AI 결과를 기다리고 있어요", "正在等待AI结果")}</h2>
+      <p>${tr("실시간 AI는 이 UI에서 모사하지 않습니다. 호스트가 Mission AI와 TimeTrace 응답을 adapter에 전달하면 같은 흐름이 시작됩니다.", "此界面不模拟实时AI。主程序向适配器传递Mission AI与TimeTrace响应后，将开始相同流程。")}</p>
+      <p class="todo">TODO(api): ${data.missingFields.join(", ") || tr("응답 연결", "连接响应")}</p>
     </section>
-  `, data, { eyebrow: "INTEGRATION READY", title: "실시간 연결" });
+  `, data, { eyebrow: "INTEGRATION READY", title: tr("실시간 연결", "实时连接") });
 }
 
 function applyGuideCharacter(root, guideCharacter) {
@@ -310,6 +347,7 @@ export async function mountTimeTrace(root, options = {}) {
     root = options.root;
   }
   if (!root) throw new Error("TimeTrace mount element is required");
+  currentLocale = options.locale === "zh-CN" ? "zh-CN" : "ko";
   mountedInstances.get(root)?.destroy();
   clearTimers();
   state.screen = "loading";
@@ -341,6 +379,7 @@ export async function mountTimeTrace(root, options = {}) {
     historicalDisplayName: options.historicalDisplayName,
     pieceNumber: options.pieceNumber,
     totalPieces: options.totalPieces,
+    completionSequenceLabel: options.completionSequenceLabel,
     initialCaptureRef: options.initialCaptureRef,
     initialCaptureUrl: options.initialCaptureUrl,
     assets: options.assets,
@@ -374,6 +413,16 @@ export async function mountTimeTrace(root, options = {}) {
     },
     video: options.liveVideo ?? null,
   };
+  if (isChinese() && scenario.guidance) {
+    const code = scenario.guidance.code ?? "MOVE_BACK";
+    scenario.guidance = {
+      ...scenario.guidance,
+      ...(GUIDANCE_COPY_ZH[code] ?? GUIDANCE_COPY_ZH.MOVE_BACK),
+      stageCopy: GUIDANCE_STAGE_ZH.map((stage) => [...stage]),
+      successInstruction: "构图已固定",
+      shortLabel: (DIRECTION_PRESENTATION_ZH[scenario.guidance.direction] ?? DIRECTION_PRESENTATION_ZH.back).shortLabel,
+    };
+  }
   state.selected = data.selection.selected || scenario?.contract?.selectedCapture || "initial";
   state.terminated = false;
 
@@ -455,7 +504,12 @@ export async function mountTimeTrace(root, options = {}) {
     if (!stage) return;
     [...stage.classList].filter((name) => name.startsWith("alignment-step-")).forEach((name) => stage.classList.remove(name));
     stage.classList.add(`alignment-step-${step}`);
-    const messages = [
+    const messages = isChinese() ? [
+      "正在寻找建筑边角",
+      "正在将窗户和屋顶线与历史记录对齐",
+      "正在把已对齐建筑的周边复原为过去景象",
+      "AI复原场景已完成",
+    ] : [
       "건물의 모서리를 찾고 있어요",
       "창문과 지붕선을 과거 기록과 맞추고 있어요",
       "정합된 건물 주변을 과거 풍경으로 복원하고 있어요",
@@ -555,7 +609,7 @@ export async function mountTimeTrace(root, options = {}) {
       button.tabIndex = button.dataset.view === view ? 0 : -1;
     });
     const yearStamp = root.querySelector("[data-year-stamp]");
-    if (yearStamp) yearStamp.textContent = view === "historical" ? `${data.historicalYear} 원본` : view === "current" ? "현재 사진" : "AI RESTORED";
+    if (yearStamp) yearStamp.textContent = view === "historical" ? tr(`${data.historicalYear} 원본`, `${data.historicalYear}年原图`) : view === "current" ? tr("현재 사진", "当前照片") : "AI RESTORED";
     const badge = root.querySelector("[data-restoration-badge]");
     if (badge) badge.hidden = view !== "restored";
     const description = root.querySelector("[data-comparison-description]");
@@ -600,9 +654,9 @@ export async function mountTimeTrace(root, options = {}) {
     const trackingStatus = root.querySelector("[data-tracking-status]");
     const moveCue = root.querySelector("[data-move-cue]");
     const primary = root.querySelector('[data-action="align-retake"]');
-    const successInstruction = scenario.guidance?.successInstruction ?? "구도 고정 완료";
+    const successInstruction = isChinese() ? "构图已固定" : scenario.guidance?.successInstruction ?? "구도 고정 완료";
     if (title) title.textContent = successInstruction;
-    if (detail) detail.textContent = `${data.historicalYear}년의 모습과 비교를 시작합니다`;
+    if (detail) detail.textContent = tr(`${data.historicalYear}년의 모습과 비교를 시작합니다`, `开始与${data.historicalYear}年的景象进行比较`);
     if (status) status.innerHTML = `<span class="pulse-dot"></span>${successInstruction}`;
     if (trackingStatus) trackingStatus.textContent = successInstruction;
     if (moveCue) {
@@ -629,7 +683,7 @@ export async function mountTimeTrace(root, options = {}) {
     const progressBar = root.querySelector("[data-guidance-progress-bar]");
     const trackingStatus = root.querySelector("[data-tracking-status]");
     const camera = root.querySelector(".camera-stage");
-    const values = scenario.guidance?.stageCopy ?? [
+    const values = isChinese() ? GUIDANCE_STAGE_ZH.map((item) => [...item]) : scenario.guidance?.stageCopy ?? [
       ["과거 기록과 겹칠 수 있는 구도를 찾고 있어요", "건물의 지붕과 외곽선을 확인하고 있습니다", 28],
       ["건물 양쪽 모서리가 안내선 안에 들어올 때까지 뒤로 이동해주세요.", "조금만 더 멀어지면 과거 사진과 비교할 수 있어요", 54],
       ["좋아요, 건물의 전체 형태가 보이기 시작했어요", "이 구도를 잠시 유지해 주세요", 82],
@@ -648,7 +702,9 @@ export async function mountTimeTrace(root, options = {}) {
     if (progress) progress.value = `${stageValue[2]}%`;
     if (progressBar) progressBar.value = stageValue[2];
     if (camera) camera.dataset.guidanceStage = String(stage);
-    if (trackingStatus) trackingStatus.textContent = ["건물 윤곽 인식", "구도 맞추는 중", "구도 맞추는 중"][stage];
+    if (trackingStatus) trackingStatus.textContent = isChinese()
+      ? ["识别建筑轮廓", "正在调整构图", "正在调整构图"][stage]
+      : ["건물 윤곽 인식", "구도 맞추는 중", "구도 맞추는 중"][stage];
   }
 
   function prepareGuidanceVideo() {
@@ -668,7 +724,7 @@ export async function mountTimeTrace(root, options = {}) {
         const fallbackButton = document.createElement("button");
         fallbackButton.type = "button";
         fallbackButton.className = "video-play-fallback";
-        fallbackButton.textContent = "촬영 영상 재생";
+        fallbackButton.textContent = tr("촬영 영상 재생", "播放拍摄视频");
         fallbackButton.addEventListener("click", () => {
           video.play().then(() => fallbackButton.remove()).catch(() => {});
         });

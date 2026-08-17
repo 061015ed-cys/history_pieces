@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import re
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
@@ -13,7 +14,11 @@ from history_chatbot.retrieval.base import DenseEncoder, RankedChunk, RetrievalC
 from history_chatbot.retrieval.dense import DenseSearcher, HashingDenseEncoder, SentenceTransformerEncoder
 from history_chatbot.retrieval.fusion import reciprocal_rank_fusion
 from history_chatbot.retrieval.qdrant_store import LocalJsonVectorStore
-from history_chatbot.retrieval.query_normalizer import content_words, normalize_query
+from history_chatbot.retrieval.query_normalizer import (
+    content_words,
+    explicit_subject_words,
+    normalize_query,
+)
 from history_chatbot.retrieval.reranker import NoOpReranker
 from history_chatbot.retrieval.sparse import BM25Searcher
 from history_chatbot.retrieval.thresholds import apply_thresholds
@@ -48,6 +53,7 @@ class RetrievalConfig:
     runtime_mode: str = "production"
     fixture_chunks_path: Path | None = None
     provisional_chunks_path: Path | None = None
+    verified_hackathon_chunks_path: Path | None = None
     development_chunks_path: Path | None = None
 
     def validate(self) -> None:
@@ -58,6 +64,8 @@ class RetrievalConfig:
             raise ProvisionalDataDetectedError(
                 "production 모드에는 provisional_hackathon 자료를 설정할 수 없습니다."
             )
+        if mode != RuntimeMode.HACKATHON and self.verified_hackathon_chunks_path is not None:
+            raise ValueError("verified_hackathon_chunks_path는 hackathon 모드에서만 사용할 수 있습니다.")
         if mode == RuntimeMode.PRODUCTION and self.development_chunks_path is not None:
             raise ValueError("production 모드에서는 development_real 자료를 설정할 수 없습니다.")
         if mode != RuntimeMode.HACKATHON and self.provisional_chunks_path is not None:
@@ -74,6 +82,7 @@ class RetrievalConfig:
             for path in (
                 self.fixture_chunks_path,
                 self.provisional_chunks_path,
+                self.verified_hackathon_chunks_path,
                 self.development_chunks_path,
             )
         )
@@ -119,6 +128,7 @@ class RetrievalConfig:
             elif key in {
                 "fixture_chunks_path",
                 "provisional_chunks_path",
+                "verified_hackathon_chunks_path",
                 "development_chunks_path",
             }:
                 values[key] = Path(value) if value else None
@@ -285,6 +295,38 @@ class ProvisionalReader:
         return chunks, stable_json_hash(records)
 
 
+class VerifiedHackathonReader:
+    """Load locally audited candidates without implying production approval."""
+
+    def __init__(self, path: Path, runtime_mode: RuntimeMode) -> None:
+        if runtime_mode != RuntimeMode.HACKATHON:
+            raise ValueError("verified_hackathon 자료는 hackathon 모드에서만 사용할 수 있습니다.")
+        self.path = path
+
+    def load(self) -> tuple[list[RetrievalChunk], str]:
+        if not self.path.is_file():
+            return [], ""
+        records = [
+            json.loads(line)
+            for line in self.path.read_text(encoding="utf-8").splitlines()
+            if line.strip()
+        ]
+        chunks: list[RetrievalChunk] = []
+        for record in records:
+            if record.get("usage_status") != "verified_hackathon":
+                raise ValueError("verified hackathon chunk has an invalid usage_status")
+            if record.get("verification_status") != "VALID":
+                raise ValueError("non-VALID record found in verified hackathon chunks")
+            if record.get("production_approved") is not False:
+                raise ValueError("verified hackathon data must remain production_approved=false")
+            if record.get("human_review_required") is not True:
+                raise ValueError("verified hackathon data must preserve human_review_required=true")
+            if record.get("allowed_for_training") is not False:
+                raise ValueError("verified hackathon data cannot be used for training")
+            chunks.append(RetrievalChunk.from_record(record))
+        return chunks, stable_json_hash(records)
+
+
 class DevelopmentRealReader:
     """Load isolated, explicitly approved real-source development chunks."""
 
@@ -376,6 +418,10 @@ class HybridRetrievalService:
         if self.config.provisional_chunks_path is not None:
             return ProvisionalReader(
                 self.config.provisional_chunks_path, self.runtime_mode
+            )
+        if self.config.verified_hackathon_chunks_path is not None:
+            return VerifiedHackathonReader(
+                self.config.verified_hackathon_chunks_path, self.runtime_mode
             )
         if self.config.development_chunks_path is not None:
             return DevelopmentRealReader(
@@ -479,8 +525,15 @@ class HybridRetrievalService:
         dense = DenseSearcher(self.encoder, self.store).search(
             query.normalized, self.config.dense_top_k
         )
+        hashing_guard = (
+            self.encoder.model_id == "hashing-v1"
+            and self.config.development_chunks_path is None
+            and self.config.fixture_chunks_path is None
+            and self.config.provisional_chunks_path is None
+        )
         sparse = BM25Searcher(self.store.chunks()).search(
-            query.normalized, self.config.sparse_top_k
+            query.normalized,
+            max(self.config.sparse_top_k, 50) if hashing_guard else self.config.sparse_top_k,
         )
         fused = reciprocal_rank_fusion(dense, sparse, rank_constant=self.config.rrf_k)
         reranked = self.reranker.rerank(query.normalized, fused)
@@ -492,18 +545,61 @@ class HybridRetrievalService:
                 item for item in reranked
                 if item.chunk.document_id in matched_documents
             ]
-        hashing_guard = (
-            self.encoder.model_id == "hashing-v1"
-            and self.config.development_chunks_path is None
-        )
         if hashing_guard:
             query_words = set(query.informative_words)
+            subject_words = set(explicit_subject_words(query.original))
+            for left, right in re.findall(
+                r"([0-9A-Za-z가-힣·]{2,30})(?:와|과)\s*"
+                r"([0-9A-Za-z가-힣·]{2,30})",
+                query.original,
+            ):
+                # Coordinated nouns are explicit facets of one question.  Keeping
+                # each facet avoids dropping a supporting chunk merely because the
+                # first named subject is absent from that chunk's opening.
+                subject_words.update(content_words(left))
+                subject_words.update(content_words(right))
+            if not subject_words:
+                return []
             reranked = [
                 item
                 for item in reranked
                 if query_words
                 & set(content_words(f"{item.chunk.title} {item.chunk.text}"))
             ]
+            content_candidates = [
+                item for item in reranked if not self._hashing_boilerplate_only(item)
+            ]
+            if content_candidates:
+                reranked = content_candidates
+            if subject_words:
+                reranked = [
+                    item for item in reranked
+                    if self._hashing_subject_agrees(subject_words, item)
+                ]
+                if not reranked:
+                    return []
+            title_matched = [
+                item
+                for item in reranked
+                if (subject_words or query_words) & set(content_words(item.chunk.title))
+            ]
+            detail_requested = bool(re.search(
+                r"왜|언제|어디|누가|누구|사람|인물|원인|이유|배경|"
+                r"결과|영향|이후|뒤|건립|설립|개통|준공|지어|세워|만들|역할",
+                query.original,
+            ))
+            if title_matched and len(subject_words) == 1 and not detail_requested:
+                reranked = title_matched
+            elif re.search(r"존재하지\s*않|자료에\s*없는|가상\s*(?:인물|사건|장소)", query.original):
+                # The hashing fallback otherwise admits unrelated documents through
+                # generic body words when the user explicitly marks a fictional or
+                # absent subject (for example an unknown dynasty matching "왕조").
+                return []
+            reranked.sort(
+                key=lambda item: self._hashing_result_order(
+                    query_words, item, query.original, subject_words
+                )
+            )
         selected = apply_thresholds(
             query,
             reranked,
@@ -512,9 +608,8 @@ class HybridRetrievalService:
             max_chunks_per_document=self.config.max_chunks_per_document,
             final_top_k=self.config.final_top_k,
         )
-        if hashing_guard and not self._hashing_coverage(
-            query.informative_words, selected
-        ):
+        coverage_words = tuple(subject_words) if hashing_guard and subject_words else query.informative_words
+        if hashing_guard and not self._hashing_coverage(coverage_words, selected):
             return []
         return selected
 
@@ -531,9 +626,190 @@ class HybridRetrievalService:
             for result in results
             for word in content_words(f"{result.chunk.title} {result.chunk.text}")
         }
-        matched = len(set(query_words) & searchable)
+        combined = " ".join(
+            f"{result.chunk.title} {result.chunk.text}" for result in results
+        )
+        matched = sum(
+            1 for word in set(query_words)
+            if word in searchable or word in combined
+            or (
+                len(content_words(word)) > 1
+                and set(content_words(word)) <= searchable
+            )
+            or (
+                "일본영사관" in re.sub(r"\s+", "", word)
+                and "근대역사관1관" in re.sub(r"\s+", "", combined)
+            )
+            or (
+                "동양척식주식회사" in re.sub(r"\s+", "", word)
+                and "근대역사관2관" in re.sub(r"\s+", "", combined)
+            )
+        )
         required = 1 if len(query_words) <= 2 else len(query_words) // 2 + 1
         return matched >= required
+
+    @staticmethod
+    def _hashing_result_order(
+        query_words: set[str], result: RankedChunk, original_query: str = "",
+        subject_words: set[str] | None = None,
+    ) -> tuple[int, int, int, int, float, str]:
+        """Prefer subject-titled factual prose over scraped navigation/footer text."""
+
+        title_words = set(content_words(result.chunk.title))
+        title_matches = len(query_words & title_words)
+        text = result.chunk.text
+        noise_markers = (
+            "수정 의견 작성",
+            "비밀번호",
+            "파일선택",
+            "다운로드가 완료",
+            "콘텐츠 이용 안내",
+            "전체메뉴",
+            "사이드메뉴",
+            "미디어 자유이용",
+        )
+        noise = sum(text.count(marker) for marker in noise_markers)
+        factual_opening = int(
+            any(
+                marker in text[:160]
+                for marker in (
+                    "정의 닫기",
+                    "개설 닫기",
+                    "내용 닫기",
+                    "변천 닫기",
+                    "생애 및 활동사항 닫기",
+                )
+            )
+        )
+        detail_matches = HybridRetrievalService._requested_detail_matches(
+            original_query, text
+        )
+        subjects = subject_words or set()
+        metadata_subjects = {
+            str(value) for value in result.chunk.payload.get("retrieval_subjects", ())
+        }
+        subject_strength = 0
+        for subject in subjects:
+            compact_subject = re.sub(r"\s+", "", subject)
+            compact_title = re.sub(r"\s+", "", result.chunk.title)
+            known_alias_match = (
+                "일본영사관" in compact_subject and "근대역사관1관" in compact_title
+            ) or (
+                "동양척식주식회사" in compact_subject and "근대역사관2관" in compact_title
+            )
+            if known_alias_match:
+                subject_strength = max(subject_strength, 3)
+                continue
+            if subject in metadata_subjects or subject in result.chunk.title:
+                subject_strength = max(subject_strength, 3)
+                continue
+            position = text.find(subject)
+            if 0 <= position <= 24:
+                subject_strength = max(subject_strength, 2)
+            elif position >= 0:
+                subject_strength = max(subject_strength, 1)
+            elif len(content_words(subject)) > 1 and all(
+                part in text for part in content_words(subject)
+            ):
+                subject_strength = max(subject_strength, 2)
+        return (
+            -detail_matches, -subject_strength, -title_matches, noise - factual_opening,
+            -result.score, result.chunk.chunk_id,
+        )
+
+    @staticmethod
+    def _requested_detail_matches(query: str, text: str) -> int:
+        patterns = (
+            (r"원래|어떤\s*건물|건축", r"고전주의|양식|벽돌|건축|건립|착공|완공"),
+            (r"언제|시기|연도|건립|설립|개통|준공|지어|세워|만들|생긴", r"(?:18|19|20)\d{2}년|건립|설립|개통|준공|세워|지어"),
+            (r"왜|원인|이유|배경|계기", r"원인|이유|배경|계기|때문|위해|따라"),
+            (r"누가|누구|사람|인물", r"참석|인물|사람|주도|대표|장관|교수|교사|학생"),
+            (r"결과|영향|이후|그\s*뒤|다음", r"결과|영향|이후|이어|폐지|변경|전환"),
+            (r"역할|중요", r"역할|기능|방어|교통|상업|행정|사용"),
+        )
+        return sum(
+            1 for query_pattern, evidence_pattern in patterns
+            if re.search(query_pattern, query) and re.search(evidence_pattern, text)
+        )
+
+    @classmethod
+    def _hashing_subject_agrees(
+        cls, subject_words: set[str], result: RankedChunk
+    ) -> bool:
+        """Require an explicit subject in a title or factual opening, not navigation."""
+
+        compact_title = re.sub(r"\s+", "", result.chunk.title)
+        if any(
+            ("일본영사관" in re.sub(r"\s+", "", subject) and "근대역사관1관" in compact_title)
+            or ("동양척식주식회사" in re.sub(r"\s+", "", subject) and "근대역사관2관" in compact_title)
+            for subject in subject_words
+        ):
+            return True
+        if subject_words & set(content_words(result.chunk.title)):
+            return True
+        if cls._hashing_boilerplate_only(result):
+            return False
+        opening = result.chunk.text[:180]
+        if any(
+            marker in opening
+            for marker in (
+                "코스 자세히 보기",
+                "관련 여행코스",
+                "위치 및 주변정보",
+                "관심콘텐츠 담기",
+                "동그라미",
+            )
+        ):
+            return False
+        for subject in subject_words:
+            match = re.search(
+                rf"(?<![0-9A-Za-z가-힣]){re.escape(subject)}"
+                r"(?:은|는|이|가|의|와|과|에서|에는)?",
+                opening,
+            )
+            if match is not None and match.start() <= 12:
+                return True
+            if len(subject) >= 2 and re.search(
+                rf"(?<![0-9A-Za-z가-힣]){re.escape(subject)}"
+                r"(?![0-9A-Za-z가-힣])",
+                result.chunk.text,
+            ):
+                return True
+            parts = content_words(subject)
+            if len(parts) > 1 and all(part in opening for part in parts):
+                return True
+        return False
+
+    @staticmethod
+    def _hashing_boilerplate_only(result: RankedChunk) -> bool:
+        text = result.chunk.text
+        if any(
+            marker in text[:160]
+            for marker in (
+                "정의 닫기",
+                "개설 닫기",
+                "내용 닫기",
+                "변천 닫기",
+                "생애 및 활동사항 닫기",
+            )
+        ):
+            return False
+        markers = (
+            "수정 의견 작성",
+            "비밀번호",
+            "파일선택",
+            "다운로드가 완료",
+            "콘텐츠 이용 안내",
+            "전체메뉴",
+            "사이드메뉴",
+            "미디어 자유이용",
+            "코스 자세히 보기",
+            "관련 여행코스",
+            "위치 및 주변정보",
+            "관심콘텐츠 담기",
+            "동그라미",
+        )
+        return sum(text.count(marker) for marker in markers) >= 2
 
     def _development_subject_documents(self, normalized_query: str) -> set[str]:
         matched: set[str] = set()
@@ -580,7 +856,9 @@ class HybridRetrievalService:
             "chunk_count": len(chunks),
             "document_count": len({chunk.document_id for chunk in chunks}),
             "data_lane": (
-                "provisional_hackathon"
+                "verified_hackathon"
+                if self.config.verified_hackathon_chunks_path is not None
+                else "provisional_hackathon"
                 if self.runtime_mode == RuntimeMode.HACKATHON
                 else (
                     "development_real"
@@ -602,6 +880,8 @@ class HybridRetrievalService:
             "mode": "hackathon",
             "provisional_document_count": len(source_ids),
             "provisional_chunk_count": len(chunks),
+            "verified_document_count": len({chunk.document_id for chunk in chunks})
+            if self.config.verified_hackathon_chunks_path is not None else 0,
             "corpus_fingerprint": self._reader().load()[1],
             "rights_scope": "unconfirmed_noncommercial_demo",
             "removable_source_ids": source_ids,

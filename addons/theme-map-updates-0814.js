@@ -17,8 +17,8 @@
       reasonZh: "这里可以同时观察木浦的港口生活与饮食文化，因此推荐为美食主题的第一块碎片。"
     }),
     space: Object.freeze({
-      labelKo: "도시공간",
-      labelZh: "城市空间",
+      labelKo: "도시의 변화",
+      labelZh: "城市变化",
       titleKo: "공간의 첫 기록을\n이렇게 시작할 수 있어요.",
       titleZh: "可以这样开始\n观察空间变化的第一条记录。",
       missionKo: "근대 건축의 새 쓰임",
@@ -28,7 +28,7 @@
       lat: 34.78769578,
       lng: 126.3817942,
       reasonKo: "근대 건축물이 오늘의 역사공간으로 이어지는 변화를 살펴볼 수 있어 도시공간 테마의 첫 조각으로 추천해요.",
-      reasonZh: "这里能观察近代建筑如何延续为今天的历史空间，因此推荐为城市空间主题的第一块碎片。"
+      reasonZh: "这里能观察近代建筑如何延续为今天的历史空间，因此推荐为城市变化主题的第一块碎片。"
     }),
     art: Object.freeze({
       labelKo: "예술",
@@ -356,29 +356,31 @@
 
   function mapMarkup(item, routeKey) {
     const place = text(item, "place");
-    const label = isChinese() ? "点击地图打开NAVER路线" : "지도 누르면 네이버지도 길찾기";
+    const chinese = isChinese();
+    const label = chinese ? "点击地图打开NAVER路线" : "지도 누르면 네이버지도 길찾기";
+    const title = chinese ? `${place}地图` : `${place} 지도`;
     return `
-      <iframe src="${osmEmbedUrl(item)}" title="${escapeHtml(place)} 지도" loading="lazy" referrerpolicy="no-referrer" tabindex="-1"></iframe>
-      <button type="button" class="hp-live-map-tap" data-theme-map-route="${escapeHtml(routeKey)}" aria-label="${escapeHtml(place)} ${escapeHtml(label)}">
-        <span class="hp-map-open-label">${escapeHtml(label)}</span>
-      </button>`;
+      <iframe src="${osmEmbedUrl(item)}" title="${escapeHtml(title)}" loading="lazy" referrerpolicy="no-referrer" tabindex="-1"></iframe>
+      <button type="button" class="hp-live-map-tap" data-theme-map-route="${escapeHtml(routeKey)}" aria-label="${escapeHtml(place)} ${escapeHtml(label)}"></button>`;
   }
 
   function routeMapMarkup(item, routeKey, route, aspectRatio) {
     const place = text(item, "place");
     const start = route[isChinese() ? "startZh" : "startKo"];
-    const label = isChinese() ? "点击地图打开NAVER路线" : "지도 누르면 네이버지도 길찾기";
-    const summary = isChinese()
+    const chinese = isChinese();
+    const label = chinese ? "点击地图打开NAVER路线" : "지도 누르면 네이버지도 길찾기";
+    const summary = chinese
       ? `步行约 ${route.durationMinutes}分钟 · ${route.distanceMeters}米`
       : `도보 약 ${route.durationMinutes}분 · ${route.distanceMeters}m`;
+    const mapTitle = chinese ? `${start}至${place}的路线地图` : `${start}에서 ${place}까지 경로 지도`;
+    const ariaLabel = chinese
+      ? `${start}至${place}，${summary}。${label}`
+      : `${start}에서 ${place}까지 ${summary}. ${label}`;
     const bounds = routeBounds(route.coordinates, aspectRatio);
     return `
-      <iframe src="${osmRouteEmbedUrl(item, bounds)}" title="${escapeHtml(start)}에서 ${escapeHtml(place)}까지 경로 지도" loading="lazy" referrerpolicy="no-referrer" tabindex="-1"></iframe>
+      <iframe src="${osmRouteEmbedUrl(item, bounds)}" title="${escapeHtml(mapTitle)}" loading="lazy" referrerpolicy="no-referrer" tabindex="-1"></iframe>
       ${routeSvgMarkup(route, bounds)}
-      <button type="button" class="hp-live-map-tap hp-live-map-tap--route" data-theme-map-route="${escapeHtml(routeKey)}" aria-label="${escapeHtml(start)}에서 ${escapeHtml(place)}까지 ${escapeHtml(label)}">
-        <span class="hp-route-summary"><b>${escapeHtml(start)} → ${escapeHtml(place)}</b><small>${escapeHtml(summary)}</small></span>
-        <span class="hp-map-open-label">${escapeHtml(label)}</span>
-      </button>`;
+      <button type="button" class="hp-live-map-tap hp-live-map-tap--route" data-theme-map-route="${escapeHtml(routeKey)}" aria-label="${escapeHtml(ariaLabel)}"></button>`;
   }
 
   function renderRouteMapHost(host, item, routeKey, route) {
@@ -503,7 +505,7 @@
   function preferenceTitle(key) {
     const titles = {
       space: ["공간의 변화를 보는 길", "观察空间变化的路线"],
-      food: ["오늘의 생활을 만나는 길", "遇见今天生活的路线"],
+      food: ["목포의 식문화를 만나는 길", "体验木浦饮食文化的路线"],
       art: ["예술로 이어지는 길", "通往艺术的路线"]
     };
     return titles[key][isChinese() ? 1 : 0];
@@ -523,7 +525,7 @@
       }).join("");
     }
     const item = THEMES[selectedJourney];
-    setText("pdf-preference-reason", `${isChinese() ? "推荐基准" : "추천 기준"} · ${text(item, "reason")}`);
+    setText("pdf-preference-reason", `${isChinese() ? "推荐依据" : "추천 기준"} · ${text(item, "reason")}`);
     const detail = document.getElementById("pdf-preference-detail-button");
     if (detail) detail.innerHTML = `${isChinese() ? "查看推荐理由" : "추천 이유 보기"} <span>→</span>`;
   }
@@ -538,7 +540,7 @@
     renderMap("hp-recommend-map", item, `theme:${selectedJourney}`);
     const mapGuide = document.querySelector("#hp-recommend-map + div small");
     const back = document.querySelector("#hp-recommend-reason-page [data-next=\"pdf-preference-page\"]");
-    if (mapGuide) mapGuide.textContent = isChinese() ? "点击地图打开NAVER路线" : "지도를 눌러 네이버지도 길찾기";
+    if (mapGuide) mapGuide.textContent = isChinese() ? "点击地图打开NAVER路线" : "지도 클릭하면 네이버지도 길찾기로 이동";
     if (back) back.textContent = isChinese() ? "返回推荐列表" : "추천 목록으로 돌아가기";
     const button = document.querySelector('[data-theme-map-action="reason-continue"]');
     if (button) button.innerHTML = `${isChinese() ? "查看碎片任务1" : "조각 미션 1 확인하기"} <span>→</span>`;
@@ -603,6 +605,24 @@
       if (route) renderRouteMapHost(host, item, `next:${pieceNumber}`, route);
       else host.innerHTML = mapMarkup(item, `next:${pieceNumber}`);
       preview.prepend(host);
+
+      const routeLine = preview.querySelector("[data-hp-route]");
+      if (routeLine && route) {
+        const start = route[isChinese() ? "startZh" : "startKo"];
+        routeLine.textContent = isChinese()
+          ? `${start} → ${text(item, "place")} · 步行约 ${route.durationMinutes}分钟 · ${route.distanceMeters}米`
+          : `${start} → ${text(item, "place")} · 도보 약 ${route.durationMinutes}분 · ${route.distanceMeters}m`;
+      }
+
+      let guide = preview.querySelector(".hp-next-map-guide");
+      if (!guide) {
+        guide = document.createElement("p");
+        guide.className = "hp-next-map-guide";
+        routeLine?.insertAdjacentElement("afterend", guide);
+      }
+      guide.textContent = isChinese()
+        ? "点击地图后将连接到NAVER地图路线。"
+        : "지도를 누르면 네이버지도 길찾기로 연결됩니다.";
     }
     if (oldLink) oldLink.classList.add("hidden");
   }
@@ -618,7 +638,7 @@
           <h1 id="hp-recommend-reason-title" class="mini-title"></h1>
           <article class="pdf-first-place-card hp-map-place-card">
             <div id="hp-recommend-map" class="hp-live-map"></div>
-            <div><strong id="hp-recommend-place"></strong><small>${isChinese() ? "点击地图打开NAVER路线" : "지도를 눌러 네이버지도 길찾기"}</small></div>
+            <div><strong id="hp-recommend-place"></strong><small>${isChinese() ? "点击地图打开NAVER路线" : "지도 클릭하면 네이버지도 길찾기로 이동"}</small></div>
           </article>
           <article class="content-card hp-recommend-reason-card">
             <p class="tag">RECOMMENDATION</p>

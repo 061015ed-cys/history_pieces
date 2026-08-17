@@ -6,10 +6,10 @@
       label: "첫 번째 조각",
       publicPlace: "목포역",
       verifiedPlace: "목포역",
-      missionTitle: "목포의 첫인상을\n기록해주세요",
-      missionDescription: "목포역에 도착한 후 무엇이 눈에 먼저 보였나요? 그 장면을 사진으로 기록해주세요.",
+      missionTitle: "목포역\n촬영해주세요",
+      missionDescription: "목포역 건물이 보이도록 촬영해주세요.",
       missionLine: "사진을 찍어서 목포에서의 첫 기록을 남겨볼까?",
-      captureTitle: "목포의 첫인상을\n기록해주세요",
+      captureTitle: "목포역\n촬영해주세요",
       acquiredLine: "드디어 첫 번째 조각을 획득했군. 이제 나의 기록을 보여주지.",
       recordLine: "이제 네가 기록할 차례야. {nickname}, 5초 동안 영상을 찍어.",
       reflectionTitle: "목포역\n어떠셨나요?",
@@ -27,7 +27,7 @@
     2: {
       label: "두 번째 조각",
       publicPlace: "목포 대중음악의 전당",
-      verifiedPlace: "호남은행 목포지점",
+      verifiedPlace: "구 호남은행 목포지점",
       missionTitle: "목포 대중음악의 전당\n촬영해주세요",
       missionDescription: "목포 대중음악의 전당 건물이 보이도록 촬영해주세요.",
       missionLine: "목포 대중음악의 전당에 제대로 도착했는지 확인해볼까?",
@@ -49,7 +49,7 @@
     3: {
       label: "세 번째 조각",
       publicPlace: "목포근대역사관 2관",
-      verifiedPlace: "동양척식주식회사 목포지점",
+      verifiedPlace: "구 동양척식주식회사 목포지점",
       missionTitle: "목포근대역사관 2관\n촬영해주세요",
       missionDescription: "목포근대역사관 2관 건물이 보이도록 촬영해주세요.",
       missionLine: "목포근대역사관 2관에 잘 찾아왔겠지? 한 번 확인해봐야겠어.",
@@ -95,7 +95,7 @@
       ...PIECES[2],
       label: "第二个故事碎片",
       publicPlace: "木浦大众音乐殿堂",
-      verifiedPlace: "湖南银行木浦支店",
+      verifiedPlace: "旧湖南银行木浦支店",
       missionTitle: "请拍摄\n木浦大众音乐殿堂",
       missionDescription: "请将木浦大众音乐殿堂建筑完整拍入画面。",
       missionLine: "确认一下我们是否顺利到达木浦大众音乐殿堂吧？",
@@ -117,7 +117,7 @@
       ...PIECES[3],
       label: "第三个故事碎片",
       publicPlace: "木浦近代历史馆2馆",
-      verifiedPlace: "东方拓殖株式会社木浦支店",
+      verifiedPlace: "旧东洋拓殖株式会社木浦支店",
       missionTitle: "请拍摄\n木浦近代历史馆2馆",
       missionDescription: "请将木浦近代历史馆2馆建筑完整拍入画面。",
       missionLine: "你应该顺利找到木浦近代历史馆2馆了吧？让我确认一下。",
@@ -148,6 +148,19 @@
     })
   });
 
+  const CHINA_COMMENTARY_ZH = Object.freeze({
+    2: Object.freeze({
+      missionLine: "也和中国的近代银行建筑进行比较，确认这里过去是否是湖南银行吧？",
+      reflectionQuestion: "在中国的开港城市中，也能看到旧金融建筑转变为新文化空间的案例。这里曾经流动着金钱与账簿，如今却成为音乐空间，你如何看待这种变化？",
+      reflectionReply: "不同城市都在把老建筑与今天的文化连接起来，让记忆得以延续。我也会记录下你发现的共同点。"
+    }),
+    3: Object.freeze({
+      missionLine: "让我们从东亚近代史的联系中，一起确认这座建筑留下的痕迹。",
+      reflectionQuestion: "这座建筑不仅属于一座城市，也与东亚近代史相连。了解曾经身处其中的人们之后，你对它有了怎样的看法？",
+      reflectionReply: "尽管国界不同，近代历史的变化仍连接着许多城市与人们。我也会记住你发现的联系。"
+    })
+  });
+
   const PIECE_CHAT = Object.freeze({
     1: Object.freeze({
       titleKo: "기록새 챗봇 · 조각 1",
@@ -173,11 +186,11 @@
       titleKo: "기록새 챗봇 · 조각 3",
       titleZh: "记录鸟聊天助手 · 碎片3",
       greetingKo: "조각 3 동양척식주식회사 목포지점에 관한 감상과 궁금한 점을 물어봐.",
-      greetingZh: "可以询问关于碎片3东方拓殖株式会社木浦支店的感受和问题。",
+      greetingZh: "可以询问关于碎片3东洋拓殖株式会社木浦支店的感受和问题。",
       quickKo: ["이 건물의 과거를 알려줘", "이곳 사람들의 이야기", "조각 3 기록 방법"],
       quickZh: ["请介绍这座建筑的过去", "这里的人们的故事", "碎片3记录方法"],
       placeKo: "조각 3은 현재 목포근대역사관 2관인 옛 동양척식주식회사 목포지점과 그곳을 지나간 사람들의 역사를 살펴보는 기록이야.",
-      placeZh: "碎片3记录如今木浦近代历史馆2馆所在的旧东方拓殖株式会社木浦支店及相关人们的历史。"
+      placeZh: "碎片3记录如今木浦近代历史馆2馆所在的旧东洋拓殖株式会社木浦支店及相关人们的历史。"
     })
   });
 
@@ -219,7 +232,7 @@
       chatbot: "聊天", chatbotTitle: "记录鸟聊天助手", chatbotGreeting: "请输入您想了解的内容。我会根据当前画面为您说明。",
       chatbotPlaceholder: "请输入问题", send: "发送", close: "关闭", helpMission: "当前任务帮助", helpPlace: "地点说明", helpRecord: "记录方法",
       botMission: "请按照当前画面的提示，让建筑或街道特征清晰出现在照片中。演示时也可以使用示例按钮继续。",
-      botPlace: "旅程从木浦站开始，沿着湖南银行木浦支店和东方拓殖株式会社木浦支店的历史痕迹展开。",
+      botPlace: "旅程从木浦站开始，沿着湖南银行木浦支店和东洋拓殖株式会社木浦支店的历史痕迹展开。",
       botRecord: "照片用于确认地点，5秒视频会连接到最后的专属旅程影片。", botFallback: "您可以询问当前旅程中的地点、任务或记录方法。"
     })
   });
@@ -237,7 +250,13 @@
   }
 
   function pieceConfig(pieceNumber) {
-    if (isChineseLanguage()) return PIECES_ZH[pieceNumber];
+    if (isChineseLanguage()) {
+      const base = PIECES_ZH[pieceNumber];
+      if (appState().culture === "china" && CHINA_COMMENTARY_ZH[pieceNumber]) {
+        return Object.freeze({ ...base, ...CHINA_COMMENTARY_ZH[pieceNumber] });
+      }
+      return base;
+    }
     const base = PIECES[pieceNumber];
     if (appState().culture === "china" && CHINA_COMMENTARY_KO[pieceNumber]) {
       return Object.freeze({ ...base, ...CHINA_COMMENTARY_KO[pieceNumber] });
@@ -251,6 +270,7 @@
   let reflectionPiece = 1;
   let finalOrder = [];
   const previewUrls = new Map();
+  const previewSources = new Map();
   const pieceChatSessions = new Map();
   const pieceChatHistories = new Map();
   const pieceChatRequests = new Set();
@@ -298,9 +318,11 @@
       return source;
     }
     if (!(source instanceof Blob)) return "";
+    if (previewUrls.has(key) && previewSources.get(key) === source) return previewUrls.get(key);
     if (previewUrls.has(key)) URL.revokeObjectURL(previewUrls.get(key));
     const url = URL.createObjectURL(source);
     previewUrls.set(key, url);
+    previewSources.set(key, source);
     return url;
   }
 
@@ -573,7 +595,7 @@
       text(".ornament-label", chinese ? "地点故事漫画" : "장소 이야기 웹툰", unlock);
       html(".mini-title", chinese ? "碎片汇集成了<br>一个完整故事" : "조각이 모여 하나의<br>이야기가 되었습니다", unlock);
       text(".unlock-card h2", chinese ? "三个故事碎片已集齐" : "세 개의 이야기 조각 완성", unlock);
-      text(".unlock-card p", chinese ? "木浦站、湖南银行木浦支店与东方拓殖株式会社木浦支店的故事连接在了一起。" : "목포역, 호남은행 목포지점, 동양척식주식회사 목포지점의 이야기가 하나로 이어졌습니다.", unlock);
+      text(".unlock-card p", chinese ? "木浦站、湖南银行木浦支店与东洋拓殖株式会社木浦支店的故事连接在了一起。" : "목포역, 호남은행 목포지점, 동양척식주식회사 목포지점의 이야기가 하나로 이어졌습니다.", unlock);
       text("#unlock-giroksae-line", chinese ? "三个碎片都集齐了，现在让你看看我的记录故事。" : "조각 3개를 모두 모았으니 나의 기록 이야기를 보여줄게.", unlock);
       html(`[data-action="unlock-place-story"]`, `${chinese ? "查看故事" : "이야기 보러 가기"} <span>→</span>`, unlock);
     }
@@ -635,8 +657,8 @@
       <button type="button" id="wire-final-submit" class="sub-button" data-wire-action="final-submit" disabled>${ui().checkAnswer}</button>`;
     const feedback = quiz.querySelector("#quiz-feedback");
     if (feedback) {
-      feedback.textContent = chinese ? "请依次选择三个项目。" : "세 항목을 순서대로 선택해주세요.";
-      feedback.classList.remove("hidden");
+      feedback.textContent = "";
+      feedback.classList.add("hidden");
     }
   }
 
@@ -776,12 +798,14 @@
 
   function openChatbot() {
     activeChatPiece = currentChatPiece();
-    const chatbotUrl = new URL("/chatbot/", window.location.origin);
-    chatbotUrl.searchParams.set("piece", String(activeChatPiece));
-    chatbotUrl.searchParams.set("locale", isChineseLanguage() ? "zh-CN" : "ko");
-    const chatbotWindow = window.open(chatbotUrl.toString(), "_blank");
-    if (chatbotWindow) chatbotWindow.opener = null;
-    else window.location.assign(chatbotUrl.toString());
+    configureChatbot(activeChatPiece);
+    const modal = document.getElementById("wire-chatbot-modal");
+    if (!modal) return;
+    modal.classList.remove("hidden");
+    appState().chatOpen = true;
+    renderChatbotHistory(activeChatPiece);
+    ensurePieceChatSession(activeChatPiece).catch(() => {});
+    document.getElementById("wire-chatbot-input")?.focus();
   }
 
   function closeChatbot() {
@@ -886,18 +910,24 @@
     appState().nickname = safe;
     appState().chatEnabled = true;
     introStep = 0;
-    text("#giroksae-intro-text", "나는 기록을 모으는 위대한 기록새야. 목포역에서 여정을 시작한다고?");
+    text("#giroksae-intro-text", isChineseLanguage()
+      ? "我是收集记录的记录鸟。你要从木浦站开始旅程吗？"
+      : "나는 기록을 모으는 위대한 기록새야. 목포역에서 여정을 시작한다고?");
     show("giroksae-intro-page");
   }
 
   function advanceIntro() {
     if (introStep === 0) {
       introStep = 1;
-      text("#giroksae-intro-text", "나한테 궁금한 게 있으면 오른쪽 위 버튼을 눌러. 친절히 답변해주지.");
+      text("#giroksae-intro-text", isChineseLanguage()
+        ? "如果有想问我的内容，请点击右上角的按钮。我会为你详细解答。"
+        : "나한테 궁금한 게 있으면 오른쪽 위 버튼을 눌러. 친절히 답변해주지.");
       return;
     }
     introStep = 0;
-    text("#giroksae-intro-text", "나는 기록을 모으는 위대한 기록새야. 목포역에서 여정을 시작한다고?");
+    text("#giroksae-intro-text", isChineseLanguage()
+      ? "我是收集记录的记录鸟。你要从木浦站开始旅程吗？"
+      : "나는 기록을 모으는 위대한 기록새야. 목포역에서 여정을 시작한다고?");
     show("mokpo-guide-page");
   }
 
@@ -916,6 +946,7 @@
     const sample = document.getElementById("wire-photo-confirm-sample");
     const isSample = typeof photo === "string" && photo.startsWith("sample-photo://");
     if (preview) {
+      preview.alt = isChineseLanguage() ? "所选地点照片" : "선택한 장소 사진";
       if (isSample) {
         preview.removeAttribute("src");
         preview.classList.add("hidden");
@@ -926,6 +957,7 @@
     }
     if (sample) {
       sample.classList.toggle("hidden", !isSample);
+      sample.setAttribute("aria-label", isChineseLanguage() ? "示例照片" : "샘플 사진");
       const sampleLabel = sample.querySelector("strong");
       if (sampleLabel) sampleLabel.textContent = appState().language === "zh-CN" ? "示例照片" : "샘플 사진";
     }
@@ -1161,17 +1193,13 @@
       html("#wire-transition-title", `${current.nextPieceLabel}<br>${current.nextPublicPlace}`);
       text("#wire-transition-place", current.nextPublicPlace);
       text("#wire-transition-description", isChineseLanguage()
-        ? (nextPiece === 2 ? "在如今的木浦大众音乐殿堂中，寻找旧湖南银行木浦支店的历史痕迹。" : "在如今的木浦近代历史馆2馆中，寻找旧东方拓殖株式会社木浦支店的历史痕迹。")
+        ? (nextPiece === 2 ? "在如今的木浦大众音乐殿堂中，寻找旧湖南银行木浦支店的历史痕迹。" : "在如今的木浦近代历史馆2馆中，寻找旧东洋拓殖株式会社木浦支店的历史痕迹。")
         : (nextPiece === 2 ? "현재 목포 대중음악의 전당으로 쓰이는 건물에서 호남은행 목포지점의 흔적을 찾아봅니다." : "현재 목포근대역사관 2관으로 쓰이는 건물에서 동양척식주식회사 목포지점의 흔적을 찾아봅니다."));
       text("#wire-transition-line", isChineseLanguage() ? `这次的地点是${current.nextPublicPlace}。` : `이번 장소는 ${current.nextPublicPlace}이야.`);
       html("#wire-transition-button", `${ui().next} <span>→</span>`);
       return;
     }
-    if (global.HistoryPiecesIntegratedUi && typeof global.HistoryPiecesIntegratedUi.showMissionDirect === "function") {
-      global.HistoryPiecesIntegratedUi.showMissionDirect(nextPiece);
-    } else {
-      show(`piece-${nextPiece}-mission-page`);
-    }
+    show(`piece-${nextPiece}-mission-page`);
   }
 
   function surpriseDefinition(pieceNumber) {
@@ -1194,7 +1222,7 @@
     }
     return {
       title: chinese ? "任务 - 找出伪造记录" : "미션 - 위조된 기록 찾기",
-      question: chinese ? "请从下列四条东方拓殖株式会社记录中找出伪造的一条。" : "아래 동양척식주식회사의 기록 네 개 중 위조된 기록을 찾으세요.",
+      question: chinese ? "请从下列四条东洋拓殖株式会社记录中找出伪造的一条。" : "아래 동양척식주식회사의 기록 네 개 중 위조된 기록을 찾으세요.",
       multi: false,
       answer: ["D"],
       options: {
@@ -1204,7 +1232,7 @@
         D: chinese ? "将未偿债务按欠税处理，并把查封土地编入总督府国有地。" : "미상환 채무를 조세 체납으로 처리하고 압류 토지를 총독부 국유지로 편입한다."
       },
       intro: chinese ? "我知道你已经很熟练了。不过，你能找出藏在这些记录中的伪造内容吗？" : "네가 제법 하는 건 알겠어. 그래도 기록들 사이에 숨어 있는 가짜까지 찾아낼 수 있을까?",
-      explanation: chinese ? "记录A、B、C反映了东方拓殖株式会社的土地经营、佃租收入、农业移民与担保金融结构。记录D把贷款未偿还改写成欠税并称土地会编入总督府国有地，因此是伪造记录。" : "기록 A, B, C는 동양척식주식회사의 토지 경영, 소작료 수입, 농업 이민 사업과 담보 금융 구조를 반영합니다. 기록 D는 대출금 상환 실패를 조세 체납으로 바꾸고 토지를 총독부 국유지로 편입한다고 서술하므로 위조 기록입니다."
+      explanation: chinese ? "记录A、B、C反映了东洋拓殖株式会社的土地经营、佃租收入、农业移民与担保金融结构。记录D把贷款未偿还改写成欠税并称土地会编入总督府国有地，因此是伪造记录。" : "기록 A, B, C는 동양척식주식회사의 토지 경영, 소작료 수입, 농업 이민 사업과 담보 금융 구조를 반영합니다. 기록 D는 대출금 상환 실패를 조세 체납으로 바꾸고 토지를 총독부 국유지로 편입한다고 서술하므로 위조 기록입니다."
     };
   }
 
@@ -1320,7 +1348,10 @@
       finalOrder = [];
       appState().finalQuizOrder = [];
       updateFinalOrder();
-      if (feedback) feedback.textContent = isChineseLanguage() ? "顺序不正确。请重新思考从木浦站开始的流动。" : "순서가 맞지 않습니다. 목포역에서 시작한 흐름을 다시 생각해보세요.";
+      if (feedback) {
+        feedback.textContent = isChineseLanguage() ? "顺序不正确。请重新思考从木浦站开始的流动。" : "순서가 맞지 않습니다. 목포역에서 시작한 흐름을 다시 생각해보세요.";
+        feedback.classList.remove("hidden");
+      }
       return;
     }
     appState().finalQuizOrder = [...finalOrder];
@@ -1337,22 +1368,36 @@
     }
 
     if (target.dataset.language) {
-      appState().language = target.dataset.language;
-      document.documentElement.lang = target.dataset.language;
+      event.__historyPiecesSetupHandled = true;
+      if (global.HistoryPiecesSetupSelection?.selectLanguage) {
+        global.HistoryPiecesSetupSelection.selectLanguage(target.dataset.language, target);
+      } else {
+        appState().language = target.dataset.language;
+        document.documentElement.lang = target.dataset.language;
+      }
       queueMicrotask(configureAll);
       return;
     }
 
     if (target.dataset.country) {
-      appState().culture = target.dataset.country;
-      document.body.dataset.culture = target.dataset.country;
+      event.__historyPiecesSetupHandled = true;
+      if (global.HistoryPiecesSetupSelection?.selectCountry) {
+        global.HistoryPiecesSetupSelection.selectCountry(target.dataset.country, target);
+      } else {
+        appState().culture = target.dataset.country;
+        document.body.setAttribute("data-culture", target.dataset.country);
+      }
       queueMicrotask(configureAll);
       return;
     }
 
     if (target.dataset.action === "confirm-country") {
       stopEvent(event);
-      show("nickname-page");
+      if (global.HistoryPiecesSetupSelection?.confirmCountry) {
+        global.HistoryPiecesSetupSelection.confirmCountry();
+      } else {
+        show(appState().culture === "china" ? "china-mode-intro-page" : "nickname-page");
+      }
       return;
     }
 
@@ -1529,6 +1574,10 @@
           configureAll();
         });
       }
+    });
+    global.addEventListener("historypieces:pagechange", (event) => {
+      const match = String(event.detail?.pageId || "").match(/^piece-([123])-(?:mission|upload)-page$/);
+      if (match) configurePiecePages(Number(match[1]));
     });
     document.getElementById("wire-chatbot-form")?.addEventListener("submit", (event) => {
       event.preventDefault();

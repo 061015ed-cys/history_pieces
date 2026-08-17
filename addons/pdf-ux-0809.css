@@ -135,13 +135,31 @@
 .place-comic-grid[data-pdf-rendered="true"] {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 12px;
+  gap: 0;
+  overflow: hidden;
+  border: 1px solid rgba(91, 67, 45, .2);
+  border-radius: 16px;
+  background: rgba(255, 252, 245, .92);
+}
+
+.place-comic-grid[data-pdf-rendered="true"] .pdf-story-panel {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.place-comic-grid[data-pdf-rendered="true"] .pdf-story-panel figcaption {
+  display: none;
 }
 
 .pdf-story-panel img {
   aspect-ratio: auto;
   max-height: none;
   object-fit: contain;
+}
+
+#quiz-feedback:empty {
+  display: none !important;
 }
 
 .journey-player-host {
@@ -393,7 +411,7 @@
   margin: 0;
   padding: 11px 13px;
   border-left: 3px solid #ad8954;
-  background: rgba(244, 234, 215, .8);
+  background: rgba(255, 252, 245, .96);
   color: #5e4736;
   font-size: 11px;
   line-height: 1.55;

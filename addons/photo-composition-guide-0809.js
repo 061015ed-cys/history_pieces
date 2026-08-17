@@ -8,8 +8,14 @@
       image: "addons/timetrace/assets/MST/current.jpg",
       altKo: "목포역 촬영 구도 예시",
       altZh: "木浦站拍摄构图示例",
-      criteriaKo: ["건물 전체가 화면 안에 보이게", "정면에 가깝게", "역명 간판과 건물이 함께 보이게"],
-      criteriaZh: ["让整座建筑完整进入画面", "尽量从正面拍摄", "让站名标识与建筑同时入镜"]
+      criteriaKo: [
+        "건물 왼쪽 끝과 오른쪽 끝이 모두 보이도록",
+        "중앙 출입구가 잘 보이도록",
+        "지붕선·건물 하단이 잘리지 않도록"
+      ],
+      reasonKo: "AI는 건물 곳곳의 특징을 기준 사진과 비교해 장소와 촬영 구도가 충분히 일치하는지 확인합니다.",
+      reasonZh: "AI会将建筑各处特征与参考照片进行比较，确认地点和拍摄构图是否充分匹配。",
+      criteriaZh: ["建筑左端和右端均完整入镜", "中央入口清晰可见", "屋顶线和建筑底部不要被截断"]
     }),
     2: Object.freeze({
       placeKo: "목포 대중음악의 전당",
@@ -17,8 +23,10 @@
       image: "addons/timetrace/assets/HNB/current.jpg",
       altKo: "목포 대중음악의 전당 촬영 구도 예시",
       altZh: "木浦大众音乐殿堂拍摄构图示例",
-      criteriaKo: ["건물 전체가 화면 안에 보이게", "정면에 가깝게", "입구와 외벽의 특징이 함께 보이게"],
-      criteriaZh: ["让整座建筑完整进入画面", "尽量从正面拍摄", "让入口与外墙特征同时入镜"]
+      criteriaKo: ["건물 모서리와 양쪽 외관이 함께 보이도록", "양쪽 지붕선·건물 하단이 잘리지 않도록", "출입구·주요 창문이 가려지지 않도록"],
+      reasonKo: "AI는 건물 곳곳의 특징을 기준 사진과 비교해 장소와 촬영 구도가 충분히 일치하는지 확인합니다.",
+      reasonZh: "AI会将建筑各处特征与参考照片进行比较，确认地点和拍摄构图是否充分匹配。",
+      criteriaZh: ["同时拍到建筑转角和两侧外观", "两侧屋顶线和建筑底部不要被截断", "入口和主要窗户不要被遮挡"]
     }),
     3: Object.freeze({
       placeKo: "목포근대역사관 2관",
@@ -26,8 +34,10 @@
       image: "addons/timetrace/assets/MMH2/current.jpg",
       altKo: "목포근대역사관 2관 촬영 구도 예시",
       altZh: "木浦近代历史馆2馆拍摄构图示例",
-      criteriaKo: ["건물 전체가 화면 안에 보이게", "정면에 가깝게", "외벽과 창문 구조가 함께 보이게"],
-      criteriaZh: ["让整座建筑完整进入画面", "尽量从正面拍摄", "让外墙与窗户结构同时入镜"]
+      criteriaKo: ["삼각 지붕 꼭짓점과 양쪽 지붕선이 보이도록", "정면 출입구와 창문들이 함께 보이도록", "오른쪽 외관·건물 하단이 잘리지 않도록"],
+      reasonKo: "AI는 건물 곳곳의 특징을 기준 사진과 비교해 장소와 촬영 구도가 충분히 일치하는지 확인합니다.",
+      reasonZh: "AI会将建筑各处特征与参考照片进行比较，确认地点和拍摄构图是否充分匹配。",
+      criteriaZh: ["拍到三角形屋顶顶点和两侧屋顶线", "同时拍到正面入口和窗户", "右侧外观和建筑底部不要被截断"]
     })
   });
 
@@ -107,10 +117,10 @@
       .join("");
     page.querySelector("[data-guide-reason-title]").textContent = chinese
       ? "为什么需要这样拍？"
-      : "왜 필요한가";
+      : "AI는 이렇게 확인해요";
     page.querySelector("[data-guide-reason-copy]").textContent = chinese
-      ? "这些标准有助于AI更准确地确认地点。"
-      : "이 기준은 AI가 장소를 더 정확히 확인하기 위한 기준입니다.";
+      ? guide.reasonZh
+      : guide.reasonKo;
     page.querySelector("[data-guide-open-camera]").innerHTML = chinese
       ? "打开相机 <span>→</span>"
       : "카메라 열기 <span>→</span>";

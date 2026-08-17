@@ -64,7 +64,7 @@ def test_explicit_people_followup_reuses_previous_retrieval_query(tmp_path, monk
     first = chat.ask("붉은 등대 전시관은 언제 만들어졌어요?")
     chat.ask("관련 인물은 누구인가요?", session_id=first.session_id)
 
-    assert queries[-1] == "붉은 등대 전시관은 언제 만들어졌어요? 관련 인물은 누구인가요?"
+    assert queries[-1] == "붉은 등대 전시관 관련 인물은 누구인가요?"
 
 
 def test_independent_question_does_not_reuse_previous_retrieval_query(tmp_path, monkeypatch) -> None:
@@ -91,7 +91,8 @@ def test_missing_evidence_never_calls_grounded_generation(tmp_path, monkeypatch)
 
     monkeypatch.setattr(chat.llm, "generate_grounded", forbidden)
     response = chat.ask("서울 궁궐의 왕은 누구야?")
-    assert response.answer == "현재 검수된 자료만으로는 확인할 수 없습니다."
+    assert "직접 연결되는 인물" in response.answer
+    assert "추측" not in response.answer
     assert response.status == "insufficient_evidence"
     assert response.sources == ()
     assert response.used_chunks == 0
@@ -179,9 +180,11 @@ def test_prompt_has_all_boundaries_and_no_guessing_rule() -> None:
         locale="ko",
     )
     assert "[시스템 지침" in prompt
-    assert "[이전 대화 요약]" in prompt
-    assert "[검색 근거]" in prompt
-    assert "[사용자 질문]" in prompt
+    assert "[대화 문맥 | 역사적 사실의 근거가 아님]" in prompt
+    assert "[복원된 현재 질문 | 검색 근거가 아님]" in prompt
+    assert "[검색된 역사 근거 | 사실 판단의 유일한 근거]" in prompt
+    assert "[현재 사용자 메시지]" in prompt
+    assert "[답변 지시]" in prompt
     assert "근거에 없는 내용은 추측" in SYSTEM_INSTRUCTIONS
     assert "개발 fixture는 실제 역사 사실이 아니다" in prompt
 

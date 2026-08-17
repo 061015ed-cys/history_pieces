@@ -33,16 +33,20 @@
 
   const FALLBACK_GUIDES = Object.freeze({
     1: Object.freeze({
-      criteriaKo: ["건물 전체가 화면 안에 보이게", "정면에 가깝게", "역명 간판과 건물이 함께 보이게"],
-      criteriaZh: ["让整座建筑完整进入画面", "尽量从正面拍摄", "让站名标识与建筑同时入镜"]
+      criteriaKo: [
+        "건물 왼쪽 끝과 오른쪽 끝이 모두 보이도록",
+        "중앙 출입구가 잘 보이도록",
+        "지붕선·건물 하단이 잘리지 않도록"
+      ],
+      criteriaZh: ["建筑左端和右端均完整入镜", "中央入口清晰可见", "屋顶线和建筑底部不要被截断"]
     }),
     2: Object.freeze({
-      criteriaKo: ["건물 전체가 화면 안에 보이게", "정면에 가깝게", "입구와 외벽의 특징이 함께 보이게"],
-      criteriaZh: ["让整座建筑完整进入画面", "尽量从正面拍摄", "让入口与外墙特征同时入镜"]
+      criteriaKo: ["건물 모서리와 양쪽 외관이 함께 보이도록", "양쪽 지붕선·건물 하단이 잘리지 않도록", "출입구·주요 창문이 가려지지 않도록"],
+      criteriaZh: ["同时拍到建筑转角和两侧外观", "两侧屋顶线和建筑底部不要被截断", "入口和主要窗户不要被遮挡"]
     }),
     3: Object.freeze({
-      criteriaKo: ["건물 전체가 화면 안에 보이게", "정면에 가깝게", "외벽과 창문 구조가 함께 보이게"],
-      criteriaZh: ["让整座建筑完整进入画面", "尽量从正面拍摄", "让外墙与窗户结构同时入镜"]
+      criteriaKo: ["삼각 지붕 꼭짓점과 양쪽 지붕선이 보이도록", "정면 출입구와 창문들이 함께 보이도록", "오른쪽 외관·건물 하단이 잘리지 않도록"],
+      criteriaZh: ["拍到三角形屋顶顶点和两侧屋顶线", "同时拍到正面入口和窗户", "右侧外观和建筑底部不要被截断"]
     })
   });
 
@@ -191,7 +195,7 @@
     const description = card.querySelector(".description");
 
     card.dataset.resultState = "failure";
-    if (icon) icon.textContent = "!";
+    if (icon) icon.textContent = "X";
     if (title) title.textContent = chinese ? "请稍微调整拍摄构图。" : "사진 구도를 조금 조정해주세요.";
     if (description) description.textContent = chinese ? "请确认下列内容后重新拍摄。" : "아래 피드백을 확인한 뒤 다시 촬영해주세요.";
 
@@ -277,10 +281,12 @@
     if (label) label.textContent = chinese ? `碎片任务完成 · ${pieceNumber}/3` : `조각 미션 완료 · ${pieceNumber}/3`;
     if (title) title.innerHTML = chinese ? `第${pieceNumber}条记录<br>已完成。` : `${["첫", "두 번째", "세 번째"][pieceNumber - 1]} 기록이<br>완료되었어요.`;
     if (progress) progress.style.width = `${pieceNumber / 3 * 100}%`;
+    const progressHost = document.querySelector("#pdf-place-complete-page .pdf-progress");
+    if (progressHost) progressHost.setAttribute("aria-label", chinese ? "碎片任务进度" : "장소 진행률");
     if (progressText) progressText.textContent = chinese ? `已完成 ${pieceNumber}/3 个碎片任务` : `전체 3개 조각 미션 중 ${pieceNumber}개 완료`;
     if (webtoonImage && images[0]) {
       webtoonImage.src = images[0].image;
-      webtoonImage.alt = images[0].alt || (chinese ? "漫画预览" : "웹툰 미리보기");
+      webtoonImage.alt = chinese ? `${item.placeZh}漫画预览` : (images[0].alt || "웹툰 미리보기");
     }
     if (video) {
       video.src = mediaUrl(state().records?.[pieceNumber] || `assets/videos/sample-record-${pieceNumber}.mp4`);
@@ -295,6 +301,8 @@
     if (videoButton) videoButton.textContent = chinese ? "再次播放视频" : "영상 다시 보기";
 
     if (nextPreview) {
+      const mapPreview = nextPreview.querySelector(".hp-map-preview");
+      if (mapPreview) mapPreview.setAttribute("aria-label", chinese ? "下一地点地图位置" : "다음 장소 지도 위치");
       nextPreview.querySelector("[data-hp-next-label]").textContent = chinese ? "下一地点预告" : "다음 장소 예고";
       nextPreview.querySelector("[data-hp-next-place]").textContent = chinese ? item.nextZh : item.nextKo;
       nextPreview.querySelector("[data-hp-route]").textContent = chinese ? item.routeZh : item.routeKo;
@@ -334,7 +342,7 @@
       const images = webtoonImages(pieceNumber);
       if (title) title.innerHTML = chinese ? `${item.placeZh}<br>漫画` : `${item.placeKo}<br>웹툰`;
       host.className = "hp-replay-media hp-replay-comic";
-      host.innerHTML = images.map((image) => `<img src="${escapeHtml(image.image)}" alt="${escapeHtml(image.alt || "웹툰 이미지")}">`).join("");
+      host.innerHTML = images.map((image) => `<img src="${escapeHtml(image.image)}" alt="${escapeHtml(chinese ? `${item.placeZh}漫画图片` : (image.alt || "웹툰 이미지"))}">`).join("");
     } else {
       const source = mediaUrl(state().records?.[pieceNumber] || `assets/videos/sample-record-${pieceNumber}.mp4`);
       if (title) title.innerHTML = chinese ? `${item.placeZh}<br>5秒视频` : `${item.placeKo}<br>5초 영상`;
@@ -355,8 +363,8 @@
       rewardLabel: "即将解锁",
       rewardTitle: "地点故事任务",
       rewardCopy: "接下来把三个碎片连接起来，确认完整的地点故事。",
-      note: "很好。现在去看看三个碎片连接成怎样的故事吧。",
-      button: "开始地点任务"
+      note: "所有地点均已完成。完整故事和旅程影片已开放。",
+      button: "查看奖励"
     } : {
       label: "조각 미션 · 3/3 완료",
       title: "세 조각을 모두<br>완료했어요.",
@@ -366,8 +374,8 @@
       rewardLabel: "다음 단계",
       rewardTitle: "장소 이야기 미션",
       rewardCopy: "이제 세 조각을 연결해 완성된 장소 이야기를 확인합니다.",
-      note: "좋아. 세 조각이 어떤 하나의 이야기로 이어지는지 확인하러 가자.",
-      button: "장소 미션 시작하기"
+      note: "모든 장소를 완료했어요. 전체 이야기와 여정필름이 열렸습니다.",
+      button: "보상 확인하기"
     };
 
     document.querySelector("[data-hp-all-label]").textContent = copy.label;
@@ -380,6 +388,10 @@
     document.querySelector("[data-hp-all-reward-copy]").textContent = copy.rewardCopy;
     document.querySelector("[data-hp-all-note]").textContent = copy.note;
     document.querySelector('[data-hp-summary-action="open-place-mission"]').innerHTML = `${copy.button} <span>→</span>`;
+    const dots = document.querySelector("#hp-all-pieces-complete-page .hp-all-piece-dots");
+    if (dots) dots.setAttribute("aria-label", chinese ? "三个碎片全部完成" : "조각 세 개 완료");
+    const bird = document.querySelector("#hp-all-pieces-complete-page .giroksae-note img");
+    if (bird) bird.alt = chinese ? "提示三个碎片已完成的记录鸟" : "세 조각 완료를 안내하는 기록새";
   }
 
   function handleClickCapture(event) {
@@ -414,10 +426,10 @@
   function handlePageChange(event) {
     const pageId = String(event.detail?.pageId || "");
     const resultMatch = pageId.match(/^piece-([123])-ai-result-page$/);
-    if (resultMatch) global.queueMicrotask(() => renderDetectionFailure(Number(resultMatch[1])));
-    if (pageId === "wire-surprise-quiz-page") global.queueMicrotask(ensureSelectionCounter);
-    if (pageId === "pdf-place-complete-page") global.queueMicrotask(renderSummary);
-    if (pageId === "hp-all-pieces-complete-page") global.queueMicrotask(renderAllComplete);
+    if (resultMatch) renderDetectionFailure(Number(resultMatch[1]));
+    if (pageId === "wire-surprise-quiz-page") ensureSelectionCounter();
+    if (pageId === "pdf-place-complete-page") renderSummary();
+    if (pageId === "hp-all-pieces-complete-page") renderAllComplete();
   }
 
   function install() {

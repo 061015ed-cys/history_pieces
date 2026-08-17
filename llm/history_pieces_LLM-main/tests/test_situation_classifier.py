@@ -14,6 +14,26 @@ def test_simple_greeting_does_not_use_rag() -> None:
     assert not result.requires_rag
 
 
+@pytest.mark.parametrize("message", ("목포역", "이범석", "동양척식주식회사 목포지점"))
+def test_entity_only_input_uses_history_rag(message: str) -> None:
+    result = classify(message)
+    assert result.primary_situation_id == SituationId.HISTORY_FACT_QUESTION
+    assert result.requires_rag
+
+
+@pytest.mark.parametrize("message", ("왜", "언제?", "누구"))
+def test_bare_interrogative_without_context_clarifies(message: str) -> None:
+    result = classify(message)
+    assert result.requires_clarification
+    assert not result.requires_rag
+
+
+def test_non_history_question_does_not_use_history_retrieval() -> None:
+    result = classify("오늘 날씨 어때?")
+    assert result.classification_reason_code == "OUT_OF_HISTORY_SCOPE"
+    assert not result.requires_rag
+
+
 @pytest.mark.parametrize(
     ("message", "situation"),
     [
@@ -50,6 +70,23 @@ def test_source_request_is_style_plus_evidence_and_rag() -> None:
     assert SituationId.EVIDENCE_AND_CORRECTION in result.secondary_situation_ids
     assert result.requires_rag
     assert result.response_length_mode == ResponseLengthMode.SOURCE_VIEW
+
+
+@pytest.mark.parametrize(
+    "message",
+    (
+        "목포역은 1700년에 개통했지? 그 전제를 자료로 확인해 줘.",
+        "목포 양동교회가 서울 종로에 있다는 전제가 맞는지 확인해 줘.",
+    ),
+)
+def test_false_premise_verification_uses_history_rag(message: str) -> None:
+    result = classify(message)
+
+    assert result.requires_rag
+
+
+def test_historical_organization_comparison_uses_rag() -> None:
+    assert classify("가람회와 누리회를 구분해 줘.").requires_rag
 
 
 def test_cross_cultural_does_not_infer_country() -> None:

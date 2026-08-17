@@ -1,0 +1,23 @@
+History Pieces 2026-08-15 요청 수정 내역
+
+수정 파일
+- index.html
+- addons/photo-composition-guide-0809.js
+- addons/requested-updates-0814.js
+- addons/requested-updates-0814.css
+- addons/experience-controls-0813.js
+- addons/pdf-ux-0809.js
+- addons/wireframe-flow-0807.js
+- addons/theme-map-updates-0814.js
+
+반영 내용
+1. 국가 선택 화면의 지원 확대 예정 문구 삭제
+2. 장소 이야기 이후 최종 장소 퀴즈 화면 복구
+3. 조각 1·2 촬영 기준 문구 수정 및 조각 1·2·3 AI 확인 이유 문구 적용
+4. 샘플 사진·영상, 건너뛰기, 조각 완료 진행 문구를 흰색으로 변경
+5. TimeTrace 화면의 이전 버튼 제거
+6. 다음 장소 지도 내부 안내 문구를 삭제하고 지도 아래 다음 장소 예고 영역으로 이동
+7. 조각 1·2·3 장소 촬영 미션 제목 구조 통일
+8. 챗봇 버튼을 새 브라우저 창이 아닌 현재 화면의 대화창과 연결
+
+그 외 원본 기능과 자산은 유지함.

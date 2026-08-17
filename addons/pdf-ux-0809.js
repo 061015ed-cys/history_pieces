@@ -4,11 +4,15 @@
   const PIECES = Object.freeze({
     1: Object.freeze({
       current: "목포역",
+      currentZh: "木浦站",
       historic: "목포역",
+      historicZh: "木浦站",
       year: "1913년 5월 15일",
+      yearZh: "1913年5月15日",
       fact: "호남선 목포–학교 구간 개통과 함께 목포역이 영업을 시작했습니다.",
       factZh: "1913年5月15日，木浦站随湖南线木浦至学校区间开通而开始营业。",
       source: "한국민족문화대백과사전 – 목포역",
+      sourceZh: "韩国民族文化大百科全书－木浦站",
       sourceUrl: "https://encykorea.aks.ac.kr/Article/E0068032",
       currentImage: "addons/timetrace/assets/MST/current.jpg",
       archiveImage: "addons/timetrace/assets/MST/historical-source.jpg",
@@ -17,11 +21,15 @@
     }),
     2: Object.freeze({
       current: "목포 대중음악의 전당",
-      historic: "호남은행 목포지점",
+      currentZh: "木浦大众音乐殿堂",
+      historic: "구 호남은행 목포지점",
+      historicZh: "旧湖南银行木浦支店",
       year: "1929년",
+      yearZh: "1929年",
       fact: "호남은행 목포지점 건물이 건립되었고, 현재는 음악 문화를 소개하는 공간으로 쓰이고 있습니다.",
       factZh: "湖南银行木浦支店建筑建于1929年，如今作为介绍音乐文化的空间使用。",
       source: "국가유산청 – 구 호남은행 목포지점",
+      sourceZh: "韩国国家遗产厅－旧湖南银行木浦支店",
       sourceUrl: "https://www.heritage.go.kr/",
       currentImage: "addons/timetrace/assets/HNB/current.jpg",
       archiveImage: "addons/timetrace/assets/HNB/historical-source.jpg",
@@ -30,11 +38,15 @@
     }),
     3: Object.freeze({
       current: "목포근대역사관 2관",
-      historic: "동양척식주식회사 목포지점",
+      currentZh: "木浦近代历史馆2馆",
+      historic: "구 동양척식주식회사 목포지점",
+      historicZh: "旧东洋拓殖株式会社木浦支店",
       year: "1921년",
+      yearZh: "1921年",
       fact: "동양척식주식회사 목포지점 건물은 식민지 토지 경영과 수탈 구조를 보여주는 역사적 공간입니다.",
-      factZh: "东方拓殖株式会社木浦支店建筑反映了殖民地土地经营与掠夺结构。",
+      factZh: "东洋拓殖株式会社木浦支店建筑反映了殖民地土地经营与掠夺结构。",
       source: "국가유산청 – 구 동양척식주식회사 목포지점",
+      sourceZh: "韩国国家遗产厅－旧东洋拓殖株式会社木浦支店",
       sourceUrl: "https://www.heritage.go.kr/",
       currentImage: "addons/timetrace/assets/MMH2/current.jpg",
       archiveImage: "addons/timetrace/assets/MMH2/historical-source.jpg",
@@ -44,20 +56,30 @@
   });
 
   const STORY_IMAGES = Object.freeze([
-    ["addons/webtoon-reference/piece-1/HP_C01_FIRST_ASSIGNMENT.png", "목포역 이야기 1컷"],
-    ["addons/webtoon-reference/piece-1/HP_C02_MOKPO_STATION_CROWD_OBSERVATION_FINAL.png", "목포역 이야기 2컷"],
-    ["addons/webtoon-reference/piece-1/HP_C03_MST_WAIT_FINAL.png", "목포역 이야기 3컷"],
-    ["addons/webtoon-reference/piece-1/HP_C04_MST_SHOOT.png", "목포역 이야기 4컷"],
-    ["addons/webtoon-reference/piece-2-style.jpg", "호남은행 목포지점 이야기"],
-    ["addons/webtoon-reference/piece-3-style.jpg", "동양척식주식회사 목포지점 이야기"]
+    ["addons/webtoon-reference/piece-1/HP_C01_FIRST_ASSIGNMENT.png", "장소 이야기 1컷 - 사진관에서 첫 임무를 받는 사진사"],
+    ["addons/webtoon-reference/piece-1/HP_C02_MOKPO_STATION_CROWD_OBSERVATION_FINAL.png", "장소 이야기 2컷 - 목포역 앞 사람들의 움직임을 살피는 사진사"],
+    ["addons/webtoon-reference/piece-1/HP_C03_MST_WAIT_FINAL.png", "장소 이야기 3컷 - 목포역 앞에서 촬영 순간을 기다리는 사진사"],
+    ["addons/webtoon-reference/piece-1/HP_C04_MST_SHOOT.png", "장소 이야기 4컷 - 목포역의 모습을 촬영하는 사진사"],
+    ["addons/webtoon-reference/piece-2/HP_C05_HNB_ARRIVAL.png", "장소 이야기 5컷 - 호남은행 목포지점에 도착해 촬영을 준비하는 사진사"],
+    ["addons/webtoon-reference/place-story/HP_C06_HNB_ACCIDENTAL_PEOPLE.png", "장소 이야기 6컷 - 호남은행 목포지점 앞 인물들이 우연히 사진에 담기는 장면"],
+    ["addons/webtoon-reference/piece-2/HP_C07_HNB_HOLDER_PAUSE.png", "장소 이야기 7컷 - 촬영을 멈추고 은행으로 들어가는 인물들을 바라보는 사진사"],
+    ["addons/webtoon-reference/piece-2/HP_C08_HNB_NO_RESHOOT.png", "장소 이야기 8컷 - 재촬영하지 않고 호남은행 목포지점을 떠나는 사진사"],
+    ["addons/webtoon-reference/piece-3/HP_C09_MMH2_FARMER_GROUP.png", "장소 이야기 9컷 - 목포근대역사관 2관 앞 사람들을 살피는 사진사"],
+    ["addons/webtoon-reference/piece-3/HP_C10_MMH2_RECONSIDERING_PEOPLE_FINAL_STATION_V3.png", "장소 이야기 10컷 - 촬영 구도를 다시 생각하는 사진사"],
+    ["addons/webtoon-reference/piece-3/HP_C11_MMH2_FINAL_APPROVED.png", "장소 이야기 11컷 - 최종 구도로 사진을 촬영하는 사진사"],
+    ["addons/webtoon-reference/piece-3/HP_C12_MMH2_INTENTIONAL_PEOPLE.png", "장소 이야기 12컷 - 사람과 장소의 기록을 함께 남기는 사진사"],
+    ["addons/webtoon-reference/place-story/HP_C13_PRINTS_SUBMITTED.png", "장소 이야기 13컷 - 세 장소의 인화 사진을 제출하는 사진사"],
+    ["addons/webtoon-reference/place-story/HP_C14_MA_MC_COMPARISON.png", "장소 이야기 14컷 - 세 장소의 기록을 비교하는 장면"],
+    ["addons/webtoon-reference/place-story/HP_C15_ALL_PRINTS_APPROVED.png", "장소 이야기 15컷 - 세 장소의 인화 사진을 모두 승인받는 장면"],
+    ["addons/webtoon-reference/place-story/HP_C16_NEXT_ASSIGNMENT_FINAL.png", "장소 이야기 16컷 - 다음 기록 임무를 준비하는 사진사"]
   ]);
 
   const THEME_JOURNEYS = Object.freeze({
     food: Object.freeze({
       label: "음식",
       labelZh: "美食",
-      summary: "오늘의 항구도시 생활문화",
-      summaryZh: "今天的港口城市生活文化",
+      summary: "항구도시의 맛과 생활",
+      summaryZh: "港口城市的美食与生活",
       title: "음식의 기록을\n이렇게 이어볼 수 있어요.",
       titleZh: "可以这样继续\n木浦的美食记录。",
       pieces: ["항구의 아침 식탁", "시장에서 만나는 목포의 맛", "오늘의 식문화"],
@@ -70,10 +92,10 @@
       map: "https://map.naver.com/p/search/%EB%AA%A9%ED%8F%AC%20%EC%A2%85%ED%95%A9%EC%88%98%EC%82%B0%EC%8B%9C%EC%9E%A5"
     }),
     space: Object.freeze({
-      label: "도시공간",
-      labelZh: "城市空间",
-      summary: "거리와 공간의 변화",
-      summaryZh: "街道与空间的变化",
+      label: "도시의 변화",
+      labelZh: "城市变化",
+      summary: "거리와 건축에 남은 시간",
+      summaryZh: "留在街道与建筑中的时光",
       title: "공간의 변화를 보는 기록을\n이렇게 이어볼 수 있어요.",
       titleZh: "可以这样继续\n观察空间变化的记录。",
       pieces: ["오래된 건물의 새 쓰임", "근대 도시의 흔적", "오늘의 역사공간"],
@@ -88,8 +110,8 @@
     art: Object.freeze({
       label: "예술",
       labelZh: "艺术",
-      summary: "문학 · 음악 · 공연 · 현재 예술공간",
-      summaryZh: "文学 · 音乐 · 演出 · 当代艺术空间",
+      summary: "음악과 미술, 문학으로 만나는 목포",
+      summaryZh: "通过音乐、美术与文学认识木浦",
       title: "예술의 기록을\n이렇게 이어볼 수 있어요.",
       titleZh: "可以这样继续\n木浦的艺术记录。",
       pieces: ["공간이 무대가 된 장면", "도시의 음악이 남은 곳", "오늘의 예술공간"],
@@ -202,9 +224,9 @@
           <p id="pdf-theme-select-label" class="ornament-label">다음 기록 고르기</p>
           <h1 id="pdf-theme-select-title" class="mini-title">다음에는 어떤 목포를<br>이어 보고 싶나요?</h1>
           <div class="pdf-theme-list" role="group" aria-label="다음 목포 여행 테마">
-            <button type="button" data-pdf-action="choose-theme" data-theme="food"><strong>음식</strong><small>오늘의 항구도시 생활문화</small><i>→</i></button>
-            <button type="button" data-pdf-action="choose-theme" data-theme="space"><strong>도시공간</strong><small>거리와 공간의 변화</small><i>→</i></button>
-            <button type="button" data-pdf-action="choose-theme" data-theme="art"><strong>예술</strong><small>문학 · 음악 · 공연 · 현재 예술공간</small><i>→</i></button>
+            <button type="button" data-pdf-action="choose-theme" data-theme="food"><strong>음식</strong><small>항구도시의 맛과 생활</small><i>→</i></button>
+            <button type="button" data-pdf-action="choose-theme" data-theme="space"><strong>도시의 변화</strong><small>거리와 건축에 남은 시간</small><i>→</i></button>
+            <button type="button" data-pdf-action="choose-theme" data-theme="art"><strong>예술</strong><small>음악과 미술, 문학으로 만나는 목포</small><i>→</i></button>
           </div>
           <button type="button" id="pdf-personal-recommend-button" class="big-button" data-pdf-action="open-personal-recommendation">내 취향대로 추천받기 <span>→</span></button>
         </div>
@@ -229,7 +251,7 @@
         <div class="page-bg bg-record"></div>
         <div class="screen-layout standard-layout pdf-theme-layout">
           <p id="pdf-preference-label" class="ornament-label">기록새 · 취향 추천</p>
-          <h1 id="pdf-preference-title" class="mini-title">당신에게는 이런<br>다음 여정이 어울려요.</h1>
+          <h1 id="pdf-preference-title" class="mini-title">기록을 이어갈<br>다음 여정을 추천해드려요.</h1>
           <div id="pdf-preference-list" class="pdf-preference-list" role="group" aria-label="취향 기반 추천 여정"></div>
           <p id="pdf-preference-reason" class="pdf-preference-reason"></p>
           <button type="button" id="pdf-preference-detail-button" class="big-button" data-pdf-action="open-preference-detail">추천 여정 자세히 보기 <span>→</span></button>
@@ -259,18 +281,26 @@
     state().currentPiece = activePiece;
     const item = PIECES[activePiece];
     const chinese = isChinese();
+    const current = chinese ? item.currentZh : item.current;
+    const historic = chinese ? item.historicZh : item.historic;
+    const year = chinese ? item.yearZh : item.year;
+    const sourceName = chinese ? item.sourceZh : item.source;
     setText("pdf-history-label", chinese ? "TimeTrace · 历史依据" : `TimeTrace · ${activePiece}/3 역사 근거`);
-    setText("pdf-history-title", chinese ? `${item.current}\n过去与现在的记录` : `${item.current}\n과거와 현재의 기록`);
+    setText("pdf-history-title", chinese ? `${current}\n过去与现在的记录` : `${current}\n과거와 현재의 기록`);
     const title = document.getElementById("pdf-history-title");
     if (title) title.innerHTML = title.textContent.replace("\n", "<br>");
     document.getElementById("pdf-history-archive").src = item.archiveImage;
     document.getElementById("pdf-history-current").src = item.currentImage;
-    setText("pdf-history-archive-caption", chinese ? `过去 · ${item.historic}` : `과거 · ${item.historic}`);
-    setText("pdf-history-current-caption", chinese ? `现在 · ${item.current}` : `현재 · ${item.current}`);
-    setText("pdf-history-year", item.year);
+    const archive = document.getElementById("pdf-history-archive");
+    const currentImage = document.getElementById("pdf-history-current");
+    if (archive) archive.alt = chinese ? `${historic}历史照片` : "과거 기록";
+    if (currentImage) currentImage.alt = chinese ? `${current}现在的照片` : "현재 기록";
+    setText("pdf-history-archive-caption", chinese ? `过去 · ${historic}` : `과거 · ${historic}`);
+    setText("pdf-history-current-caption", chinese ? `现在 · ${current}` : `현재 · ${current}`);
+    setText("pdf-history-year", year);
     setText("pdf-history-fact", chinese ? item.factZh : item.fact);
     const source = document.getElementById("pdf-history-source");
-    source.textContent = `${chinese ? "资料来源" : "자료 출처"}: ${item.source}`;
+    source.textContent = `${chinese ? "资料来源" : "자료 출처"}: ${sourceName}`;
     source.href = item.sourceUrl;
     setText("pdf-ai-title", chinese ? "AI与数据处理依据" : "AI·데이터 처리 근거");
     setText("pdf-ai-desc", chinese
@@ -291,6 +321,9 @@
     missionResult = { pieceNumber: activePiece, selected, correct, definition };
     const chinese = isChinese();
     setText("pdf-mission-label", chinese ? `故事碎片 ${activePiece} · 任务结果` : `이야기 조각 ${activePiece} · 미션 결과`);
+    const resultTags = document.querySelectorAll("#pdf-mission-result-page .pdf-answer-card .tag");
+    if (resultTags[0]) resultTags[0].textContent = chinese ? "已选择的记录" : "선택한 기록";
+    if (resultTags[1]) resultTags[1].textContent = chinese ? "已验证的答案" : "검증된 정답";
     setText("pdf-mission-status", correct ? (chinese ? "回答正确" : "정답입니다") : (chinese ? "回答不正确" : "오답입니다"));
     document.getElementById("pdf-mission-result-page").dataset.correct = String(correct);
     document.getElementById("pdf-mission-selected").innerHTML = answerMarkup(selected, definition.options);
@@ -309,10 +342,12 @@
     const item = PIECES[activePiece];
     const chinese = isChinese();
     setText("pdf-complete-label", chinese ? `地点完成 · ${activePiece}/3` : `장소 완료 · ${activePiece}/3`);
-    setText("pdf-complete-title", chinese ? `${item.current}\n记录完成` : `${item.current}\n기록 완료`);
+    setText("pdf-complete-title", chinese ? `${item.currentZh}\n记录完成` : `${item.current}\n기록 완료`);
     const title = document.getElementById("pdf-complete-title");
     if (title) title.innerHTML = title.textContent.replace("\n", "<br>");
     document.getElementById("pdf-progress-fill").style.width = `${activePiece / 3 * 100}%`;
+    const progress = document.querySelector("#pdf-place-complete-page .pdf-progress");
+    if (progress) progress.setAttribute("aria-label", chinese ? "地点进度" : "장소 진행률");
     setText("pdf-progress-text", chinese ? `已完成 ${activePiece}/3 个地点` : `전체 3개 장소 중 ${activePiece}개 완료`);
     document.getElementById("pdf-complete-archive").src = item.archiveImage;
     setText("pdf-reward-history", chinese ? "过去与现在的记录" : "과거·현재 기록 보상");
@@ -323,23 +358,36 @@
     document.getElementById("pdf-final-rewards").classList.toggle("hidden", activePiece !== 3);
     setText("pdf-next-clue", activePiece === 3
       ? (chinese ? "三个地点都完成了。现在确认完整故事与旅程影片吧。" : "세 장소를 모두 완료했어. 이제 전체 이야기와 여정필름을 확인하자.")
-      : (chinese ? `下一条线索在${item.nextZh}。` : `다음 단서는 ${item.next}에 있어.`));
+      : (chinese ? `下一个碎片在${item.nextZh}。` : `다음 조각은 ${item.next}에 있어.`));
     show("pdf-place-complete-page");
   }
 
   function renderFullStory() {
-    const grid = document.querySelector("#place-story-comic-page .place-comic-grid");
-    if (!grid) return;
-    if (grid.dataset.pdfRendered !== "true") {
+    const chinese = isChinese();
+    const pages = [
+      document.getElementById("place-story-comic-page"),
+      document.getElementById("place-story-comic-page-2")
+    ];
+
+    pages.forEach((page, pageIndex) => {
+      const grid = page?.querySelector(".place-comic-grid");
+      if (!grid) return;
+      const start = pageIndex * 8;
+      const pageImages = STORY_IMAGES.slice(start, start + 8);
       grid.dataset.pdfRendered = "true";
-      grid.innerHTML = STORY_IMAGES.map(([src, alt], index) => `
-        <figure class="pdf-story-panel"><img src="${src}" alt="${alt}" loading="eager"><figcaption>${String(index + 1).padStart(2, "0")}</figcaption></figure>`).join("");
-    }
-    const next = document.querySelector('#place-story-comic-page [data-next="quiz-page"], #place-story-comic-page .big-button');
-    if (next) {
-      next.dataset.next = "journey-film-page";
-      next.innerHTML = `${isChinese() ? "查看旅程影片" : "여정필름 확인"} <span>→</span>`;
-    }
+      grid.innerHTML = pageImages.map(([src, alt], index) => `
+        <figure class="pdf-story-panel"><img src="${src}" alt="${chinese ? `故事漫画第${start + index + 1}格` : alt}" loading="eager"></figure>`).join("");
+
+      const label = page.querySelector(".ornament-label");
+      if (label) label.textContent = `${chinese ? "地点故事漫画" : "장소 이야기 웹툰"} · ${pageIndex + 1}/2`;
+      const title = page.querySelector(".mini-title");
+      if (title) title.innerHTML = chinese ? "碎片汇集成了<br>一个完整故事" : "조각이 모여 하나의<br>이야기가 되었습니다";
+    });
+
+    const firstNext = document.querySelector('#place-story-comic-page [data-next="place-story-comic-page-2"]');
+    if (firstNext) firstNext.innerHTML = `${chinese ? "查看后8格" : "다음 8컷 보기"} <span>→</span>`;
+    const finalNext = document.querySelector('#place-story-comic-page-2 [data-next="quiz-page"]');
+    if (finalNext) finalNext.innerHTML = `${chinese ? "完成地点问答" : "장소 퀴즈 풀기"} <span>→</span>`;
   }
 
   function renderRecommendationDetail() {
@@ -353,7 +401,7 @@
         <div class="pdf-official-photo-placeholder"><span>PHOTO</span><p>${isChinese() ? "官方照片待连接" : "공식 사진 연결 대기"}</p></div>
         <strong>${isChinese() ? "这次旅程的三个碎片" : "이번 여정의 세 조각"}</strong>
         <div class="pdf-journey-pieces">
-          ${[1, 2, 3].map((piece) => `<figure><img src="${PIECES[piece].currentImage}" alt="${PIECES[piece].current}"><figcaption>${piece}. ${isChinese() ? PIECES[piece].historic : PIECES[piece].historic}</figcaption></figure>`).join("")}
+          ${[1, 2, 3].map((piece) => `<figure><img src="${PIECES[piece].currentImage}" alt="${isChinese() ? PIECES[piece].currentZh : PIECES[piece].current}"><figcaption>${piece}. ${isChinese() ? PIECES[piece].historicZh : PIECES[piece].historic}</figcaption></figure>`).join("")}
         </div>`;
       card.appendChild(block);
     }
@@ -422,7 +470,7 @@
   function preferenceTitle(key) {
     const titles = {
       space: ["공간의 변화를 보는 길", "观察空间变化的路线"],
-      food: ["오늘의 생활을 만나는 길", "遇见今天生活的路线"],
+      food: ["목포의 식문화를 만나는 길", "体验木浦饮食文化的路线"],
       art: ["예술로 이어지는 길", "通往艺术的路线"]
     };
     return titles[key][isChinese() ? 1 : 0];
@@ -431,7 +479,7 @@
   function renderPreferenceRecommendation() {
     const chinese = isChinese();
     setText("pdf-preference-label", chinese ? "记录鸟 · 喜好推荐" : "기록새 · 취향 추천");
-    setMultilineTitle("pdf-preference-title", chinese ? "这些下一段旅程\n很适合你。" : "당신에게는 이런\n다음 여정이 어울려요.");
+    setMultilineTitle("pdf-preference-title", chinese ? "这些下一段旅程\n很适合你。" : "기록을 이어갈\n다음 여정을 추천해드려요.");
     const order = ["space", "food", "art"];
     const list = document.getElementById("pdf-preference-list");
     if (list) {
@@ -509,8 +557,7 @@
       else flow?.showSurpriseQuiz?.(missionResult?.pieceNumber || activePiece);
     } else if (action === "complete-next") {
       if (activePiece < 3) {
-        if (global.HistoryPiecesIntegratedUi?.showMissionDirect) global.HistoryPiecesIntegratedUi.showMissionDirect(activePiece + 1);
-        else show(`piece-${activePiece + 1}-mission-page`);
+        show(`piece-${activePiece + 1}-mission-page`);
       } else {
         show("unlock-page");
       }
@@ -556,7 +603,7 @@
     renderThemeSelect();
     document.addEventListener("click", handleClick);
     global.addEventListener("historypieces:pagechange", (event) => {
-      if (event.detail?.pageId === "place-story-comic-page") renderFullStory();
+      if (["place-story-comic-page", "place-story-comic-page-2"].includes(event.detail?.pageId)) renderFullStory();
       if (event.detail?.pageId === "next-place-detail-page") queueMicrotask(renderRecommendationDetail);
       if (event.detail?.pageId === "pdf-theme-select-page") renderThemeSelect();
       if (event.detail?.pageId === "pdf-theme-result-page") renderThemeResult(selectedTheme);
